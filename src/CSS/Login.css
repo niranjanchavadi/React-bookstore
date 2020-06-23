@@ -1,0 +1,65 @@
+.loginpage {
+  margin-left: 0px;
+  width: 400px;
+  height: 520px ;
+}
+
+.login {
+  margin-top: 5%;
+  margin-left: 457px;
+  color: red;
+  width: 400px;
+  height: 520px ;
+}
+
+
+
+.usernameLogin {
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  width: 90%;
+}
+
+.button {
+  margin-top: 25px;
+  margin-left: 40px;
+  margin-right: 20px;
+}
+
+.paragraph {
+  margin-left: 55px;
+  font-size: 20px;
+  font-weight: 490;
+  letter-spacing: .1px;
+  line-height: 1.5;
+}
+
+.signInLogin {
+  font-size: 20px;
+  margin-top: 10px;
+  margin-left: 150px;
+  font-size: 24px;
+  font-weight: 520;
+  font-family: 'Google Sans', 'Noto Sans Myanmar UI', arial, sans-serif;
+}
+
+.password {
+  margin-top: 4%;
+  height: 35;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-container>div {
+  margin-top: 20px;
+  margin-right: 155px;
+}
+
+.middle{
+display: flex;
+align-content: center;
+
+}
