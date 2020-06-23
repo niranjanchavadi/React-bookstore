@@ -1,0 +1,98 @@
+.registercard {
+    color: rgb(178, 76, 187);
+    margin-top: 3%;
+    margin-left: 400px;
+    width: 400px;
+    height: 500px;
+}
+
+.userregister {
+    padding: 3%;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.passwordline {
+    display: contents;
+    font-weight: 300;
+    font-size: small;
+}
+
+
+/* .userfundoo {
+  font-size: 210%;
+  padding-bottom: 2%;
+} */
+
+.usersignUp {
+    font-size: 165%;
+    padding-bottom: 2%;
+}
+
+.userfirstlastname {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+    padding-bottom: 1%;
+}
+
+.useremail1 {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    padding-bottom: 1%;
+}
+
+.phonenumber {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 100%;
+    padding-bottom: 1%;
+}
+
+.userpassword {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+}
+
+.userbutton {
+    display: flex;
+    justify-content: space-between;
+    color: #A03037;
+}
+
+div p {
+    align-items: center;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 600px) {
+    .name {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        padding: 3%;
+    }
+    .useremail1 {
+        padding: 3%;
+    }
+    .userbutton {
+        display: flex;
+        justify-content: space-between;
+        padding: 3%;
+    }
+    .main {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
