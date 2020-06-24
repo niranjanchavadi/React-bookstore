@@ -20,7 +20,7 @@ class Registration extends Component {
     super (props);
     this.state = {
       fullName: '',
-      email: '',
+      email:'',
       password: '',
       mobileNumber: '',
       errors: {},
@@ -107,12 +107,11 @@ class Registration extends Component {
           <div className="backgroundregister">
             <div className="userregister">
             <div className="middle">
-                  <img src ={Logo} width="25%" height="25%" alt="hello"  />
+                  <img src ={Logo} width="25%" height="25%" alt="hello"/>
             </div>
               <div className="useronlinebookstore">
-                <h2 style={{ color: "#A03037", size:"medium" }}>OnlineBookStore SignUp</h2>
+                <h2 style={{ color: "#A03037" ,textAlign:"center",marginLeft:"-10%"}}>BookStore SignUp</h2>
               </div>
-              <div className="usersignUp">Create BookStore Account</div>
               <div className="main" style={{flexDirection: 'row'}}>
                 <div>
                   <div className="userfullName">
@@ -120,6 +119,7 @@ class Registration extends Component {
                       id="outlined"
                       label="Full name"
                       style={{width: '100%'}}
+                      textAlign="center"
                       onChange={this.axios}
                       error={this.state.errors.fullName}
                       helperText={this.state.errors.fullName}
@@ -196,17 +196,14 @@ class Registration extends Component {
                   <br />
                   <br />
                   <div className="userbutton">
-                    <Button  margin="dense"  color="secondary"size="small" variant="contained"
-                        onClick={() => this.props.history.push ('/')} 
-                        style={{width: '100%'}}
+                    <Button  margin="dense"  size="small" variant="contained"
+                        // onClick={() => this.props.history.push ('/')} 
+                        onClick={this.registrationForm} 
+                        style={{width: '100%',backgroundColor:'#A03037'}}
                       >
                       Sign Up
                     </Button>
-                    {/* <Button   margin="dense" color="secondary" size="small" variant="contained"
-                       onClick={this.registrationForm} 
-                      >
-                       SUBMIT
-                    </Button> */}
+
                   </div>
                 </div>
                  

@@ -20,7 +20,7 @@ export class Login extends Component {
       userName: "",
       password: "",
       fullName: "",
-      email: "",
+      emailId: "",
       showPassword: "",
       snackbarMessage: "",
       snackbarOpen: false,
@@ -46,16 +46,16 @@ export class Login extends Component {
       });
       formIsValid = false;
     }
-    if (!this.state.email) {
-      errors["email"] = "*Enter the correct email";
+    if (!this.state.emailId) {
+      errors["emailId"] = "*Enter the correct emailId";
       this.setState({
         snackbarOpen: true,
-        snackbarMessage: "Enter the correct email",
+        snackbarMessage: "Enter the correct emailId",
       });
       formIsValid = false;
     }
-    if (this.state.password === "" || this.state.email === "") {
-      errors["email"] = "*Please enter all fields";
+    if (this.state.password === "" || this.state.emailId === "") {
+      errors["emailId"] = "*Please enter all fields";
       console.log(errors);
       this.setState({
         snackbarOpen: true,
@@ -73,14 +73,14 @@ export class Login extends Component {
   loginForm = () => {
     if (this.validateForm()) {
       let user = {};
-      user.email = this.state.email;
+      user.emailId = this.state.emailId;
       user.password = this.state.password;
 
       userLogin(user)
         .then((response) => {
            console.log (response);
           localStorage.setItem("Token", response.data.message);
-          localStorage.setItem("Email", response.data.email);
+          localStorage.setItem("emailId", response.data.emailId);
           localStorage.setItem("FullName", response.data.fullName);
           this.setState({
             snackbarOpen: true,
@@ -138,12 +138,12 @@ export class Login extends Component {
                   required
                   margin="dense"
                   size="small"
-                  name="email"
+                  name="emailId"
                   id="outlined-required"
                   variant="outlined"
-                  label="Enter email"
-                  error={this.state.errors.email}
-                  helperText={this.state.errors.email}
+                  label="Enter emailId"
+                  error={this.state.errors.emailId}
+                  helperText={this.state.errors.emailId}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end" sytle={{ width: "10px" }}>

@@ -2,14 +2,17 @@
     color: rgb(178, 76, 187);
     margin-top: 3%;
     margin-left: 35%;
-    width: 400px;
-    height: 600px;
+    width: 28%;
+    height: 60%;
+    border-radius: 20%;
 }
 
 .userregister {
     padding: 3%;
     justify-content: space-evenly;
     flex-direction: column;
+    border-radius: 35%;
+    margin-left: 10%;
 }
 
 .passwordline {
@@ -18,9 +21,11 @@
     font-size: small;
 }
 
-.usersignUp {
-    font-size: 165%;
-    padding-bottom: 2%;
+.middle {
+    display: flex;
+    align-content: center;
+    margin-left: 35%;
+    border-radius: 2cm;
 }
 
 .userfullName {
@@ -56,7 +61,8 @@
 .userbutton {
     display: flex;
     justify-content: space-between;
-    color: #A03037;
+    /* color: #A03037;
+ */
 }
 
 div p {
