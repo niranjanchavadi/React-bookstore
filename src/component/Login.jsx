@@ -70,6 +70,8 @@ export class Login extends Component {
     return formIsValid;
   };
 
+  
+
   loginForm = () => {
     if (this.validateForm()) {
       let user = {};
@@ -107,16 +109,15 @@ export class Login extends Component {
       <Card className="login">
         <CardContent>
           <div className="loginpage" >
-
-
            <div>
            <div className="middle">
                   <img src ={Logo} width="25%" height="25%" alt="hello" />
-
             </div>
            <div className="signInLogin">
               {" "}
-              <span>Sign in</span>
+              <h3 style={{ color: "#A03037" ,textAlign:"center",marginLeft:"-95%"  }}>Login  &nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="Register" onClick={() => this.props.history.push("/register")} style={{ color: "#A03037" }} >Register </a></h3> 
+            
             </div>
             
            </div>
@@ -137,10 +138,10 @@ export class Login extends Component {
                 <TextField
                   required
                   margin="dense"
-                  size="small"
                   name="emailId"
                   id="outlined-required"
                   variant="outlined"
+                  style={{width: '90%'}}
                   label="Enter emailId"
                   error={this.state.errors.emailId}
                   helperText={this.state.errors.emailId}
@@ -167,7 +168,7 @@ export class Login extends Component {
                   label="Password"
                   error={this.state.errors.password}
                   helperText={this.state.errors.password}
-                  style={{ width: "90%" }}
+                  style={{width: '90%'}}
                   onChange={this.axios}
                   InputProps={{
                     endAdornment: (
@@ -191,25 +192,22 @@ export class Login extends Component {
                 />
               </div>
             </div>
+          
+            <div className="Forget" onClick={() => this.props.history.push("/forgotpassword")} marginRight="100%">
+              <a href="ForgotPassword">ForgotPassword </a>
+            </div>
 
             <div className="flex-container">
-              <div onClick={() => this.props.history.push("/register")}>
-                <a href="Register">Register </a>
-              </div>
               <div>
                 <Button
                   variant="contained"
-                  color="secondary"
                   onClick={this.loginForm}
+                  style={{width: '350%',backgroundColor:'#A03037'}}
                 >
                   Login
                 </Button>
               </div>
               
-            </div>
-            <br />
-            <div onClick={() => this.props.history.push("/forgotpassword")}>
-              <a href="ForgotPassword">ForgotPassword </a>
             </div>
           </div>
         </CardContent>

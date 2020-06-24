@@ -24,6 +24,7 @@ class Registration extends Component {
       password: '',
       mobileNumber: '',
       errors: {},
+      
     };
   }
 
@@ -115,7 +116,7 @@ class Registration extends Component {
               <div className="main" style={{flexDirection: 'row'}}>
                 <div>
                   <div className="userfullName">
-                    <TextField required margin="dense" color="secondary" size="large" name="fullName" variant="outlined"
+                    <TextField required margin="dense" size="large" name="fullName" variant="outlined"
                       id="outlined"
                       label="Full name"
                       style={{width: '100%'}}

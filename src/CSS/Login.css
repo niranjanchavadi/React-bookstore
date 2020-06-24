@@ -1,28 +1,29 @@
 .loginpage {
-    margin-left: 0px;
-    width: 400px;
-    height: 520px;
+    margin-left: 18%;
+    width: 300px;
+    height: 420px;
 }
 
 .login {
-    margin-top: 5%;
-    margin-left: 457px;
+    margin-top: 3%;
+    margin-left: 34%;
     color: red;
-    width: 400px;
-    height: 520px;
+    width: 30%;
+    height: 10%;
 }
 
 .usernameLogin {
     display: flex;
     justify-content: start;
     flex-direction: column;
-    width: 90%;
+    border-color: #A03037;
 }
 
 .button {
     margin-top: 25px;
     margin-left: 40px;
     margin-right: 20px;
+    width: 100%;
 }
 
 .paragraph {
@@ -36,7 +37,7 @@
 .signInLogin {
     font-size: 20px;
     margin-top: 10px;
-    margin-left: 150px;
+    margin-left: 35%;
     font-size: 24px;
     font-weight: 520;
     font-family: 'Google Sans', 'Noto Sans Myanmar UI', arial, sans-serif;
@@ -49,15 +50,20 @@
 
 .flex-container {
     display: flex;
+    margin-right: 60%;
 }
 
 .flex-container>div {
     margin-top: 20px;
-    margin-right: 155px;
+    margin-right: 80%;
 }
 
 .middle {
     display: flex;
     align-content: center;
-    margin-left: 35%;
+    margin-left: 10%;
+}
+
+.Forget {
+    margin-left: 50%;
 }

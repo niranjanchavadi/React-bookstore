@@ -25,7 +25,6 @@
     display: flex;
     align-content: center;
     margin-left: 35%;
-    border-radius: 2cm;
 }
 
 .userfullName {
@@ -73,6 +72,7 @@ div p {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    border-color: #A03037;
 }
 
 @media only screen and (max-width: 600px) {
