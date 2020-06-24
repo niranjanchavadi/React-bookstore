@@ -37,29 +37,4 @@ export function forgotPassword (forgotPasswordDto) {
     }
   );
 }
-export function resetPassword (resetPasswordDTO,token) {
-  return axiosService.axiosPost (
-    "http://localhost:8080/user/resetpassword",
-    resetPasswordDTO,
-    {
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-        token:token,
-      },
-    }
-  );
-}
 
-export function chanageprofile (file) {
-  return axiosService.axiosPost (
-    "http://localhost:8080/user/uploadFile",
-     file, 
-     {
-       headers: {
-          "Content-Type": "multipart/form-data",
-          // token: token,
-       },
-     }
-  );
-}
-  

@@ -12,6 +12,7 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PhoneIcon from '@material-ui/icons/Phone';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import {userRegistration} from "../services/UserService/UserServices";
+import Logo from '../assets/Logo.png';
  
 
 class Registration extends Component {
@@ -101,17 +102,20 @@ class Registration extends Component {
 
   render () {
     return (
-      <Card className="registercard">
+      <Card className="registercard" >
         <CardContent>
           <div className="backgroundregister">
             <div className="userregister">
+            <div className="middle">
+                  <img src ={Logo} width="25%" height="25%" alt="hello"  />
+            </div>
               <div className="useronlinebookstore">
                 <h2 style={{ color: "#A03037", size:"medium" }}>OnlineBookStore SignUp</h2>
               </div>
               <div className="usersignUp">Create BookStore Account</div>
               <div className="main" style={{flexDirection: 'row'}}>
                 <div>
-                  <div className="userfullname">
+                  <div className="userfullName">
                     <TextField required margin="dense" color="secondary" size="large" name="fullName" variant="outlined"
                       id="outlined"
                       label="Full name"
@@ -193,15 +197,16 @@ class Registration extends Component {
                   <br />
                   <div className="userbutton">
                     <Button  margin="dense"  color="secondary"size="small" variant="contained"
-                        onClick={() => this.props.history.push ('/')}
+                        onClick={() => this.props.history.push ('/')} 
+                        style={{width: '100%'}}
                       >
                       Sign Up
                     </Button>
-                    <Button   margin="dense" color="secondary" size="small" variant="contained"
+                    {/* <Button   margin="dense" color="secondary" size="small" variant="contained"
                        onClick={this.registrationForm} 
                       >
                        SUBMIT
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
                  

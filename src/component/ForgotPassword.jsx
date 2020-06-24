@@ -124,8 +124,9 @@ export class ForgotPassword extends Component {
 
             <br />
             <div className="nextbutton">
-              <Button color="primary"  variant="contained" 
+              <Button color="secondary"  variant="contained" 
                  onClick={this.forgotPasswordForm}
+                 style={{width: '100%'}}
               >
                 Next
               </Button>

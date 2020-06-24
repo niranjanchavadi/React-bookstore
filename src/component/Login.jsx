@@ -19,8 +19,7 @@ export class Login extends Component {
     this.state = {
       userName: "",
       password: "",
-      firstName: "",
-      lastName: "",
+      fullName: "",
       email: "",
       showPassword: "",
       snackbarMessage: "",
@@ -82,8 +81,7 @@ export class Login extends Component {
            console.log (response);
           localStorage.setItem("Token", response.data.message);
           localStorage.setItem("Email", response.data.email);
-          localStorage.setItem("FirstName", response.data.firstName);
-          localStorage.setItem("LastName", response.data.lastName);
+          localStorage.setItem("FullName", response.data.fullName);
           this.setState({
             snackbarOpen: true,
             
@@ -113,7 +111,7 @@ export class Login extends Component {
 
            <div>
            <div className="middle">
-                  <img src ={Logo} width="20%" height="20%" alt="hello" />
+                  <img src ={Logo} width="25%" height="25%" alt="hello" />
 
             </div>
            <div className="signInLogin">
@@ -203,7 +201,6 @@ export class Login extends Component {
                   variant="contained"
                   color="secondary"
                   onClick={this.loginForm}
-                  size="large"
                 >
                   Login
                 </Button>

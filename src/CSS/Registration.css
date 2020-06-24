@@ -1,9 +1,9 @@
 .registercard {
     color: rgb(178, 76, 187);
     margin-top: 3%;
-    margin-left: 400px;
+    margin-left: 35%;
     width: 400px;
-    height: 500px;
+    height: 600px;
 }
 
 .userregister {
@@ -18,18 +18,12 @@
     font-size: small;
 }
 
-
-/* .userfundoo {
-  font-size: 210%;
-  padding-bottom: 2%;
-} */
-
 .usersignUp {
     font-size: 165%;
     padding-bottom: 2%;
 }
 
-.userfirstlastname {
+.userfullName {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
