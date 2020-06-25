@@ -42,7 +42,7 @@ class Registration extends Component {
       formIsValid = false;
     }
     if (!this.state.fullName) {
-      errors['email'] = "*FullName name can not be empty";
+      errors['fullName'] = "*FullName name can not be empty";
       formIsValid = false;
     }
     
@@ -191,10 +191,6 @@ class Registration extends Component {
                       }}
                      />
                   </div>
-                  <p className="passwordline">
-                    password should contain digits special char alphabets
-                  </p>
-                  <br />
                   <br />
                   <div className="userbutton">
                     <Button  margin="dense"  size="small" variant="contained"

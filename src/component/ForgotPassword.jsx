@@ -90,7 +90,7 @@ export class ForgotPassword extends Component {
       <Card className="forgot" >
         <CardContent>
           <div className="forgotpasswordpage">
-            <p className="recoverymail">Enter email for forgot password</p>
+            <p className="recoverymail" >Enter email for forgot password</p>
             <div className="forgotpasswordemail">
               <TextField required margin="dense" size="small" name="email" variant="outlined"
                  id="outlined-required"
@@ -124,9 +124,9 @@ export class ForgotPassword extends Component {
 
             <br />
             <div className="nextbutton">
-              <Button color="secondary"  variant="contained" 
+              <Button   variant="contained" 
                  onClick={this.forgotPasswordForm}
-                 style={{width: '100%'}}
+                 style={{width: '120%',backgroundColor:'#A03037'}}
               >
                 Next
               </Button>
