@@ -25,6 +25,7 @@ export class Login extends Component {
       snackbarMessage: "",
       snackbarOpen: false,
       errors: {},
+      // disabled=false;
     };
   }
 
@@ -139,6 +140,7 @@ export class Login extends Component {
                   required
                   margin="dense"
                   name="emailId"
+                  color="secondary"
                   id="outlined-required"
                   variant="outlined"
                   style={{width: '90%'}}
@@ -160,6 +162,7 @@ export class Login extends Component {
                 <TextField
                   required
                   size="small"
+                  color="secondary"
                   margin="dense"
                   name="password"
                   variant="outlined"
@@ -201,8 +204,10 @@ export class Login extends Component {
               <div>
                 <Button
                   variant="contained"
-                  onClick={this.loginForm}
+                  onClick={this.loginForm }
+                
                   style={{width: '350%',backgroundColor:'#A03037'}}
+                  // disabled={isDisabled}
                 >
                   Login
                 </Button>

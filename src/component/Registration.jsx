@@ -13,6 +13,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import {userRegistration} from "../services/UserService/UserServices";
 import Logo from '../assets/Logo.png';
+
  
 
 class Registration extends Component {
@@ -20,10 +21,11 @@ class Registration extends Component {
     super (props);
     this.state = {
       fullName: '',
-      email:'',
+      emailId:'',
       password: '',
       mobileNumber: '',
       errors: {},
+      
       
     };
   }
@@ -47,13 +49,13 @@ class Registration extends Component {
     }
     
     if (!RegExp ("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\. [A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
-        .test (this.state.email)
+        .test (this.state.emailId)
     ) {
-      errors['email'] = "*Enter valid pattern e-mail id";
+      errors['emailId'] = "*Enter valid pattern e-mail id";
       formIsValid=false;
     }
-    if (!this.state.email) {
-      errors['email'] = "*E-mail id can not be empty";
+    if (!this.state.emailId) {
+      errors['emailId'] = "*E-mail id can not be empty";
       formIsValid = false;
     }
     if (!RegExp("^[6-9][0-9]{9}$").test(this.state.mobileNumber)) {
@@ -82,7 +84,7 @@ class Registration extends Component {
     if (this.validateForm ()) {
       let user = {};
       user.fullName = this.state.fullName;
-      user.email = this.state.email;
+      user.emailId = this.state.emailId;
       user.password = this.state.password;
       user.mobileNumber = this.state.mobileNumber;
       console.log (user);
@@ -121,6 +123,7 @@ class Registration extends Component {
                       label="Full name"
                       style={{width: '100%'}}
                       textAlign="center"
+                      color="secondary"
                       onChange={this.axios}
                       error={this.state.errors.fullName}
                       helperText={this.state.errors.fullName}
@@ -135,14 +138,14 @@ class Registration extends Component {
                     />
 
                   </div>
-                  <div className="useremail1">
-                    <TextField required  margin="dense" color="secondary" size="small"  name="email"  variant="outlined"
+                  <div className="useremailId1">
+                    <TextField required  margin="dense" color="secondary" size="small"  name="emailId"  variant="outlined"
                       id="outlined"
                       label="E-mail"
                       style={{width: '100%'}}
                       onChange={this.axios}
-                      error={this.state.errors.email}
-                      helperText={this.state.errors.email}
+                      error={this.state.errors.emailId}
+                      helperText={this.state.errors.emailId}
                       InputProps={{
                         endAdornment: (
                         <InputAdornment position="end" sytle={{width: '10px'}}>

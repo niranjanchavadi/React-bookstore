@@ -12,6 +12,10 @@
     height: 8%;
 }
 
+img {
+    border-radius: 40%;
+}
+
 .usernameLogin {
     display: flex;
     justify-content: start;

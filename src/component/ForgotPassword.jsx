@@ -89,11 +89,12 @@ export class ForgotPassword extends Component {
     return (
       <Card className="forgot" >
         <CardContent>
-          <div className="forgotpasswordpage">
+          <div className="forgotpasswordpage" color="secondary" >
             <p className="recoverymail" >Enter email for forgot password</p>
             <div className="forgotpasswordemail">
               <TextField required margin="dense" size="small" name="email" variant="outlined"
                  id="outlined-required"
+                 color="secondary"
                  label="Email"
                  onChange={this.axios}
                  error={this.state.errors.email}
