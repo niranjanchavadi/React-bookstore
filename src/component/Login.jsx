@@ -13,9 +13,14 @@ import { userLogin } from "../services/UserService/UserServices";
 import Snackbar from "@material-ui/core/Snackbar";
 import Logo from '../assets/Logo.png';
 
+
+
+
 export class Login extends Component {
   constructor(props) {
     super(props);
+
+
     this.state = {
       userName: "",
       password: "",
@@ -25,8 +30,14 @@ export class Login extends Component {
       snackbarMessage: "",
       snackbarOpen: false,
       errors: {},
-      // disabled=false;
+     
+    
     };
+  }
+
+  handleSubmit = () => {
+    const { emailId, password } = this.state;
+    alert(`Welcome ${emailId} password: ${password}`);
   }
 
   axios = (event) => {
@@ -102,22 +113,28 @@ export class Login extends Component {
             snackbarMessage: "*Login failed! invalid credentials",
           });
         });
-    }
+      }
+   
   };
 
   render() {
+    const { emailId, password } = this.state;
+    const enabled =
+          emailId.length > 0 &&
+          password.length > 0;
     return (
+      <form onSubmit={this.handleSubmit}>
       <Card className="login">
         <CardContent>
           <div className="loginpage" >
            <div>
            <div className="middle">
-                  <img src ={Logo} width="25%" height="25%" alt="hello" />
+                  <img src ={Logo} width="27%" height="27%" alt="hello" />
             </div>
            <div className="signInLogin">
               {" "}
-              <h3 style={{ color: "#A03037" ,textAlign:"center",marginLeft:"-95%"  }}>Login  &nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="Register" onClick={() => this.props.history.push("/register")} style={{ color: "#A03037" }} >Register </a></h3> 
+              <h3 style={{ color: "#A03037" ,textAlign:"center",marginLeft:"-70%"  }}>Login  &nbsp;&nbsp;&nbsp;&nbsp;
+              <span href="Register" onClick={() => this.props.history.push("/register")} style={{ color: "#A03037" }} >Register </span></h3> 
             
             </div>
             
@@ -197,7 +214,7 @@ export class Login extends Component {
             </div>
           
             <div className="Forget" onClick={() => this.props.history.push("/forgotpassword")} marginRight="100%">
-              <a href="ForgotPassword">ForgotPassword </a>
+              <span href="ForgotPassword">ForgotPassword ? </span>
             </div>
 
             <div className="flex-container">
@@ -205,8 +222,9 @@ export class Login extends Component {
                 <Button
                   variant="contained"
                   onClick={this.loginForm }
-                  style={{width: '350%',backgroundColor:'#A03037'}}
-                  // disabled={isDisabled}
+                    
+                  style={{width: '350%',backgroundColor:'#A03037',color:'white'}}
+                  disabled={!enabled}
                 >
                   Login
                 </Button>
@@ -216,7 +234,9 @@ export class Login extends Component {
           </div>
         </CardContent>
       </Card>
+      </form>
     );
   }
-}
+  }
+
 export default Login;

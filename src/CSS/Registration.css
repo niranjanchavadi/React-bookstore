@@ -11,8 +11,8 @@
     padding: 3%;
     justify-content: space-evenly;
     flex-direction: column;
-    border-radius: 35%;
-    margin-left: 10%;
+    border-radius: 40%;
+    margin-left: 12%;
 }
 
 .passwordline {
@@ -67,6 +67,10 @@
 
 div p {
     align-items: center;
+}
+
+IconButton {
+    margin-left: 40%;
 }
 
 .main {

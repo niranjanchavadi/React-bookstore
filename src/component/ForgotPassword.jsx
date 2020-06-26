@@ -89,7 +89,7 @@ export class ForgotPassword extends Component {
     return (
       <Card className="forgot" >
         <CardContent>
-          <div className="forgotpasswordpage" color="secondary" >
+          <div className="forgotpasswordpage"  >
             <p className="recoverymail" >Enter email for forgot password</p>
             <div className="forgotpasswordemail">
               <TextField required margin="dense" size="small" name="email" variant="outlined"

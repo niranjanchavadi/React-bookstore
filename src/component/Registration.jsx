@@ -13,7 +13,6 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import {userRegistration} from "../services/UserService/UserServices";
 import Logo from '../assets/Logo.png';
-
  
 
 class Registration extends Component {
@@ -25,9 +24,14 @@ class Registration extends Component {
       password: '',
       mobileNumber: '',
       errors: {},
-      
-      
-    };
+         
+    }; 
+   
+  }
+
+  handleSubmit = () => {
+    const {fullName, emailId, mobileNumber, password} = this.state;
+    alert(`Welcome ${fullName} ${emailId} password: ${password} mobileNumber: ${mobileNumber} `);
   }
 
   axios = event => {
@@ -38,8 +42,9 @@ class Registration extends Component {
 
   validateForm = () => {
     let errors = {};
-    let formIsValid = true;
-    if (!RegExp("^[A-Z][a-zA-Z]{3,20}$").test(this.state.fullName)) {
+     let formIsValid=true;
+   
+    if (!RegExp("^[a-zA-Z]+ [a-zA-Z]+$").test(this.state.fullName)) {
       errors['fullName'] = '*Enter the Valid full name';
       formIsValid = false;
     }
@@ -65,9 +70,11 @@ class Registration extends Component {
         errors['mobileNumber'] = "*Phone number can not be empty";
         formIsValid = false
     }
+
     if (!RegExp("((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!*]).{8,20})").test(this.state.password)) {
         errors['password'] = '*Enter the valid pattern password'
         formIsValid = false
+      
     }
     if (!this.state.password) {
         errors['password'] = '*Password can not be empty'
@@ -77,8 +84,11 @@ class Registration extends Component {
     this.setState ({
       errors: errors,
     });
+      
     return formIsValid;
+
   };
+ 
 
   registrationForm = () => {
     if (this.validateForm ()) {
@@ -104,8 +114,15 @@ class Registration extends Component {
   };
 
   render () {
+    const { emailId, password, fullName, mobileNumber } = this.state;
+    const enabled =
+          fullName.length>0&&
+          emailId.length > 0 &&
+          mobileNumber.length>0 &&
+          password.length > 0 ;
     return (
-      <Card className="registercard" >
+      <form onSubmit={this.handleSubmit}>
+      <Card className="registercard"  >
         <CardContent>
           <div className="backgroundregister">
             <div className="userregister">
@@ -113,7 +130,7 @@ class Registration extends Component {
                   <img src ={Logo} width="25%" height="25%" alt="hello"/>
             </div>
               <div className="useronlinebookstore">
-                <h2 style={{ color: "#A03037" ,textAlign:"center",marginLeft:"-10%"}}>BookStore SignUp</h2>
+                <h1 style={{ color: "#A03037" ,textAlign:"center",marginLeft:"-16%"}}> SignUp</h1>
               </div>
               <div className="main" style={{flexDirection: 'row'}}>
                 <div>
@@ -133,8 +150,7 @@ class Registration extends Component {
                            <PermIdentityIcon /> 
                         </InputAdornment>
                         ),
-                       }}
-                       
+                       }}                   
                     />
 
                   </div>
@@ -156,8 +172,8 @@ class Registration extends Component {
                     />
                     
                   </div>
-                  <div className="mobileNumber">
-                    <TextField required margin="dense" color="secondary"  name="mobileNumber"  variant="outlined"
+                  <div className="mobileNumber" >
+                    <TextField required margin="dense"  color="secondary"  name="mobileNumber"  variant="outlined"
                       size="small"
                       id="outlined"
                       label="mobile Number"
@@ -167,7 +183,7 @@ class Registration extends Component {
                       helperText={this.state.errors.mobileNumber}
                       InputProps={{
                         endAdornment: (
-                        <InputAdornment position="end" sytle={{width: '10px'}}>
+                        <InputAdornment position="end">
                            <PhoneIcon /> 
                         </InputAdornment>
                         ),
@@ -185,8 +201,8 @@ class Registration extends Component {
                       helperText={this.state.errors.password}
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment position="end" sytle={{width: '10px'}}>
-                            <IconButton  onClick={() => this.setState ({showPassword: !this.state.showPassword })} >
+                          <InputAdornment position="end"  >
+                            <IconButton  onClick={() => this.setState ({showPassword: !this.state.showPassword })}>
                                {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
                             </IconButton>
                           </InputAdornment>
@@ -199,7 +215,8 @@ class Registration extends Component {
                     <Button  margin="dense"  size="small" variant="contained"
                         // onClick={() => this.props.history.push ('/')} 
                         onClick={this.registrationForm} 
-                        style={{width: '100%',backgroundColor:'#A03037'}}
+                        style={{width: '100%',backgroundColor:'#A03037',color:'white'}}
+                        disabled={!enabled}
                       >
                       Sign Up
                     </Button>
@@ -212,6 +229,7 @@ class Registration extends Component {
           </div>
         </CardContent>
       </Card>
+      </form>
     );
   }
 }
