@@ -19,23 +19,23 @@ describe('<Registration/>',() => {
     })
 
     it('password check',()=>{
-        wrapper.find('input[type="password"]').simulate('change', {target: {name: 'password', value: 'Sube@007'}});
-        expect(wrapper.state('password')).toEqual('Sube@007');
-        expect(instance.state.props.password).toBe('Sube@007')
+        wrapper.find('input[type="password"]').simulate('change', {target: {name: 'password', value: 'subE@007'}});
+        expect(wrapper.state('password')).toEqual('subE@007');
+        expect(instance.state.props.password).toBe('subE@007')
         expect(instance.state.isValid).toBe(true);
     })
 
     it('register check with right data',()=>{
         wrapper.find('input[type="text"]').simulate('change', {target: {name: 'fullName', value: 'Sube'}});
-        wrapper.find('input[type="password"]').simulate('change', {target: {name: 'password', value: 'sube@007'}});
-        expect(instance.props.state.password).toBe('sube@007')
+        wrapper.find('input[type="password"]').simulate('change', {target: {name: 'password', value: 'subE@007'}});
+        expect(instance.props.state.password).toBe('subE@007')
         expect(instance.state.isValid).toBe(true);
     })
 
     it('register check with wrong data',()=>{
         wrapper.find('input[type="text"]').simulate('change', {target: {name: 'fullName', value: 'Sube'}});
-        wrapper.find('input[type="password"]').simulate('change', {target: {name: 'password', value: 'mubE@008'}});
-        expect(instance.props.state.password).toBe('sube@007')
+        wrapper.find('input[type="password"]').simulate('change', {target: {name: 'password', value: 'subE@008'}});
+        expect(instance.props.state.password).toBe('subE@007')
         expect(instance.state.isValid).toBe(true);
     })
 
@@ -48,9 +48,9 @@ describe('<Registration/>',() => {
  
     it('change handler working ', () => {
         wrapper.find(TextField).simulate('change',{target: {name:'fullName',value: 'Subedar'}})
-        wrapper.find(TextField).simulate('change',{target: {name:'password',value: 'sube@007'}})
+        wrapper.find(TextField).simulate('change',{target: {name:'password',value: 'subE@007'}})
         expect(instance.state.props.fullName).toBe('Subedar')
-        expect(instance.state.props.password).toBe('sube@007')
+        expect(instance.state.props.password).toBe('subE@007')
         expect(instance.state.isValid).toBe(true);
     })
 

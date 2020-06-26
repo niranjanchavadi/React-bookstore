@@ -205,7 +205,6 @@ export class Login extends Component {
                 <Button
                   variant="contained"
                   onClick={this.loginForm }
-                
                   style={{width: '350%',backgroundColor:'#A03037'}}
                   // disabled={isDisabled}
                 >
