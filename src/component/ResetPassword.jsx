@@ -137,25 +137,46 @@ export class ResetPassword extends Component {
 
             <br />
            
-            <div className="passwordtext">
-              <TextField required margin="dense" label="Password"  size="small"  name="password"  variant="outlined"
+            {/* <div className="passwordtext">
+              <TextField required margin="dense" label="Password"  color="secondary" size="small"  name="password"  variant="outlined"
                 id="outlined-adornment-password"
                 type={this.state.showPassword ? 'text' : 'password'}
-                inputProps={{style: {width: 340}, }}
+                style={{width: '100%'}}
                 error={this.state.errors.password}
                 helperText={this.state.errors.password}
                 onChange={this.axios}
               />
-            </div>
-            {/* <br /> */}
-            <div className="confirmpasswordtext">
-              <TextField required margin="dense"  label="Confirm Password"  size="small" name="confirmpassword" variant="outlined"
+            </div> */}
+             <div className="passwordtext">
+              <TextField required  margin="dense" color="secondary" size="small" name="password" variant="outlined"
+                      id="standard-adornment-password"
+                      type={this.state.showPassword ? 'text' : 'password'}
+                      label="Password"
+                      style={{width: '75%'}}
+                      onChange={this.axios}
+                      error={this.state.errors.password}
+                      helperText={this.state.errors.password}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position= " end "  >
+                            <IconButton  onClick={() => this.setState ({showPassword: !this.state.showPassword })} edge="end">
+                               {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                     />
+                      </div>
+           
+            {/* <div className="confirmpasswordtext">
+              <TextField required margin="dense"  label="Confirm Password"  color="secondary" size="small" name="confirmpassword" variant="outlined"
                 id="outlined-adornment-password"
                 type={this.state.showPassword ? 'text' : 'password'}
                 error={this.state.errors.confirmpassword}
                 helperText={this.state.errors.confirmpassword}
+                style={{width: '100%'}}
                 onChange={this.axios}
-                inputProps={{ style: {width: 340},
+                inputProps={{ 
                 endAdornment: (
                   <InputAdornment position="end" sytle={{width: '10px'}}>
                         <IconButton  onClick={() => this.setState ({showPassword: !this.state.showPassword }) } >
@@ -164,7 +185,26 @@ export class ResetPassword extends Component {
                       </InputAdornment>
                     ),
                 }}
-              />
+              /> */}
+             <div className="confirmpasswordtext">
+                <TextField required  margin="dense" color="secondary" size="small" name="password" variant="outlined"
+                      id="standard-adornment-password"
+                      type={this.state.showPassword ? 'text' : 'password'}
+                      label="Confirm Password" 
+                      style={{width: '75%'}}
+                      onChange={this.axios}
+                      error={this.state.errors.confirmpassword}
+                      helperText={this.state.errors.confirmpassword}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position= " end "  >
+                            <IconButton  onClick={() => this.setState ({showPassword: !this.state.showPassword })} edge="end">
+                               {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                     />
             </div>
             <br />
             <div className="nextbutton">
