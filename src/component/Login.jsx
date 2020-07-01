@@ -199,7 +199,7 @@ export class Login extends Component {
                               showPassword: !this.state.showPassword,
                             })
                           }
-                        >
+                          edge="end">
                           {this.state.showPassword ? (
                             <Visibility />
                           ) : (
