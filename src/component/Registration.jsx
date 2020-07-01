@@ -23,6 +23,7 @@ class Registration extends Component {
       emailId:'',
       password: '',
       mobileNumber: '',
+      roleType: '',
       errors: {},
          
     }; 
@@ -30,8 +31,8 @@ class Registration extends Component {
   }
 
   handleSubmit = () => {
-    const {fullName, emailId, mobileNumber, password} = this.state;
-    alert(`Welcome ${fullName} ${emailId} password: ${password} mobileNumber: ${mobileNumber} `);
+    const {fullName, emailId, mobileNumber, password, roleType } = this.state;
+    alert(`Welcome ${fullName} ${emailId} password: ${password} mobileNumber: ${mobileNumber} roleType: ${roleType}`);
   }
 
   axios = event => {
@@ -97,6 +98,7 @@ class Registration extends Component {
       user.emailId = this.state.emailId;
       user.password = this.state.password;
       user.mobileNumber = this.state.mobileNumber;
+      user.roleType = this.roleType;
       console.log (user);
 
       userRegistration (user)
@@ -113,8 +115,9 @@ class Registration extends Component {
     }
   };
 
+
   render () {
-    const { emailId, password, fullName, mobileNumber } = this.state;
+    const { emailId, password, fullName, mobileNumber} = this.state;
     const enabled =
           fullName.length>0&&
           emailId.length > 0 &&
@@ -192,7 +195,7 @@ class Registration extends Component {
                   </div>
                   <div className="userpassword">
                     <TextField required  margin="dense" color="secondary" size="small" name="password" variant="outlined"
-                      id="outlined-adornment-password"
+                      id="standard-adornment-password"
                       type={this.state.showPassword ? 'text' : 'password'}
                       label="Password"
                       style={{width: '100%'}}
@@ -201,8 +204,8 @@ class Registration extends Component {
                       helperText={this.state.errors.password}
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment position="end"  >
-                            <IconButton  onClick={() => this.setState ({showPassword: !this.state.showPassword })}>
+                          <InputAdornment position= " end "  >
+                            <IconButton  onClick={() => this.setState ({showPassword: !this.state.showPassword })} edge="end">
                                {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
                             </IconButton>
                           </InputAdornment>
@@ -210,6 +213,14 @@ class Registration extends Component {
                       }}
                      />
                   </div>
+                  <br></br>
+                  <div >
+                  
+                    <input type="radio" value="ADMIN" name="roleType" onChange={this.axios}/> ADMIN
+                     <input type="radio" value="SELLER" name="roleType" onChange={this.axios}/> SELLER
+                     <input type="radio" value="USER" name="roleType" onChange={this.axios}/> USER
+                  </div>
+ 
                   <br />
                   <div className="userbutton">
                     <Button  margin="dense"  size="small" variant="contained"
