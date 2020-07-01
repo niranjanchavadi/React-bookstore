@@ -5,8 +5,7 @@ import ForgotPassword from "../component/ForgotPassword";
 import Registration from "../component/Registration";
 
 const Router = () => {
-    return ( <
-        BrowserRouter >
+    return ( <BrowserRouter >
         <
         Route path = "/register"
         component = { Registration }
@@ -20,9 +19,7 @@ const Router = () => {
         Route path = "/login"
         exact component = { Login }
         />
-
-        <
-        /BrowserRouter>
+        </BrowserRouter>
     );
 };
 
