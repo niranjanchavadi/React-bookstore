@@ -98,7 +98,7 @@ class Registration extends Component {
       user.emailId = this.state.emailId;
       user.password = this.state.password;
       user.mobileNumber = this.state.mobileNumber;
-      user.roleType = this.roleType;
+      user.roleType = this.state.roleType;
       console.log (user);
 
       userRegistration (user)
