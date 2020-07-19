@@ -1,83 +1,132 @@
-body,html{
+body,
+html {
     min-height: 100vh;
 }
 
-.appDiv{
+.appDiv {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
+
 @media only screen and (max-width: 1024px) {
-.listDiv{
-    display: flex;
-    flex-direction: row;
-    align-content: space-around;
-    flex-flow: row wrap;
-    justify-content: center;
-    margin: 0 0 0 10%;
-    width: 80%;
-    margin-top: 80px;
-    padding-bottom: 20px;
-}
+    .listDiv {
+        display: flex;
+        flex-direction: row;
+        align-content: space-around;
+        flex-flow: row wrap;
+        justify-content: center;
+        margin: 0 0 0 10%;
+        width: 80%;
+        margin-top: 80px;
+        padding-bottom: 20px;
+    }
 }
 
 @media only screen and (min-width: 1024px) {
-    .listDiv{
+    .listDiv {
         display: flex;
         flex-direction: row;
         align-content: space-around;
         flex-flow: row wrap;
         justify-content: flex-start;
-        margin: auto ;
+        margin: auto;
         width: 1024px;
         padding-bottom: 20px;
         margin-top: 80px;
-        
-    } 
+    }
 }
 
-.bookDiv{
+.bookDisplay {
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+}
+
+.bookDiv {
     width: 230px;
-    border: 2px solid #E8E8E8;
+    border: 2px solid #e8e8e8;
     margin: 1.05%;
     background-color: rgb(242, 242, 242);
     border-radius: 3px;
 }
 
-.bookDiv:hover{
+.bookDiv:hover {
     width: 230px;
-    border: 2px solid #E8E8E8;
+    border: 2px solid #e8e8e8;
     margin: 1.05%;
     background-color: rgb(242, 242, 242);
     border-radius: 3px;
     box-shadow: 3px 3px 5px 6px grey;
-}  
+}
 
-.bookImage{
+.bookCarddivNew {
+    width: 250px;
+    border: 2px solid #E8E8E8;
+    margin: 1.05%;
+    background-color: rgb(242, 242, 242);
+    border-radius: 3px;
+    align-items: center;
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+.bookCarddivCart {
+    width: 250px;
+    border: 2px solid #E8E8E8;
+    margin: 1.05%;
+    background-color: rgb(242, 242, 242);
+    border-radius: 3px;
+    align-items: center;
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+.bookH2 {
+    display: flex;
+    font-size: 30px;
+    margin-left: 50px;
+    font-weight: bold;
+}
+
+.bookItemsDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding-left: 1.05%;
+    padding-right: 0.525%;
+    height: 50px;
+    align-items: center;
+    margin-top: 100px;
+    margin-left: 60px;
+}
+
+.bookImage {
     position: absolute;
     height: 130px;
     width: 105px;
     margin-left: auto;
     margin-right: auto;
 }
-.imageDiv{
-    margin: 20px auto 20px auto ;
+
+.imageDiv {
+    margin: 20px auto 20px auto;
     /* height: 130px; */
     width: 105px;
     height: 130px;
-
     border: 1px solid black;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     cursor: default;
 }
 
-.propertyHolderDiv{
+.propertyHolderDiv {
     height: 137px;
-
 }
-.bookProperty{
+
+.bookProperty {
     width: 84%;
     padding: 2% 8%;
     margin: 0;
@@ -85,7 +134,7 @@ body,html{
     background-color: white;
 }
 
-.titleFont{
+.titleFont {
     /* font-family: 'Roboto'; */
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
@@ -96,11 +145,9 @@ body,html{
     white-space: nowrap;
 }
 
-
-.authorFont{
+.authorFont {
     /* font-family: 'Roboto'; */
     font-family: Arial, Helvetica, sans-serif;
-
     font-size: 11px;
     margin: 0;
     padding-top: 7px;
@@ -108,10 +155,10 @@ body,html{
     color: rgb(119, 119, 119);
 }
 
-.priceFont{
+.priceFont {
     /* font-family: 'Roboto'; */
     font-weight: bold;
-    font-family: "Times New Roman", Times, serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 13px;
     margin: 10px 0 0 0;
     padding-top: 4px;
@@ -121,7 +168,19 @@ body,html{
     margin-block-end: 0px;
 }
 
-.bookDivButton{
+.bookCarddiv {
+    width: 200px;
+    border: 2px solid #e8e8e8;
+    margin: 1.05%;
+    background-color: rgb(242, 242, 242);
+    border-radius: 3px;
+    align-items: center;
+    margin-top: 150px;
+    justify-content: space-evenly;
+    /* margin-left: 200px; */
+}
+
+.bookDivButton {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -131,7 +190,8 @@ body,html{
 
 .bookButton {
     width: 45%;
-    background-color: rgb(24,12, 196); /* Green */
+    background-color: rgb(24, 12, 196);
+    /* Green */
     border: none;
     color: white;
     padding: 2% 1%;
@@ -142,33 +202,33 @@ body,html{
     margin: 10px 10px;
     transition-duration: 0.4s;
     cursor: pointer;
-  }
-  
-  .bookButton:hover {
+}
+
+.bookButton:hover {
     background-color: rgb(11, 4, 110);
     color: white;
-  }
+}
 
-  .outOfStock{
-  position: absolute;
-  background-color: white;
-  width: 170px;
-  height: 30px;
-  padding-top: 10px;
-  margin-top: 50px;
-  display: flex;
-  justify-content: center;
-  box-shadow: 3px  3px grey;
-  border-radius: 3px;
-  opacity: 0.6;
+.outOfStock {
+    position: absolute;
+    background-color: white;
+    width: 170px;
+    height: 30px;
+    padding-top: 10px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 3px 3px grey;
+    border-radius: 3px;
+    opacity: 0.6;
 }
 
 .tooltip {
     position: relative;
     display: inline-block;
-  }
-  
-  .tooltip .tooltiptext {
+}
+
+.tooltip .tooltiptext {
     font-family: 'Roboto';
     font-size: 13px;
     visibility: hidden;
@@ -181,47 +241,47 @@ body,html{
     margin-left: 200px;
     position: absolute;
     z-index: 1;
-  }
-  
-  .tooltip:hover .tooltiptext {
+}
+
+.tooltip:hover .tooltiptext {
     visibility: visible;
-  }
+}
 
-  .bookDetailsH{
-      padding: 0px;
-      margin: 0px;
-      line-height: 0.5;
-  }
+.bookDetailsH {
+    padding: 0px;
+    margin: 0px;
+    line-height: 0.5;
+}
 
-  .pagination{
+.pagination {
     display: inline-block;
     bottom: 45px;
-  }
+}
 
-  .paginationDiv{
-    width:100%;
+.paginationDiv {
+    width: 100%;
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
 
- @media only screen and (max-width: 600px) {
- .bookItemsDiv{
-     display: flex;
-     flex-direction: row;
-     justify-content: center;
-     width: 100%;
-     align-items: center;
- }
+@media only screen and (max-width: 600px) {
+    .bookItemsDiv {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        align-items: center;
+    }
 }
 
 @media only screen and (min-width: 600px) {
-    .bookItemsDiv{
+    .bookItemsDiv {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         width: 100%;
-        padding-left:1.05%;
+        padding-left: 1.05%;
         padding-right: 0.525%;
         height: 50px;
         align-items: center;
@@ -237,17 +297,20 @@ body,html{
     font-size: 80%;
     height: 45px;
     padding-top: 10px;
- }
- .hidden { display:none; }
+}
 
- .noRecord{
+.hidden {
+    display: none;
+}
+
+.noRecord {
     width: 200px;
     height: 200px;
- }
+}
 
- .noRecordDiv{
-     display: flex;
-     justify-content: center;
-     width: 1024px;
-     height: 70%;
- }
+.noRecordDiv {
+    display: flex;
+    justify-content: center;
+    width: 1024px;
+    height: 70%;
+}

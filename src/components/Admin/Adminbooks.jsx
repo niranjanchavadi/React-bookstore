@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
-// import Pagination from '@material-ui/lab/Pagination';
-// import { Pagination } from '@material-ui/lab';
-// import Pagination from '../pagination/Pagination';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
-// import bookImage from '../../assets/book.jpg';
-
 import { withStyles } from '@material-ui/core/styles';
 import Pagination from '../pagination/Pagination';
 
@@ -30,8 +25,6 @@ class Adminbooks extends Component {
 												src={ele.bookImgUrl}
 												style={{ borderRadius: 0, width: '150px', justifyContent: 'center' }}
 											/>
-
-											{/* <img className='img' id='img-book' src={bookImage}/> */}
 
 											<CardContent id="card-content">
 												<Typography gutterBottom variant="h11" component="h3">
@@ -60,17 +53,16 @@ class Adminbooks extends Component {
 												<Button
 													variant="outlined"
 													style={{
-														background: '#A03037',
+														background:  '#3371B5',
 														border: '1px solid black',
 														color: 'white',
 														justifyContent: 'center',
 														// marginLeft:'50%'
 													}}
-													onClick={() => {
-														this.props.handleApproved(ele.bookId);
-													}}>
-													Approve
+										                             >
+													Approved
 												</Button>
+								
 											) : (
 												<>
 													<Button
@@ -84,16 +76,37 @@ class Adminbooks extends Component {
 														Approve{' '}
 													</Button>
 													&nbsp;&nbsp;
+													
 												</>
 											)}
 
-											<Button
-												variant="outlined"
-												color="black"
-												onClick={() => this.props.handledisApprove(ele.bookId)}>
-											 
-												Disapprove
-											</Button>
+                                            {this.props.clickedIddisapprove.includes(ele.bookId) ? (
+												<Button
+													variant="outlined"
+													style={{
+														background: '#3371B5',
+														border: '1px solid black',
+														color: 'white',
+														justifyContent: 'center',
+														// marginLeft:'50%'
+													}}
+												                     >
+													DisApproved
+												</Button>
+											) : (
+											
+													<Button
+														variant="outlined"
+														color="white"
+														size="small"
+														style={{ backgroundColor: '#A03037', color: 'white' }}
+														
+														onClick={() => this.props.handledisApprove(ele.bookId)}>
+														DisApprove{' '}
+													</Button>
+												
+												
+											)}
 										</div>
 									</CardActions>
 								</Card>

@@ -37,8 +37,7 @@
                 margin-top: 80px;
             }
         }
-        
-        .bookCarddiv {
+        /* .bookCarddiv {
             width: 250px;
             border: 2px solid #E8E8E8;
             margin: 1.05%;
@@ -47,6 +46,18 @@
             align-items: center;
             margin-top: 150px;
             margin-left: 200px;
+        } */
+        
+        .bookCarddivAdmin {
+            width: 250px;
+            border: 2px solid #E8E8E8;
+            margin: 1.05%;
+            background-color: rgb(242, 242, 242);
+            border-radius: 3px;
+            align-items: center;
+            margin-top: 120px;
+            margin-left: 100px;
+            justify-content: space-evenly;
         }
         
         .buttonContent {

@@ -137,14 +137,14 @@ class Registration extends Component {
             height = "25%"
             alt = "hello" / >
             <
-            /div>{' '} <
+            /div> <
             div className = "useronlinebookstore" >
             <
             h1 style = {
                 { color: '#A03037', textAlign: 'center', marginLeft: '-16%' } } >
-            SignUp { ' ' } <
-            /h1>{' '} <
-            /div>{' '} <
+            SignUp <
+            /h1> <
+            /div> <
             div className = "main"
             style = {
                 { flexDirection: 'row' } } >
@@ -180,8 +180,8 @@ class Registration extends Component {
                     ),
                 }
             }
-            />{' '} <
-            /div>{' '} <
+            /> <
+            /div> <
             div className = "useremailId1" >
             <
             TextField required margin = "dense"
@@ -209,8 +209,8 @@ class Registration extends Component {
                     ),
                 }
             }
-            />{' '} <
-            /div>{' '} <
+            /> <
+            /div> <
             div className = "mobileNumber" >
             <
             TextField required margin = "dense"
@@ -237,8 +237,8 @@ class Registration extends Component {
                     ),
                 }
             }
-            />{' '} <
-            /div>{' '} <
+            /> <
+            /div> <
             div className = "userpassword" >
             <
             TextField required margin = "dense"
@@ -271,14 +271,14 @@ class Registration extends Component {
                             ) : ( <
                                 VisibilityOff / >
                             )
-                        } { ' ' } <
-                        /IconButton>{' '} <
+                        } <
+                        /IconButton> <
                         /InputAdornment>
                     ),
                 }
             }
-            />{' '} <
-            /div>{' '} <
+            /> <
+            /div> <
             br / >
             <
             div >
@@ -288,20 +288,20 @@ class Registration extends Component {
             name = "roleType"
             onChange = { this.axios }
             />
-            ADMIN { ' ' } <
+            ADMIN <
             input type = "radio"
             value = "SELLER"
             name = "roleType"
             onChange = { this.axios }
             />
-            SELLER { ' ' } <
+            SELLER <
             input type = "radio"
             value = "user"
             name = "roleType"
             onChange = { this.axios }
             />
-            USER { ' ' } <
-            /div>{' '} <
+            USER <
+            /div> <
             br / >
             <
             div className = "userbutton" >
@@ -314,15 +314,15 @@ class Registration extends Component {
             style = {
                 { width: '100%', backgroundColor: '#A03037', color: 'white' } }
             disabled = {!enabled } >
-            Sign Up { ' ' } <
-            /Button>{' '} <
-            /div>{' '} <
-            /div>{' '} <
-            /div>{' '} <
-            /div>{' '} <
-            /div>{' '} <
-            /CardContent>{' '} <
-            /Card>{' '} <
+            Sign Up <
+            /Button> <
+            /div> <
+            /div> <
+            /div> <
+            /div> <
+            /div> <
+            /CardContent> <
+            /Card> <
             /form>
         );
     }

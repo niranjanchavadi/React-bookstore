@@ -169,7 +169,10 @@ function AdminProfile(props) {
         MenuItem title = "BookStore Account"
         onClick = { handleLoginChange }
         style = {
-            { justifyContent: 'center', display: 'flex' } } > < /MenuItem> <
+            { justifyContent: 'center', display: 'flex' } } >
+
+        <
+        /MenuItem> <
         /div> <
         div style = {
             {

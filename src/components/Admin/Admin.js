@@ -131,10 +131,11 @@ class Admin extends Component {
             isSearching: false,
             filterArrayCount: 0,
             clickedId: [],
-            clickedId1: [],
+            clickedIddisapprove: [],
             books: [],
             bookCount: 0,
             addToBagBtnText: 'Approved',
+            disapprovedtext: 'disapproved',
             currentPage: 1,
             postsPerPage: 8,
             // page: 1,
@@ -145,57 +146,6 @@ class Admin extends Component {
         if (this.props.history.location.pathname !== '/') {
             this.props.homePage();
         }
-    };
-    // getbookVerification = (clickedID) => {
-    // 	let clickedid = this.state.clickedId;
-    // 	clickedid.push(clickedID);
-    // 	this.setState({
-    // 		clickedId: [...clickedid],
-    // 	});
-    // 	var bookidnew = {
-    // 		bookId: clickedID,
-    // 	};
-
-    // 	let token = localStorage.getItem('Token');
-    // 	console.log(token, 'token');
-
-    // 	bookVerification(bookidnew, token)
-    // 		.then((Response) => {
-    // 			// localStorage.removeItem('Token');
-    // 			alert('Book  verified SuccessFully  ');
-    // 		})
-    // 		.catch((error) => {
-    // 			console.log('Error', error.response);
-    // 			console.log(error.response.data.message, 'Failed to verify book');
-
-    // 			alert(error.response.data.message, '*Failed to verify book');
-    // 		});
-    // };
-
-    getbookUnVerification = (clickedID) => {
-        let clickedid = this.state.clickedId;
-        clickedid.push(clickedID);
-        this.setState({
-            clickedId: [...clickedid],
-        });
-        var bookidnew = {
-            bookId: clickedID,
-        };
-
-        let token = localStorage.getItem('Token');
-        console.log(token, 'token');
-
-        bookUnVerification(bookidnew, token)
-            .then((Response) => {
-                // localStorage.removeItem('Token');
-                alert('Book  unverified SuccessFully  ');
-            })
-            .catch((error) => {
-                console.log('Error', error.response);
-                console.log(error.response.data.message, 'Failed to unverify book');
-
-                alert(error.response.data.message, '*Failed to unverify book');
-            });
     };
 
     getBookLists = () => {
@@ -243,8 +193,24 @@ class Admin extends Component {
         });
     };
 
-    handledisApprove = (clickedID) => {
-        this.getbookUnVerification(clickedID);
+    handledisApprove = (clickedID2) => {
+        let clickediddisapprove = this.state.clickedIddisapprove;
+        clickediddisapprove.push(clickedID2);
+        this.setState({
+            // cartCount: this.state.cartCount,
+            clickedIddisapprove: [...clickediddisapprove],
+            disapprovedtext: 'disApproved',
+        });
+        var cart = {
+            bookId: clickedID2,
+        };
+
+        let token = localStorage.getItem('Token');
+        // 	console.log(token, 'token');
+        const response = bookUnVerification(cart, token);
+        response.then((res) => {
+            console.log('disApproved Response ', res.data);
+        });
     };
 
     componentDidMount() {
@@ -297,7 +263,7 @@ class Admin extends Component {
             >
             <
             AdminDashboard searchHandler = { this.searchHandler }
-            />{' '} <
+            /> <
             >
             <
             Adminbooks books = { this.state.isSearching ? this.state.filterArray : currentPosts }
@@ -307,14 +273,14 @@ class Admin extends Component {
             handleApproved = { this.handleApproved }
             handledisApprove = { this.handledisApprove }
             clickedId = { this.state.clickedId }
+            clickedIddisapprove = { this.state.clickedIddisapprove }
             addToBagBtnText = { this.state.addToBagBtnText }
-            // sortByRelevanceHandler={this.sortByRelevanceHandler}
-            />{' '} <
+            /> <
             Pagination postsPerPage = { this.state.postsPerPage }
             totalPosts = { this.state.books.length }
             paginateNumber = { this.paginate }
-            />{' '} <
-            />{' '} <
+            /> <
+            /> <
             />
         );
     }
