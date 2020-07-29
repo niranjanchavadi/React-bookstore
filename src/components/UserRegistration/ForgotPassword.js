@@ -65,18 +65,18 @@ export class ForgotPassword extends Component {
 
             forgotPassword(user)
                 .then((response) => {
-                    localStorage.setItem('Token', response.data.message);
+                    localStorage.setItem('Token', response.data.token);
                     console.log(response, 'Token has been sent to your mail, Please Verify first');
                     this.setState({
-                        snackbarOpen: true,
-                        snackbarMessage: 'Token has been sent to your mail',
+                        // snackbarOpen: true,
+                        // snackbarMessage: 'Token has been sent to your mail',
                     });
                 })
                 .catch((error) => {
                     console.log(error, 'Invalid e-mail');
                     this.setState({
-                        snackbarOpen: true,
-                        snackbarMessage: 'Invalid E-mail',
+                        // snackbarOpen: true,
+                        // snackbarMessage: 'Invalid E-mail',
                     });
                 });
         }
@@ -90,8 +90,7 @@ export class ForgotPassword extends Component {
             <
             div className = "forgotpasswordpage" >
             <
-            p className = "recoverymail" > Enter email
-            for forgot password < /p>  <
+            p className = "recoverymail" > Please enter valid Email ID < /p>{' '} <
             div className = "forgotpasswordemail" >
             <
             TextField required margin = "dense"
@@ -118,8 +117,8 @@ export class ForgotPassword extends Component {
                     ),
                 }
             }
-            />  <
-            /div>  <
+            />{' '} <
+            /div>{' '} <
             Snackbar anchorOrigin = {
                 {
                     vertical: 'bottom',
@@ -130,23 +129,19 @@ export class ForgotPassword extends Component {
             autoHideDuration = { 3000 }
             onClose = {
                 () => this.setState({ snackbarOpen: false }) }
-            message = { this.state.snackbarMessage } >
-
-            <
-            /Snackbar>  <
+            message = { this.state.snackbarMessage } > { ' ' } <
+            /Snackbar>{' '} <
             br / >
             <
-            div className = "nextbutton" >
-            <
-            Button variant = "contained"
+            Button className = "nextbutton"
+            variant = "contained"
             onClick = { this.forgotPasswordForm }
             style = {
-                { width: '120%', backgroundColor: '#A03037' } } >
-            Next <
-            /Button>  <
-            /div>  <
-            /div>  <
-            /CardContent>  <
+                { backgroundColor: '#A03037', color: 'white', marginLeft: '38%' } } >
+            Next { ' ' } <
+            /Button>{' '} <
+            /div>{' '} <
+            /CardContent>{' '} <
             /Card>
         );
     }

@@ -7,8 +7,8 @@ var axiosService = new AxiosServices();
 
 
 
-export function getAllUnverifiedBookList(token) {
-    return axiosService.axiosGet('http://localhost:8080/sellers/getUnverifiedBooks', {
+export function getunverifiedBooksofseller(token) {
+    return axiosService.axiosGet('http://localhost:8080/sellers/getUnverifiedBooksOfSeller', {
         headers: { token: token },
     });
 }
@@ -77,6 +77,17 @@ export function getWishListBooks(token) {
     return axiosService.axiosGet('http://localhost:8080/user/getWishListBooks', {
         headers: {
             token: token,
+            'Content-Type': 'application/json;charset=utf-8',
+        },
+    });
+}
+
+
+export function getBookDetails(bookId) {
+    console.log(bookId);
+    return axiosService.axiosGet('http://localhost:8080/user/getbookdetails?bookId=' + bookId, {
+        headers: {
+
             'Content-Type': 'application/json;charset=utf-8',
         },
     });
@@ -205,4 +216,78 @@ export function getOrderId() {
         },
     });
 
+}
+
+// =============================================================
+
+export function getAllSellers() {
+    return axiosService.axiosGet('http://localhost:8080/sellers/getAllSellers', {
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+        },
+    });
+}
+
+
+
+export function sendApprovalRequest(bookidnew, token) {
+
+    return axiosService.axiosPost('http://localhost:8080/sellers/sendApprovalRequest?bookId=' + bookidnew.bookId, null, {
+        headers: {
+            token: token,
+
+        },
+    });
+}
+
+export function SendForapprovalbooklist(sellerId, token) {
+
+    return axiosService.axiosGet(`http://localhost:8080/admin/SendForapprovalbookList?sellerId=${sellerId}`, {
+        headers: {
+            token: token,
+            // 'Content-Type': 'application/json;charset=utf-8'
+        },
+    });
+}
+
+
+
+export function getDisapprovedBooks(token) {
+    return axiosService.axiosGet('http://localhost:8080/sellers/getDisapprovedBooks', {
+        headers: {
+            token: token,
+            'Content-Type': 'application/json;charset=utf-8',
+        },
+    });
+}
+
+
+export function getApprovedBooks(token) {
+    return axiosService.axiosGet('http://localhost:8080/sellers/getApprovedBooks', {
+        headers: {
+            token: token,
+            'Content-Type': 'application/json;charset=utf-8',
+        },
+    });
+}
+
+
+export function removeAll(token) {
+    return axiosService.axiosDelete('http://localhost:8080/user/removeAll', {
+        headers: {
+            'token': token,
+            'Content-Type': 'application/json;charset=utf-8',
+        },
+    });
+}
+
+
+
+export function orderPlaced(token) {
+    return axiosService.axiosPost('http://localhost:8080/user/orderPlacedMail', null, {
+        headers: {
+            'token': token,
+            'Content-Type': 'application/json;charset=utf-8',
+        },
+    });
 }

@@ -12,6 +12,9 @@ import Card from '@material-ui/core/Card';
 import { userLogin } from '../../service/UserService/UserServices';
 import Snackbar from '@material-ui/core/Snackbar';
 import Logo from '../../asserts/Logo.png';
+import { DialogContent, Dialog } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
+import Styles from '../../css/snackbar.module.css';
 
 export class Login extends Component {
     constructor(props) {
@@ -24,15 +27,24 @@ export class Login extends Component {
             emailId: '',
             showPassword: '',
             snackbarMessage: '',
+            // isloggedin:false,
             snackbarOpen: false,
             errors: {},
-            roleType: '',
+
+            isActive: false,
         };
     }
 
+    handleLogin = () => {
+        localStorage.removeItem('RoleType');
+        this.setState({
+            openLogin: !this.state.openLogin,
+        });
+    };
+
     handleSubmit = () => {
         const { emailId, password } = this.state;
-        alert(`Welcome ${emailId} password: ${password}`);
+        // alert(`Welcome ${emailId} password: ${password}`);
     };
 
     axios = (event) => {
@@ -78,6 +90,10 @@ export class Login extends Component {
     };
 
     loginForm = () => {
+        // this.setState({
+        // 	isloggedin: !this.state.isloggedin,
+        // });
+
         if (this.validateForm()) {
             let user = {};
             user.emailId = this.state.emailId;
@@ -88,35 +104,40 @@ export class Login extends Component {
             userLogin(user)
                 .then((response) => {
                     console.log(response);
-                    localStorage.setItem('Token', response.data.message);
+                    // localStorage.setItem('Token', response.data.message);
+                    // localStorage.setItem('Email', user.emailId);
+                    localStorage.setItem('Token', response.data.data);
+                    localStorage.setItem('FullName', response.data.message);
                     localStorage.setItem('Email', user.emailId);
+                    localStorage.setItem('RoleType', response.data.roleType);
+                    this.openSnackBar('Login Successfull');
 
-                    // localStorage.setItem("FullName", response.data.fullName);
-                    // this.setState({
-                    // 	snackbarOpen: true,
-                    // 	snackbarMessage: '*Login Successfull',
-                    // });
                     setTimeout(() => {
-                        if (this.state.roleType === 'ADMIN') {
+                        if (response.data.roleType === 'ADMIN') {
                             this.props.history.push('/admin');
-                        } else if (this.state.roleType === 'SELLER') {
+                        } else if (response.data.roleType === 'SELLER') {
                             this.props.history.push('/seller');
-                        } else if (this.state.roleType === 'user') {
-                            this.props.history.push('/cart');
+                        } else if (response.data.roleType === 'user') {
+                            this.props.history.push('/');
                         } else {
-                            alert('enter roletype');
+                            this.openSnackBar('enter roletype');
                         }
                     }, 2000);
                 })
                 .catch((error) => {
                     console.log('Error', error.response);
-                    // console.log('*Login failed! invalid credentials');
-                    // this.setState({
-                    // 	snackbarOpen: true,
-                    // 	snackbarMessage: '*Login failed! invalid credentials',
-                    // });
+                    this.openSnackBar('Login failed');
                 });
         }
+    };
+
+    openSnackBar = async(prop) => {
+        await this.setState({ status: prop });
+        this.setState({ isActive: true }, () => {
+            setTimeout(() => {
+                this.setState({ isActive: false });
+            }, 3000);
+        });
     };
 
     render() {
@@ -136,26 +157,26 @@ export class Login extends Component {
             div className = "middle" >
             <
             img src = { Logo }
-            width = "27%"
-            height = "27%"
+            width = "35%"
+            height = "35%"
             alt = "hello" / >
             <
-            /div>  <
+            /div>{' '} <
             div className = "signInLogin" >
             <
             h3 style = {
-                { color: '#A03037', textAlign: 'center', marginLeft: '-50%' } } >
-            Login <
+                { color: '#A03037', textAlign: 'center', marginLeft: '-70%' } } >
+            Login { ' ' } <
             span href = "Register"
             onClick = {
                 () => this.props.history.push('/register') }
             style = {
-                { color: '#A03037' } } >
-            Register <
-            /span>  <
-            /h3>  <
-            /div>  <
-            /div>  <
+                { color: '#A03037', marginLeft: '10%' } } >
+            Register { ' ' } <
+            /span>{' '} <
+            /h3>{' '} <
+            /div>{' '} <
+            /div>{' '} <
             Snackbar anchorOrigin = {
                 {
                     vertical: 'bottom',
@@ -166,10 +187,7 @@ export class Login extends Component {
             autoHideDuration = { 3000 }
             onClose = {
                 () => this.setState({ snackbarOpen: false }) }
-            message = { this.state.snackbarMessage } >
-
-            <
-            /Snackbar>  <
+            message = { this.state.snackbarMessage } > < /Snackbar>{' '} <
             div >
             <
             div className = "usernameLogin" >
@@ -198,8 +216,8 @@ export class Login extends Component {
                 }
             }
             onChange = { this.axios }
-            />  <
-            /div>  <
+            />{' '} <
+            /div>{' '} <
             div className = "password" >
             <
             TextField required size = "small"
@@ -228,52 +246,22 @@ export class Login extends Component {
                                 showPassword: !this.state.showPassword,
                             })
                         }
-                        edge = "end" >
-
-                        {
-                            this.state.showPassword ? ( <
-                                Visibility / >
-                            ) : ( <
-                                VisibilityOff / >
-                            )
-                        } <
-                        /IconButton>  <
+                        edge = "end" > { this.state.showPassword ? < Visibility / > : < VisibilityOff / > } { ' ' } <
+                        /IconButton>{' '} <
                         /InputAdornment>
                     ),
                 }
             }
-            />  <
-            /div>  <
-            /div>  <
+            />{' '} <
+            /div>{' '} <
+            /div>{' '} <
             div className = "Forget"
             onClick = {
                 () => this.props.history.push('/forgotpassword') }
             marginRight = "100%" >
             <
-            span href = "ForgotPassword" > ForgotPassword ? < /span>  <
-            /div>  <
-            br / >
-            <
-            div >
-            <
-            input type = "radio"
-            value = "ADMIN"
-            name = "roleType"
-            onChange = { this.axios }
-            /> ADMIN  <
-            input type = "radio"
-            value = "SELLER"
-            name = "roleType"
-            onChange = { this.axios }
-            /> SELLER  <
-            input type = "radio"
-            value = "user"
-            name = "roleType"
-            onChange = { this.axios }
-            /> USER  <
-            /div>  <
-            br / >
-            <
+            span href = "ForgotPassword" > Forgot Password ? < /span>{' '} <
+            /div>{' '} <
             div className = "flex-container" >
             <
             div >
@@ -283,13 +271,15 @@ export class Login extends Component {
             style = {
                 { width: '350%', backgroundColor: '#A03037', color: 'white' } }
             disabled = {!enabled } >
-            Login <
-            /Button>  <
-            /div>  <
-            /div>  <
-            /div>  <
-            /CardContent>  <
-            /Card>  <
+            Login { ' ' } <
+            /Button>{' '} <
+            /div>{' '} <
+            /div>{' '} <
+            /div>{' '} <
+            /CardContent>{' '} <
+            /Card>{' '} <
+            div className = { this.state.isActive ? [Styles.snackbar, Styles.show].join(' ') : Styles.snackbar } > { this.state.status } { ' ' } <
+            /div>{' '} <
             /form>
         );
     }

@@ -69,5 +69,9 @@ img {
 }
 
 .Forget {
-    margin-left: 50%;
+    margin-left: 46%;
+}
+
+.registertitle {
+    cursor: 'pointer';
 }

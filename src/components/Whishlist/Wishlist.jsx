@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Typography, Container, Grid } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dashboard1 from '../UserDashboard/Dashboard1';
-import { getWishListBooks ,deleteFromWishlist,addFromWishlistToCart} from '../../Configuration/BookConfig';
+import { getWishListBooks ,deleteFromWishlist,addFromWishlistToCart, getAllItemsFromCart} from '../../Configuration/BookConfig';
 import Wishlistboard from './Wishlistboard';
 
 
@@ -16,6 +16,7 @@ class Wishlist extends Component {
             quantity: "",
             descrption:'abc',
             wishlist:[],
+            cart:[],
             clickId:[],
             total:"",
             incrementDecrementCount: 1
@@ -24,8 +25,24 @@ class Wishlist extends Component {
 
     componentDidMount() {
         this.getAllItemFromWishList();
+        this.getAllItemsFromCart();
         }
 
+
+
+
+        
+	getAllItemsFromCart = () => {
+		let token = localStorage.getItem('Token');
+		getAllItemsFromCart(token)
+			.then((res) => {
+				this.setState({ cart: res.data });
+				// localStorage.setItem('cartCount',res.data.data.totalBooksInCart)
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
 
     getAllItemFromWishList = () => {
@@ -42,13 +59,13 @@ class Wishlist extends Component {
 
   
 
-    addFromWishlistToCart = async(data) => {
+    addFromWishlistToCart = (data) => {
         let token = localStorage.getItem('Token');
         const res= addFromWishlistToCart(data,token);
         this.getAllItemFromWishList();
     }
 
-    deleteFromWishlist = async(data) => {
+    deleteFromWishlist = (data) => {
         let token = localStorage.getItem('Token');
         const res= deleteFromWishlist(data,token);
         this.getAllItemFromWishList();
@@ -62,7 +79,10 @@ class Wishlist extends Component {
             return (
                 <Container maxWidth="lg">
                     <div>
-                        <Wishlistboard wishlist = {this.state.wishlist.length}/>
+                        <Wishlistboard
+                         wishlist = {this.state.wishlist.length}
+                         cart = {this.state.cart.length}
+                        />
                         {/* <Dashboard1 wishlist={this.state.wishlist.length}/> */}
                         <Grid item xs={10}>
                             <div className="Customer-address-div" style={{ marginTop: '78px' }}>
@@ -86,16 +106,39 @@ class Wishlist extends Component {
                                                             </div>
     
                                                             <div className="aligncontentbesidepic">
-                                                                <div>
-                                                                    <h4 className="h4-div">{ele.name}</h4>
-                                                                </div>
-                                                                <div className="author-name-div">
-                                                                    <p>{ele.author}</p>
-                                                                </div>
-                                                                <div className="book-price-div">
-                                                                    <p> ₹ {ele.totalPrice}</p>
-                                                                </div>
-                                                              <div>
+                                                            <div className="bookname">
+																{/* <Typography id="summary-bookname" component="h2">
+																	{ele.name}
+																</Typography>
+																<p style={{ color: '#9D9D9D' }}> by {ele.author}</p>
+																<Typography id="summary-bookname" component="h3">
+																	Rs.{ ele.totalPrice}
+																</Typography> */}
+                                                                	<Typography
+																			
+																			variant="body2"
+																			component="h4">
+																		<b>{ele.name} </b>	
+																		</Typography>
+																		<Typography
+																			id="note-content"
+																			variant="body2"
+																			color="textSecondary"
+																			component="p">
+																			by {ele.author}
+																		</Typography>
+																		<Typography
+																			id="note-content"
+																			variant="body2"
+																			color="black"
+																			component="h1">
+																			<b> Rs.{ele.totalPrice}</b>
+																		</Typography>
+															</div>
+                                                            &nbsp;&nbsp;
+                                                              <div  className="buttonsinwishlist" >
+                                                                  
+                                                                  <span>
                                                                     <Button
                                                                     key={ele.id}
                                                                     style={{
@@ -105,10 +148,13 @@ class Wishlist extends Component {
                                                                         justifyContent: 'center',
                                                                        
                                                                     }}
+                                                                    size="small"
 																	onClick={() => this.addFromWishlistToCart(ele.bookId)}>
-																	MoveToCart
-																</Button>
-                                                                 &nbsp;&nbsp;
+																	Move To Cart
+																  </Button>
+                                                                  </span>
+                                                                  &nbsp;&nbsp;
+                                                                   <span>
 																	<Button
                                                                         key={ele.id}
                                                                         style={{
@@ -118,9 +164,11 @@ class Wishlist extends Component {
                                                                             justifyContent: 'center',
                                                                            
                                                                         }}
+                                                                        size="small"
 																		onClick={() => this. deleteFromWishlist(ele.bookId)}>
 																		Remove
 																	</Button>
+                                                                    </span>
                                                                  </div>
                                                             </div>
                                                         </div>

@@ -96,20 +96,19 @@ export class ResetPassword extends Component {
                     console.log('Password Successfully Changed');
                     localStorage.removeItem('Token');
                     this.setState({
-                        snackbarOpen: true,
-                        snackbarMessage: '*Password Successfully Changed',
+                        // snackbarOpen: true,
+                        // snackbarMessage: '*Password Successfully Changed',
                     });
-                    //alert ("*Password Successfully Changed");
+
                     this.props.history.push('/login');
                 })
                 .catch((error) => {
                     console.log('Error', error.response);
                     console.log(error.response.data.message, 'Failed To Change the Password');
                     this.setState({
-                        snackbarOpen: true,
-                        snackbarMessage: '*Failed To Change the Password',
+                        // snackbarOpen: true,
+                        // snackbarMessage: '*Failed To Change the Password',
                     });
-                    //alert (error.response.data.message,"*Failed To Change the Password");
                 });
         }
     };

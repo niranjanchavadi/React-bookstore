@@ -102,9 +102,11 @@
 }
 
 #Sort_By_Relevance {
-    border-radius: 10px;
+    border-radius: 5px;
     outline: none;
     padding: 10px;
+    margin-left: 127%;
+    font-size: 14px;
 }
 
 .pagination-div {
@@ -129,14 +131,15 @@
 .MuiPaper-root.MuiCard-root.note-card.MuiPaper-elevation1.MuiPaper-rounded {
     width: 75%;
     margin: 1%;
-    height: 350px;
-    background-color: rgb(242, 242, 242);
+    height: 340px;
+    background-color: white;
     border: 2px solid #E8E8E8;
     align-items: center;
     display: flex;
     flex-direction: row;
     flex-flow: wrap;
     border-radius: 3px;
+    margin-top: -3%;
 }
 
 
@@ -145,16 +148,25 @@
     flex-direction: row;
     /* margin-left: '50%'; */
 
-Addtocartbutton */ .buttonContent {
+.Addtocartbutton {
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-evenly;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    padding-left: 8%;
+    /* padding-bottom: 15%; */
+    border-radius: 0px;
+    margin-left: '50%';
 }
 
-Addtocartbutton2 */ .buttonContent {
+.Addtocartbutton2 {
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-evenly;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    padding-left: 15%;
+    /* padding-bottom: 15%; */
+    border-radius: 0px;
+    margin-left: '40%';
+    position: relative;
 }
 
 
@@ -459,6 +471,7 @@ h2#welcome-text {
         margin-top: 100px;
         margin-bottom: 20px;
         min-height: 699px;
+        padding-left: 30px;
     }
     .header {
         display: flex;
@@ -551,12 +564,13 @@ h2#welcome-text {
     .MuiOutlinedInput-root {
         height: 20px;
     }
-    #Sort_By_Relevance {
+    /* #Sort_By_Relevance {
         padding: 0px;
         font-size: 12px;
-    }
+    } */
     #display-book-title {
         font-size: 18px;
+        padding-left: 100px;
     }
     p {
         margin-top: 0;
@@ -618,10 +632,15 @@ h2#welcome-text {
 }
 
 .aligncontentbesidepic {
-    margin-left: -25px;
+    margin-left: -40px;
 }
 
+.MuiCardActions-root {
+    display: flex;
+    padding-left: 30px;
+    align-items: center;
+}
 
-/* .card-content {
-    margin-left: 50px;
-} */
+#card-content {
+    margin-left: 1%;
+}

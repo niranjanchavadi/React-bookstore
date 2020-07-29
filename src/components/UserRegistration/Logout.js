@@ -60,8 +60,7 @@ class Logout extends Component {
             autoHideDuration = { 3000 }
             onClose = {
                 () => this.setState({ snackbarOpen: false }) }
-            message = { this.state.snackbarMessage } > { ' ' } <
-            /Snackbar>{' '} <
+            message = { this.state.snackbarMessage } > < /Snackbar>{' '} <
             div className = "logout" >
             <
             div className = "logoutButton" >

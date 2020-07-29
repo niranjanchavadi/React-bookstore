@@ -5,7 +5,7 @@ export default function Footer() {
     return ( <
         div className = "footer" >
         <
-        p > Copyright & copy; 2020, Bookstore Private Ltd.All Rights Reserved < /p> <
+        p > Copyright© 2020, Bookstore Private Limited.All Rights Reserved < /p>{' '} <
         /div>
     );
 }

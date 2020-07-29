@@ -289,13 +289,13 @@ html {
 }
 
 .footer {
-    margin-top: auto;
+    margin-top: 2%;
     width: 100%;
-    background-color: #1b0203;
+    /* background-color: #2E1D1E; */
     color: white;
     text-align: center;
     font-size: 80%;
-    height: 45px;
+    height: 30px;
     padding-top: 10px;
 }
 

@@ -13,7 +13,11 @@ export function addBookConfiguration(object, token) {
         " http://localhost:8080/sellers/addBook",
         object, {
 
-            headers: { 'token': token },
+            headers: {
+                'token': token,
+                // 'Content-Type': 'application/json',
+                // 'Accept': '*',
+            },
 
         }
     );
@@ -58,9 +62,9 @@ export const getBookByPriceDesc = async() => {
     return response;
 }
 
-export function getBookDetails(bookId) {
-    return axios({
-        method: 'get',
-        url: 'http://localhost:8080/user/getbookdetails/' + bookId
-    });
-}
+// export function getBookDetails(bookId) {
+//     return axios({
+//         method: 'get',
+//         url: 'http://localhost:8080/user/getbookdetails' + bookId
+//     });
+// }

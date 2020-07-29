@@ -78,6 +78,11 @@ const useStyles = (theme) => ({
 		},
 	},
 
+	searchbox:{
+		marginLeft:'-30%',
+	 },
+ 
+
 	appBar: {
 		padding: '0 10%',
 		backgroundColor: '#A03037',
@@ -126,12 +131,7 @@ class AdminDashboard extends Component {
 			menuOpen: false,
 		});
 	};
-	handleClickProfile = (event) => {
-		this.setState({
-			menuOpen: true,
-			menuAnchorEl: event.currentTarget,
-		});
-	};
+
 	openSnackBar = async () => {
 		await this.setState({ isActive: true }, () => {
 			setTimeout(() => {
@@ -141,10 +141,6 @@ class AdminDashboard extends Component {
 	};
 
 	
-
-	goToCart = () => {
-		this.props.history.push('/cart');
-	};
 
 	handleChange = () => {
 		this.props.history.push('/login');
@@ -176,7 +172,7 @@ class AdminDashboard extends Component {
 								BookStore
 							</Typography>
 						</Grid>
-						<div>
+						<div className={classes.searchbox}>
 							<div className={classes.searchIcon}>
 								<SearchIcon />
 							</div>
@@ -187,14 +183,12 @@ class AdminDashboard extends Component {
 									input: classes.inputInput,
 								}}
 								onChange={this.props.searchHandler}   
+								// onChange= {!this.props.sellernamesearch ? this.props.searchHandler :this.props.sellersearchHandler }
+
 								inputProps={{ 'aria-label': 'search' }}
 							/>
 						</div>
 						<AdminProfile onChange={this.handleClickProfile} />  
-                        <Typography color="white" style={{ marginLeft: '-12%' }}>
-							  
-							Admin  
-						</Typography>  
 					</Toolbar>
 				</AppBar>
 			</div>

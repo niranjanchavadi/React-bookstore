@@ -91,6 +91,11 @@ const useStyles = (theme) => ({
 		flexWrap: 'noWrap',
 		alignItems: 'center',
 	},
+
+
+	booktittle :{
+       cursor:'pointer',
+	},
 });
 
 const StyledBadge = withStyles((theme) => ({
@@ -142,9 +147,16 @@ class Dashboardorder extends Component {
 	
 
 	goToCart = () => {
-		this.props.history.push('/cart');
-	};
-
+		let isloggedin = localStorage.getItem('Email') ? true : false;
+		if(isloggedin){
+            this.props.history.push('/cart');
+		}
+		else{
+            this.props.history.push('/login');
+		}
+		
+	}; 
+	
 	handleChange = () => {
 		this.props.history.push('/login');
 	};
@@ -172,7 +184,13 @@ class Dashboardorder extends Component {
 						<Grid container className={classes.gridDiv}>
 							<MenuBookIcon className={classes.bookIcon} />
 							<Typography className={classes.title} value="1" variant="h6" noWrap>
-								BookStore
+							   
+						        	<span   className={classes.booktittle}
+											href="BookStore"
+											onClick={() => this.props.history.push('/')}
+											style={{ color: 'white' }}>
+											BookStore
+										</span>
 							</Typography>
 						</Grid>
 						<div>

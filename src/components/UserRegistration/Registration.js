@@ -14,6 +14,7 @@ import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 
 import Logo from '../../asserts/Logo.png';
 import { userRegistration } from '../../service/UserService/UserServices';
+import Styles from '../../css/snackbar.module.css';
 
 class Registration extends Component {
     constructor(props) {
@@ -25,20 +26,27 @@ class Registration extends Component {
             mobileNumber: '',
             roleType: '',
             errors: {},
+            isActive: false,
         };
     }
 
     handleSubmit = () => {
         const { fullName, emailId, mobileNumber, password, roleType } = this.state;
-        alert(
-            `Welcome ${fullName} ${emailId} password: ${password} mobileNumber: ${mobileNumber} roleType: ${roleType}`
-        );
+        // alert(
+        // 	`Welcome ${fullName} ${emailId} password: ${password} mobileNumber: ${mobileNumber} roleType: ${roleType}`
+        // );
     };
 
     axios = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
         });
+    };
+
+    maxLengthCheck = (object) => {
+        if (object.target.value.length > object.target.maxLength) {
+            object.target.value = object.target.value.slice(0, object.target.maxLength);
+        }
     };
 
     validateForm = () => {
@@ -88,6 +96,15 @@ class Registration extends Component {
         return formIsValid;
     };
 
+    openSnackBar = async(prop) => {
+        await this.setState({ status: prop });
+        this.setState({ isActive: true }, () => {
+            setTimeout(() => {
+                this.setState({ isActive: false });
+            }, 3000);
+        });
+    };
+
     registrationForm = () => {
         if (this.validateForm()) {
             let user = {};
@@ -100,18 +117,16 @@ class Registration extends Component {
 
             userRegistration(user)
                 .then((response) => {
-                    localStorage.setItem('FullName', user.fullName);
-                    localStorage.setItem('Email-Id', user.emailId);
                     localStorage.setItem('RoleType', user.roleType);
 
-                    console.log(response, 'User registered successfully!!');
-                    alert('User registered successfully');
+                    this.openSnackBar('User registered successfully');
 
                     this.props.history.push('/login');
                 })
                 .catch((error) => {
                     console.log('Error', error.response);
-                    alert('User registration failed');
+                    // alert('User registration failed');
+                    this.openSnackBar('User registration failed');
                 });
         }
     };
@@ -133,18 +148,18 @@ class Registration extends Component {
             div className = "middle" >
             <
             img src = { Logo }
-            width = "25%"
-            height = "25%"
+            width = "35%"
+            height = "35%"
             alt = "hello" / >
             <
-            /div> <
+            /div>{' '} <
             div className = "useronlinebookstore" >
             <
             h1 style = {
                 { color: '#A03037', textAlign: 'center', marginLeft: '-16%' } } >
-            SignUp <
-            /h1> <
-            /div> <
+            SignUp { ' ' } <
+            /h1>{' '} <
+            /div>{' '} <
             div className = "main"
             style = {
                 { flexDirection: 'row' } } >
@@ -180,8 +195,8 @@ class Registration extends Component {
                     ),
                 }
             }
-            /> <
-            /div> <
+            />{' '} <
+            /div>{' '} <
             div className = "useremailId1" >
             <
             TextField required margin = "dense"
@@ -209,8 +224,8 @@ class Registration extends Component {
                     ),
                 }
             }
-            /> <
-            /div> <
+            />{' '} <
+            /div>{' '} <
             div className = "mobileNumber" >
             <
             TextField required margin = "dense"
@@ -219,7 +234,11 @@ class Registration extends Component {
             variant = "outlined"
             size = "small"
             id = "outlined"
+            onInput = { this.maxLengthCheck }
+            type = "number"
             label = "mobile Number"
+            inputProps = {
+                { maxLength: '10' } }
             style = {
                 { width: '100%' } }
             fullWidth required autoComplete = "off"
@@ -237,8 +256,8 @@ class Registration extends Component {
                     ),
                 }
             }
-            /> <
-            /div> <
+            />{' '} <
+            /div>{' '} <
             div className = "userpassword" >
             <
             TextField required margin = "dense"
@@ -265,43 +284,43 @@ class Registration extends Component {
                                 showPassword: !this.state.showPassword,
                             })
                         }
-                        edge = "end" > {
+                        edge = "end" > { ' ' } {
                             this.state.showPassword ? ( <
                                 Visibility / >
                             ) : ( <
                                 VisibilityOff / >
                             )
-                        } <
-                        /IconButton> <
+                        } { ' ' } <
+                        /IconButton>{' '} <
                         /InputAdornment>
                     ),
                 }
             }
-            /> <
-            /div> <
+            />{' '} <
+            /div>{' '} <
             br / >
             <
-            div >
+            div className = "radiobuttons" >
             <
             input type = "radio"
             value = "ADMIN"
             name = "roleType"
             onChange = { this.axios }
             />
-            ADMIN <
+            ADMIN { ' ' } <
             input type = "radio"
             value = "SELLER"
             name = "roleType"
             onChange = { this.axios }
             />
-            SELLER <
+            SELLER { ' ' } <
             input type = "radio"
             value = "user"
             name = "roleType"
             onChange = { this.axios }
             />
-            USER <
-            /div> <
+            USER { ' ' } <
+            /div>{' '} <
             br / >
             <
             div className = "userbutton" >
@@ -314,15 +333,17 @@ class Registration extends Component {
             style = {
                 { width: '100%', backgroundColor: '#A03037', color: 'white' } }
             disabled = {!enabled } >
-            Sign Up <
-            /Button> <
-            /div> <
-            /div> <
-            /div> <
-            /div> <
-            /div> <
-            /CardContent> <
-            /Card> <
+            Sign Up { ' ' } <
+            /Button>{' '} <
+            /div>{' '} <
+            /div>{' '} <
+            /div>{' '} <
+            /div>{' '} <
+            /div>{' '} <
+            /CardContent>{' '} <
+            /Card>{' '} <
+            div className = { this.state.isActive ? [Styles.snackbar, Styles.show].join(' ') : Styles.snackbar } > { ' ' } { this.state.status } { ' ' } <
+            /div>{' '} <
             /form>
         );
     }

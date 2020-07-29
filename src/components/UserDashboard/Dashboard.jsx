@@ -1,43 +1,113 @@
 import React, { Component } from 'react';
 import DisplayBooks from './DisplayBooks';
 import Cart from '../Cart/Cart';
-import Pagination from '../pagination/Pagination';
 import { withRouter } from 'react-router-dom';
-import { responsiveFontSizes } from '@material-ui/core';
+import { responsiveFontSizes, Grid, ListItemSecondaryAction } from '@material-ui/core';
 import Dashboard1 from './Dashboard1';
 import { getBookByPriceAsc, getBookByPriceDesc } from '../../Configuration/confiugration';
-import { addToCart, getUserDashboardBookList, findByAuthorname, addToWishlist } from '../../Configuration/BookConfig';
+import {
+	addToCart,
+	getUserDashboardBookList,
+	findByAuthorname,
+	addToWishlist,
+	getAllItemsFromCart,
+	getWishListBooks,
+} from '../../Configuration/BookConfig';
 import Wishlist from '../Whishlist/Wishlist';
-
+import '../../css/BookDetails.css';
+import '../../css/SellerPage.css';
+import Pagination from '@material-ui/lab/Pagination';
 
 class Dashboard extends Component {
-	
 	state = {
 		books: [],
 		bookCount: 0,
 		cartCount: 1,
-		wishlistCount:1,
+		wishlistCount: 1,
 		clickedId: [],
-		clickedIdwishlist:[],
+		clickedIdwishlist: [],
 		cart: [],
 		addToBagBtnText: 'Add to Bag',
-		addTowishlistText:'Add to wishlist',
+		addTowishlistText: 'Add to wishlist',
 		showMyCartComponent: false,
 		filterArray: [],
 		isSearching: false,
 		filterArrayCount: 0,
 		currentPage: 1,
 		postsPerPage: 8,
-		wishlist:[],
+		wishlist: [],
+		enabled: false,
+		wishlistbutton: true,
+
+		length: 0,
+
 		// ShowWishListComponent:false,
 	};
 
 	componentDidMount() {
 		this.getBookLists();
+		this.getAllItemsFromCart();
+		this.getAllItemFromWishList();
+
+		if (localStorage.getItem('items') && !localStorage.getItem('Token')) {
+			this.setState({
+				clickedId: window.localStorage.getItem('items'),
+			});
+		}
 	}
 
+	getAllItemsFromCart = () => {
+		let token = localStorage.getItem('Token');
+		getAllItemsFromCart(token)
+			.then((res) => {
+				res.data.forEach((element) => {
+					this.setState(
+						{
+							clickedId: [...this.state.clickedId, element.bookId],
+						},
+						() => console.log('reference', this.state.clickedId)
+					);
+
+					// this.addToBagClickHandler(element.bookId)
+				});
+				console.log('a');
+				console.log(res.data.length);
+				console.log(res.data);
+				console.log('b');
+
+				this.setState({ cart: res.data }, () => this.updatebadgecount());
+			})
+
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	updatebadgecount = () => {
+		this.setState({
+			length: this.state.cart.length,
+		});
+	};
+
+	getAllItemFromWishList = () => {
+		let token = localStorage.getItem('Token');
+
+		getWishListBooks(token)
+			.then((res) => {
+				res.data.forEach(element => {
+					this.setState({
+						clickedIdwishlist:[...this.state.clickedIdwishlist,element.bookId]
+					},()=>console.log('reference',this.state.clickedIdwishlist))
+
+				});
+				this.setState({ wishlist: res.data });
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	getBookLists = () => {
-		
 		getUserDashboardBookList()
 			.then((res) => {
 				this.setState({ books: res.data.data });
@@ -65,16 +135,12 @@ class Dashboard extends Component {
 		console.log('pagenumber after', this.state.currentPage);
 	};
 
-
 	wishListIconClickedHandler = () => {
-	    let doesShowWishListComponent = this.state.ShowWishListComponent;
-	     this.setState({
-	        ShowWishListComponent: !doesShowWishListComponent,
-
-	    });
-
+		let doesShowWishListComponent = this.state.ShowWishListComponent;
+		this.setState({
+			ShowWishListComponent: !doesShowWishListComponent,
+		});
 	};
-
 
 	searchHandler = (event) => {
 		let search = event.target.value;
@@ -119,29 +185,92 @@ class Dashboard extends Component {
 		}
 	};
 
-	addToBagClickHandler = (clickedID) => {
+	addToBagClickHandler = (clickedID, book) => {
+		console.log(book);
 		let token = localStorage.getItem('Token');
 		let cartCount = this.state.cartCount;
 		let clickedid = this.state.clickedId;
 		clickedid.push(clickedID);
-		this.setState({
-			cartCount: this.state.cartCount,
-			clickedId: [...clickedid],
-			addToBagBtnText: 'Added to bag',
-		});
+		this.setState(
+			{
+				cartCount: this.state.cartCount,
+				clickedId: [...clickedid],
+				addToBagBtnText: 'Added to bag',
+				wishlistbutton: false,
+			}
+			// () => this.bookslocalstore(book)
+		);
+
 		var cart = {
 			bookId: clickedID,
 		};
-		
-		const response = addToCart(cart,token);
-		response.then((res) => {
-			console.log('AddtoBag Response ', res.data);
+
+		addToCart(cart, token).then((res) => {
+			this.getAllItemsFromCart();
 		});
 	};
 
-	addToWishlistClickHandler = (clickedIDWishlist) =>{
 
-        let token = localStorage.getItem('Token');
+	
+		
+
+	// bookslocalstore = (book) => {
+	// 	console.log(book)
+	// 	if (!localStorage.getItem('Token')) {
+	// 		window.localStorage.setItem('items', JSON.stringify(this.state.clickedId));
+	// 		// window.localStorage.setItem("books",  JSON.stringify(book));
+	// 	}
+
+	// 	if (!window.localStorage.getItem('books')) {
+	// 		window.localStorage.setItem('books', JSON.stringify(book));
+	// 	} else {
+
+
+	// 		var data = [localStorage.getItem('books')]
+
+    //         // data = data ? JSON.parse(data) : {};
+
+	// 		// data[this.state.clickedId.length] = book;
+	// 		data.push(book)
+
+    //         localStorage.setItem('books', JSON.stringify(data));
+			
+           
+	// 		// var data = localStorage.getItem('books');
+
+	// 		//   data = data ? JSON.parse(data) : [];
+			  
+	// 		//   let a=[book]
+
+    //         //  data.push(a);
+
+	// 		//   localStorage.setItem('books', JSON.stringify(data));
+			  
+
+
+	// 		//   JSONObject myjson = new JSONObject(book);
+    //         //   JSONArray the_json_array = myjson.getJSONArray("profiles");
+            
+	// 		// var a = [];
+	// 		// a.push(JSON.parse(localStorage.getItem('session')));
+	// 		// localStorage.setItem('session', JSON.stringify(a));
+
+
+	// 		// var temp=[];
+	// 		// temp.push(JSON.parse(window.localStorage.getItem('books')));
+	// 		// window.localStorage.setItem("books",  JSON.stringify(temp));
+
+	// 		// var	temp= JSON.parse(window.localStorage.getItem("books"))
+	// 		// 	temp.push(book)
+	// 		//        console.log('temp',temp)
+
+	// 		// 	   window.localStorage.setItem("books",  JSON.stringify(temp));
+	// 		// 	   console.log(JSON.parse(window.localStorage.getItem("books")))
+	// 	}
+	// };
+
+	addToWishlistClickHandler = (clickedIDWishlist) => {
+		let token = localStorage.getItem('Token');
 		let wishlistCount = this.state.wishlistCount;
 		let clickedidWishlist = this.state.clickedIdwishlist;
 		clickedidWishlist.push(clickedIDWishlist);
@@ -153,15 +282,14 @@ class Dashboard extends Component {
 		var wishlist1 = {
 			bookId: clickedIDWishlist,
 		};
-		const response =  addToWishlist(wishlist1,token);
-		response.then((res) => {
-			console.log('Addtowishlist Response ', res.data);
+		addToWishlist(wishlist1, token).then((res) => {
+			this.getAllItemFromWishList();
 		});
-		// this.props.history.push("/wishlist");
-	}
+	};
 
-	
-	
+	alerts = (event, value) => {
+		this.paginate(value);
+	};
 
 	render() {
 		const indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
@@ -171,19 +299,19 @@ class Dashboard extends Component {
 		return (
 			<>
 				<Dashboard1
-					// cart={this.props.cart.length}
-					// wishlist={this.props.wishlist.length}
+					cart={this.state.length}
+					wishlist={this.state.wishlist.length}
 					cartIconClickedHandler={this.cartIconClickedHandler}
 					searchHandler={this.searchHandler}
 					wishlistCount={this.state.wishlistCount}
 					wishListIconClickedHandler={this.wishListIconClickedHandler}
 				/>
-					
+
 				{this.state.showMyCartComponent ? (
 					<Cart />
-				) :  this.state.ShowWishListComponent ? (
-                    <Wishlist wishlist={this.state.wishlist} />
-                  ):(
+				) : this.state.ShowWishListComponent ? (
+					<Wishlist wishlist={this.state.wishlist} />
+				) : (
 					<>
 						<DisplayBooks
 							books={this.state.isSearching ? this.state.filterArray : currentPosts}
@@ -197,17 +325,22 @@ class Dashboard extends Component {
 							addToBagBtnText={this.state.addToBagBtnText}
 							addTowishlistText={this.state.addTowishlistText}
 							sortByRelevanceHandler={this.sortByRelevanceHandler}
+							wishlistbutton={this.state.wishlistbutton}
+
+							// cart={this.state.length}
+							// enabled={this.state.enabled}
 						/>
 
-						<Pagination
-							postsPerPage={this.state.postsPerPage}
-							totalPosts={this.state.books.length}
-							paginateNumber={this.paginate}
-						/>
+						<Grid container className="page">
+							<Pagination
+								onChange={this.alerts}
+								showFirstButton
+								showLastButton
+								count={Math.ceil(this.state.books.length / 8)}
+							/>
+						</Grid>
 					</>
 				)}
-
-				
 			</>
 		);
 	}

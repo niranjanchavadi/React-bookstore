@@ -95,6 +95,11 @@ const useStyles = (theme) => ({
 		flexWrap: 'noWrap',
 		alignItems: 'center',
 	},
+
+
+	booktittle :{
+		cursor:'pointer',
+	 },
 });
 
 const StyledBadge = withStyles((theme) => ({
@@ -146,8 +151,14 @@ class Dashboard1 extends Component {
 	
 
 	goToCart = () => {
-		this.props.history.push('/login');
+		
+		this.props.history.push('/cart');
 	};
+
+	goToWishlist = () => {
+		
+		this.props.history.push('/wishlist');
+	}
 
 	handleChange = () => {
 		this.props.history.push('/login');
@@ -165,6 +176,7 @@ class Dashboard1 extends Component {
 		});
 	};
 
+
 	render() {
 		console.log(this.props.cart)
 		const { classes } = this.props;
@@ -176,7 +188,12 @@ class Dashboard1 extends Component {
 						<Grid container className={classes.gridDiv}>
 							<MenuBookIcon className={classes.bookIcon} />
 							<Typography className={classes.title} value="1" variant="h6" noWrap>
-								BookStore
+						      	<span    className={classes.booktittle} 
+											href="BookStore"
+											onClick={() => this.props.history.push('/')}
+											style={{ color: 'white' }}>
+											BookStore
+										</span>
 							</Typography>
 						</Grid>
 						<div>
@@ -195,7 +212,7 @@ class Dashboard1 extends Component {
 						</div>
 						<IconButton className={classes.cartIcon} onClick={this.goToCart}>
 							<StyledBadge badgeContent={this.props.cart} color="secondary">
-								<ShoppingCartIcon className={classes.cartIcon} />
+								<ShoppingCartIcon className={classes.cartIcon} fontSize='large' />
 							</StyledBadge>
 						</IconButton>
 
@@ -206,9 +223,9 @@ class Dashboard1 extends Component {
                            {/* <Button id='icon-btn' onClick={this.props.wishListIconClickedHandler}> 
 						   <FavoriteIcon fontSize='medium' /> </Button> */}
 
-						   <IconButton id='icon-btn' onClick={this.props.wishListIconClickedHandler}>
+						   <IconButton id='icon-btn' onClick={this.goToWishlist}>
 							<StyledBadge badgeContent={this.props.wishlist} color="secondary">
-							<FavoriteIcon fontSize='medium' />
+							<FavoriteIcon fontSize='large' />
 							</StyledBadge>
 						</IconButton>
                         </div>

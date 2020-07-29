@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container } from '@material-ui/core';
+import { Container, Divider } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
@@ -22,6 +22,9 @@ import {
 	removeBookFromCart,
 	removeFromCart,
 	getAllItemsFromCart,
+	getWishListBooks,
+	removeAll,
+	orderPlaced,
 } from '../../Configuration/BookConfig';
 import Dashboard from '../UserDashboard/Dashboard';
 import Dashboard1 from '../UserDashboard/Dashboard1';
@@ -35,6 +38,7 @@ export class Cart extends Component {
 			quantity: 1,
 			descrption: 'abc',
 			cart: [],
+			wishlist: [],
 			dummy: [],
 			total: '',
 			showCustomerDetails: false,
@@ -50,16 +54,65 @@ export class Cart extends Component {
 			landMark: '',
 			type: '',
 			state: '',
-			locality: '',
-			locationType: '',
 			status: '',
 			isActive: false,
 			incrementDecrementCount: 1,
+
+			totalPrice: 0,
+			OrderAmount: 0,
+			shippingcharge:0,
+			totalPayable: 0,
+
+			helperName: '  ',
+			helperphoneNumber: '  ',
+			helperPincode: '  ',
+			helperstate: '  ',
+			helpercity: '  ',
+			helperlandmark: '  ',
+			helperaddress: '  ',
+			firstNameerror: false,
+			phoneNumerror: false,
+			pinCodeerror: false,
+			stateerror:false,
+			cityerror:false,
+			landmarkerror: false,
+			addresserror:false,
+
+			customerPanel: false,
+			ordersummaryPanel: false,
+			// enabled: false,
+		
+			availablequantity:0,
 		};
 	}
 
 	componentDidMount() {
-		this.getAllItemsFromCart();
+		
+		if(localStorage.getItem("Token")){
+			this.getAllItemsFromCart();
+		}
+		else{
+			// res.data.forEach(element => {
+			// 	this.setState({
+			// 		clickedId:[...this.state.clickedId,element.bookId]
+			// 	},()=>console.log('reference',this.state.clickedId))
+
+				// this.addToBagClickHandler(element.bookId)
+				
+			// });
+			// window.localStorage.getItem("books").forEach(element => {
+			// 	this.setState({
+			// 		cart:[...this.state.cart,element.book]
+			// 	})
+			// })
+				this.state.cart= JSON.parse(window.localStorage.getItem("books"))
+				
+			
+		}
+		console.log(this.state.cart)
+		
+	
+		this.getAllItemFromWishList();
 	}
 
 	getAllItemsFromCart = () => {
@@ -74,111 +127,67 @@ export class Cart extends Component {
 			});
 	};
 
-	validatePhoneNumber = (e) => {
-		const regexp1 = /^[5-9]\d{9}$/;
-		const char = e.target.value;
-		if (!regexp1.test(char)) {
-			this.openSnackBar('Invalid Phone Number');
+	getAllItemFromWishList = () => {
+		let token = localStorage.getItem('Token');
 
-			this.setState({
-				[e.target.name]: '',
+		getWishListBooks(token)
+			.then((res) => {
+				this.setState({ wishlist: res.data });
+			})
+			.catch((err) => {
+				console.log(err);
 			});
-		}
 	};
 
-	validateName = (e) => {
-		const regexp = /[A-Za-z]{3,20}/;
-		const char = e.target.value;
-		if (!regexp.test(char)) {
-			this.openSnackBar('Invalid Name');
-			this.setState({
-				[e.target.name]: '',
-			});
-		}
-	};
-
-	validatePinCode = (e) => {
-		const regexp2 = /^[1-9]\d{5}$/;
-		const char = e.target.value;
-		if (!regexp2.test(char)) {
-			document.getElementById(e.target.id).style.border = 'red';
-			this.openSnackBar('Invalid PinCode');
-			this.setState({
-				[e.target.name]: '',
-			});
-		}
-	};
-
-	validateLocality = (e) => {
-		const regexp2 = /[A-Za-z]{3,20}/;
-		const char = e.target.value;
-		if (!regexp2.test(char)) {
-			document.getElementById(e.target.id).style.border = 'red';
-			this.openSnackBar('Invalid Locality');
-			this.setState({
-				[e.target.name]: '',
-			});
-		}
-	};
-
-	validatecity = (e) => {
-		const regexp2 = /[A-Za-z]{3,20}/;
-		const char = e.target.value;
-		if (!regexp2.test(char)) {
-			document.getElementById(e.target.id).style.border = 'red';
-			this.openSnackBar('Invalid City');
-			this.setState({
-				[e.target.name]: '',
-			});
-		}
-	};
-
-	validatestate = (e) => {
-		const regexp2 = /[A-Za-z]{3,20}/;
-		const char = e.target.value;
-		if (!regexp2.test(char)) {
-			document.getElementById(e.target.id).style.border = 'red';
-			this.openSnackBar('Invalid state');
-			this.setState({
-				[e.target.name]: '',
-			});
-		}
-	};
-
-
-	validatelandmark = (e) => {
-		const regexp2 = /[A-Za-z]{3,20}/;
-		const char = e.target.value;
-		if (!regexp2.test(char)) {
-			document.getElementById(e.target.id).style.border = 'red';
-			this.openSnackBar('Invalidlandmark');
-			this.setState({
-				[e.target.name]: '',
-			});
-		}
-	};
-
-	openSnackBar = async (prop) => {
-		await this.setState({ status: prop });
-		this.setState({ isActive: true }, () => {
-			setTimeout(() => {
-				this.setState({ isActive: false });
-			}, 3000);
-		});
-	};
 	nameHandler = (event) => {
 		const fullName = event.target.value;
 		console.log('fullName', fullName);
 		this.setState({
 			fullName: fullName,
 		});
+
+		const regexp = /^[A-Z][A-Za-z\s]{3,}$/;
+		const char = event.target.value;
+		if (!regexp.test(char)) {
+			this.setState({
+				[event.target.name]: '',
+				firstNameerror: true,
+				helperName: 'Please enter a valid name',
+			});
+		} else {
+			this.setState({
+				[event.target.name]: '',
+				firstNameerror: false,
+				helperName: ' ',
+			});
+		}
+		// this.enablebutton();
 	};
+
 	phoneNumberHandler = (event) => {
 		const phoneNumber = event.target.value;
 		console.log('phoneNumber', phoneNumber);
 		this.setState({
 			phoneNumber: phoneNumber,
 		});
+
+		const regexp1 = /^[5-9]\d{9}$/;
+		const char = event.target.value;
+
+		if (!regexp1.test(char)) {
+			this.setState({
+				[event.target.name]: '',
+				phoneNumerror: true,
+				helperphoneNumber: 'Please enter a valid phone number',
+			});
+		} else {
+			this.setState({
+				[event.target.name]: '',
+				phoneNumerror: false,
+				helperphoneNumber: ' ',
+			});
+		}
+		// this.enablebutton();
 	};
 
 	pincodeHandler = (event) => {
@@ -187,50 +196,23 @@ export class Cart extends Component {
 		this.setState({
 			pinCode: pinCode,
 		});
-	};
-	localityHandler = (event) => {
-		const locality = event.target.value;
-		console.log('locality', locality);
-		this.setState({
-			locality: locality,
-		});
-	};
-	cityHandler = (event) => {
-		const city = event.target.value;
-		console.log('city', city);
-		this.setState({
-			city: city,
-		});
-	};
-	addressHandler = (event) => {
-		const address = event.target.value;
-		console.log('address', address);
-		this.setState({
-			address: address,
-		});
-	};
-	landmarkHandler = (event) => {
-		const regexp = /[A-Za-z]{3,20}/;
-		const landMark = event.target.value;
-		console.log('landMark', landMark);
-		this.setState({
-			landMark: landMark,
-		});
-	};
-	typeHandler = (event) => {
-		const type = event.target.value;
-		console.log('type', type);
-		this.setState({
-			type: type,
-		});
-	};
 
-	locationTypeHandler = (event) => {
-		const locationType = event.target.value;
-		console.log('locationType', locationType);
-		this.setState({
-			locationType: locationType,
-		});
+		const regexp2 = /^[1-9]\d{5}$/;
+		const char = event.target.value;
+		if (!regexp2.test(char)) {
+			this.setState({
+				[event.target.name]: '',
+				pinCodeerror: true,
+				helperPincode: 'Please enter a valid pincode',
+			});
+		} else {
+			this.setState({
+				[event.target.name]: '',
+				pinCodeerror: false,
+				helperPincode: ' ',
+			});
+		}
+		// this.enablebutton();
 	};
 
 	stateHandler = (event) => {
@@ -238,11 +220,138 @@ export class Cart extends Component {
 		this.setState({
 			state: state,
 		});
+
+		const regexp2 = /[A-Za-z]{3,20}/;
+		const char = event.target.value;
+		if (!regexp2.test(char)) {
+			this.setState({
+				[event.target.name]: '',
+				stateerror: true,
+				helperstate: 'Please enter a valid state name ',
+			});
+		} else {
+			this.setState({
+				[event.target.name]: '',
+				stateerror: false,
+				helperstate: ' ',
+			});
+		}
+		// this.enablebutton();
 	};
+
+	cityHandler = (event) => {
+		const city = event.target.value;
+		console.log('city', city);
+		this.setState({
+			city: city,
+		});
+
+		const regexp2 = /[A-Za-z]{3,20}/;
+		const char = event.target.value;
+		if (!regexp2.test(char)) {
+			this.setState({
+				[event.target.name]: '',
+				cityerror: true,
+				helpercity: 'Please enter a valid city ',
+			});
+		} else {
+			this.setState({
+				[event.target.name]: '',
+				cityerror: false,
+				helpercity: ' ',
+			});
+		}
+		// this.enablebutton();
+	};
+
+	landmarkHandler = (event) => {
+		const landMark = event.target.value;
+		console.log('landMark', landMark);
+		this.setState({
+			landMark: landMark,
+		});
+
+		const regexp2 = /^[a-zA-Z0-9\s,.'-]{3,}$/;
+		const char = event.target.value;
+		if (!regexp2.test(char)) {
+			this.setState({
+				[event.target.name]: '',
+				landmarkerror: true,
+				helperlandmark: 'Please enter a valid landmark ',
+			});
+		} else {
+			this.setState({
+				[event.target.name]: '',
+				landmarkerror: false,
+				helperlandmark: ' ',
+			});
+		}
+		// this.enablebutton();
+	};
+
+	addressHandler = (event) => {
+		const address = event.target.value;
+		console.log('address', address);
+		this.setState({
+			address: address,
+		});
+
+		const regexp2 = /[A-Za-z0-9]{3,20}/;
+		const char = event.target.value;
+		if (!regexp2.test(char)) {
+			this.setState({
+				[event.target.name]: '',
+				addresserror: true,
+				helperaddress: 'Please enter a valid address ',
+			});
+		} else {
+			this.setState({
+				[event.target.name]: '',
+				addresserror: false,
+				helperaddress: ' ',
+			});
+		}
+		// this.enablebutton();
+	};
+
+	typeHandler = (event) => {
+		const type = event.target.value;
+	
+		this.setState({
+			enable:true,
+			
+			type: type,
+			
+			
+          
+	
+		});
+	    // this.enablebutton();
+		
+	};
+
+	// enablebutton=()=>{
+	// 		console.log('enable');
+	// 		console.log(this.state);
+	// 		console.log(this.state.helperName.length)
+	// 	if(this.enableextension){
+	// 				console.log('inside if');
+	// 				this.setState({
+	// 					enabled :true,
+						
+	// 				});
+	// 			}
+	// }
+
+
+	// enableextension (){
+	// 	return this.state.helperName.length === 1 && this.state.helperphoneNumber.length === 1 && this.state.helperPincode.length === 1 && this.state.helperstate.length === 1  &&this.state.helpercity.length === 1 && this.state.helperlandmark.length === 1 &&this.state.helperaddress.length === 1;
+			 
+	// }
 
 	addCustomerDetailsHandler = (event) => {
 		let token = localStorage.getItem('Token');
-		console.log(token, 'token');
+
 		let userDetailsDto = {};
 		userDetailsDto.state = this.state.state;
 		userDetailsDto.fullName = this.state.fullName;
@@ -251,19 +360,16 @@ export class Cart extends Component {
 		userDetailsDto.pinCode = this.state.pinCode;
 		userDetailsDto.city = this.state.city;
 		userDetailsDto.landMark = this.state.landMark;
-		userDetailsDto.addressType = this.state.type;
+		userDetailsDto.type = this.state.type;
 		userDetailsDto.locality = this.state.locality;
-		userDetailsDto.locationType = this.state.locationType;
 
 		addUserDetails(userDetailsDto, token)
 			.then((Response) => {
-				alert('userDetails  Updated SuccessFully  ');
+				console.log('userDetails Updated SuccessFully ');
 			})
 			.catch((error) => {
 				console.log('Error', error.response);
 				console.log(error.response.data.message, 'Failed to update userDetails');
-
-				alert(error.response.data.message, '*Failed to update userDetails');
 			});
 		this.setState({
 			showCustomerDetails: false,
@@ -284,33 +390,54 @@ export class Cart extends Component {
 		});
 	};
 
-
-
-
-	addQuantity =  async (data) => {
-		console.log("In addQuantityRequestMethod");
+	addQuantity = (data) => {
+		console.log('In addQuantityRequestMethod');
 		let token = localStorage.getItem('Token');
-        const res= addMoreItems(data,token);
+	// 	let 
+	//   count=ele.quantity;
+	//   count=count-1;
+	// this.setState({
+	// 	availablequantity:ele.available,
+	// })
+	   
+		// if(this.state.availablequantity===0){
+		// 	alert(' available quantity is zero')
+		// }
+		// else{
+			const res = addMoreItems(data, token);
+			this.getAllItemsFromCart();
+		// }
+			
+		
+	
+		
 		// this.setState({cart: (await res).data.data})
-	    this.getAllItemsFromCart();
-	 
-    
-    }
-    removeFromCart = async (data) => {
+		
+	};
+
+	removeFromCart = (data) => {
 		let token = localStorage.getItem('Token');
-        const response = removeBookFromCart(data,token);
+		const response = removeBookFromCart(data, token);
 		// this.setState({ cart: (await response).data.data});
 		this.getAllItemsFromCart();
-    }
-    
-    substractQuantity = async (data) => {
+	};
+
+	substractQuantity = (data) => {
 		let token = localStorage.getItem('Token');
-        const res= removeFromCart(data,token);
+		const res = removeFromCart(data, token);
 		// this.setState({cart: (await res).data.data})
 		this.getAllItemsFromCart();
-    }
+	};
 
-	
+	removeAllFromcart = () => {
+		let token = localStorage.getItem('Token');
+		removeAll(token);
+	};
+
+	orderPlaced = () => {
+		let token = localStorage.getItem('Token');
+		orderPlaced(token);
+	};
 
 	placeorder = (event) => {
 		this.setState({
@@ -327,10 +454,15 @@ export class Cart extends Component {
 	};
 
 	customerDetailsShowHandler = (event) => {
-		// this.props.history.push('/login');
-		this.setState({
-			showCustomerDetails: true,
-		});
+		// let isloggedin = localStorage.getItem('Email') ? true : false;
+		if (localStorage.getItem('RoleType') === 'user') {
+			this.totalamount();
+			this.setState({
+				showCustomerDetails: true,
+			});
+		} else {
+			this.props.history.push('/login');
+		}
 	};
 	orderSummeryShowHandler = async () => {
 		let doesShowOrderSummary = this.state.showOrderSummery;
@@ -346,47 +478,57 @@ export class Cart extends Component {
 			showOrderSummery: !doesShowOrderSummery,
 		});
 	};
-	orderPlacedPageHandler(event) {
+
+	orderPlacedPageHandler = (event) => {
 		localStorage.removeItem('cartCount');
+		this.orderPlaced();
+		this.removeAllFromcart();
 
 		window.location.assign('/ordersuccessfull');
-	}
-
-
+	};
 
 	checkoutClickHandler = () => {
 		const doesShowOrderSuccessful = this.state.showOrderSuccessful;
 
 		this.setState({
 			showOrderSuccessful: !doesShowOrderSuccessful,
-			
 		});
 	};
 
+	totalamount = () => {
+		let variable = 0;
+		this.state.cart.map((ele) => (variable = variable + ele.totalPrice));
+		this.state.OrderAmount = variable;
+		if(variable<3000){
+			this.state.shippingcharge=300;
+			this.state.totalPayable=variable+this.state.shippingcharge;
+		}
+		else{
+			this.state.shippingcharge=0;
+			this.state.totalPayable=variable+this.state.shippingcharge;
+		}
+	};
+
 	render() {
-		const { fullName, phoneNumber, pinCode, city, address, landMark, locality, locationType } = this.state;
-		const enabled =
-			fullName.length > 0 &&
-			phoneNumber.length > 0 &&
-			pinCode.length > 0 &&
-			city.length > 0 &&
-			address.length > 0 &&
-			landMark.length > 0 &&
-			locality.length > 0 &&
-			locationType.length > 0;
+
+		const { fullName,phoneNumber,pinCode,city,address,landMark,state} = this.state;
+		const enabled =fullName.length > 0 && phoneNumber.length > 0 && pinCode.length > 0 && city.length > 0 &&
+		address.length > 0 &&landMark.length > 0 && state.length >0;
+
 
 		return (
 			<Container maxWidth="lg">
 				<div>
-					<Dashboard1 cart={this.state.cart.length} />
+					<Dashboard1 cart={this.state.cart.length} wishlist={this.state.wishlist.length} />
 					<Grid item xs={10}>
 						<div className="Customer-address-div" style={{ marginTop: '78px' }}>
-							<Typography id="mycart-title" variant="h5">
-								My cart({this.state.cart.length})  
+							<Typography id="mycart-title" variant="h5" style={{ marginTop: '2%', marginLeft: '3.9%' }}>
+								My cart({this.state.cart.length})
 							</Typography>
 
-							{this.state.cart.map((ele,index) => {
+							{this.state.cart.map((ele, index) => {
 								return (
+									
 									<div>
 										<div>
 											<div>
@@ -394,42 +536,63 @@ export class Cart extends Component {
 													<div className="book-details-divcart">
 														<div className="img-book">
 															<img
+																alt="name"
 																id="img-book"
 																src={ele.imgUrl}
-																style={{ borderRadius: 0, justifyContent: 'center' }}
+																style={{
+																	borderRadius: 0,
+																	width: '130px',
+																	justifyContent: 'center',
+																}}
 															/>
 														</div>
 
 														<div className="aligncontentbesidepic">
-															<div>
-																<h4 className="h4-div">{ele.name}</h4>
+															<div className="bookname">
+																<Typography variant="body2" component="h4">
+																	<b>{ele.name}</b>
+																</Typography>
+																<Typography
+																	id="note-content"
+																	variant="body2"
+																	color="textSecondary"
+																	component="p">
+																	by {ele.author}
+																</Typography>
+																<Typography
+																	id="note-content"
+																	variant="body2"
+																	color="textSecondary"
+																	component="p">
+																	Available:{ele.available}
+																</Typography>
+																<Typography
+																	id="note-content"
+																	variant="body2"
+																	color="black"
+																	component="h1">
+																	<b> Rs.{ele.totalPrice}</b>
+																</Typography>
 															</div>
-															<div className="author-name-div">
-																<p>{ele.author}</p>
-															</div>
-															<div className="book-price-div">
-																<p> ₹ {this.state.quantity * ele.totalPrice}</p>
-															</div>
-															{/* <div className="book-price-div" >
-                                                    { <p>total={this.state.quantity * ele.price}</p> }
-                        
-                                                </div> */}
-															<div className="quantity-div">
-																{/* { <button className="minus-btn" 
-                                                       onClick={this.substractQuantity} >
-                                                        <RemoveRoundedIcon className="icon" />
-                                                    </button> } */}
 
-																<Button
-																	key={ele.id}
-																	onClick={() => this.substractQuantity(ele.bookId)}>
-																	<RemoveCircleOutlineIcon />
-																</Button>
+														
+															<div className="quantity-div">
+																<div>
+																	<Button
+																		key={ele.id}
+																		onClick={() =>
+																			this.substractQuantity(ele.bookId)
+																		}>
+																		<RemoveCircleOutlineIcon />
+																	</Button>
+																</div>
 
 																<div className="input-type">
 																	{/* {this.state.quantity} */}
 																	{ele.quantity}
+
 																</div>
+																
 
 																<div>
 																	<Button
@@ -438,12 +601,14 @@ export class Cart extends Component {
 																		<AddCircleOutlineIcon />
 																	</Button>
 																</div>
-																<button
-																	className="remove-btn"
-																	key={ele.id}
-																	onClick={() => this.removeFromCart(ele.bookId)}>
-																	Remove
-																</button>
+																<div>
+																	<button
+																		className="remove-btn"
+																		key={ele.id}
+																		onClick={() => this.removeFromCart(ele.bookId)}>
+																		Remove
+																	</button>
+																</div>
 															</div>
 														</div>
 													</div>
@@ -463,9 +628,10 @@ export class Cart extends Component {
 									</Button>
 								</div>
 							) : null}
-						</div>  
+						</div>
 						&nbsp;&nbsp;&nbsp;
 					</Grid>
+
 					<Grid item xs={10}>
 						<div className="Customer-address-div">
 							<div className="address-title">
@@ -474,100 +640,121 @@ export class Cart extends Component {
 							{this.state.showCustomerDetails ? (
 								<form>
 									<div className="form-group">
-										<input
+										&nbsp;&nbsp;
+										<TextField
 											type="text"
+											variant="outlined"
 											required
 											placeholder="Name"
 											id="name"
 											className="form-control "
 											onChange={this.nameHandler}
-											onBlur={this.validateName}
+											error={this.state.firstNameerror}
+											helperText={this.state.helperName}
 										/>
-
-										<input
+										&nbsp;&nbsp;
+										<TextField
 											type="text"
+											variant="outlined"
 											required
 											placeholder="Phone number"
 											id="phoneNumber"
+											inputProps={{maxLength :10}}
 											className="form-control "
 											onChange={this.phoneNumberHandler}
-											onBlur={this.validatePhoneNumber}
+											error={this.state.phoneNumerror}
+											helperText={this.state.helperphoneNumber}
 										/>
 									</div>
+									<br />
 									<div className="form-group">
-										<input
+										&nbsp;&nbsp;
+										<TextField
 											type="text"
+											variant="outlined"
 											required
 											placeholder="pincode"
 											id="pincode"
+											inputProps={{maxLength :6}}
 											className="form-control "
 											onChange={this.pincodeHandler}
-											onBlur={this.validatePinCode}
+											error={this.state.pinCodeerror}
+											helperText={this.state.helperPincode}
 										/>
-										<input
+										&nbsp;&nbsp;
+										<TextField
 											type="text"
-											placeholder="locality"
+											variant="outlined"
+											placeholder="State"
 											id="locality"
 											className="form-control "
-											onChange={this.localityHandler}
-											onBlur={this.validateLocality}
+											onChange={this.stateHandler}
+											error={this.state.stateerror}
+											helperText={this.state.helperstate}
 										/>
 									</div>
+									<br />
 									<div className="form-group">
-										<input
+										&nbsp;&nbsp;
+										<TextField
 											type="text"
+											variant="outlined"
 											required
 											placeholder="city/town"
 											id="city"
 											className="form-control "
 											onChange={this.cityHandler}
+											error={this.state.cityerror}
+											helperText={this.state.helpercity}
 										/>
-
-										<input
+										&nbsp;&nbsp;
+										<TextField
 											type="text"
+											variant="outlined"
 											required
 											placeholder="landmark"
 											id="landmark"
 											className="form-control "
 											onChange={this.landmarkHandler}
+											error={this.state.landmarkerror}
+											helperText={this.state.helperlandmark}
 										/>
 									</div>
-									<div className="form-group">
-										<input
+									<br />
+									<div className="form-groupaddress">
+										&nbsp;&nbsp;
+										<TextField
 											type="text"
+											variant="outlined"
 											required
 											placeholder="address"
 											id="address"
 											className="address-group "
 											onChange={this.addressHandler}
+											error={this.state.addresserror}
+											helperText={this.state.helperaddress}
 										/>
-										<input
-											type="text"
-											required
-											placeholder="locationType"
-											id="landmark"
-											className="form-control "
-											onChange={this.locationTypeHandler}
-										/>
+									
 									</div>
+									<br />
 									<div className="type-div">
 										<label>Type</label>
 										<div>
 											<RadioGroup row aria-label="position" name="position" defaultValue="top">
 												<FormControlLabel
-													value="home"
+													value="HOME"
 													control={<Radio color="primary" />}
 													label="Home"
 													onChange={this.typeHandler}
 												/>
 												<FormControlLabel
-													value="work"
+													value="WORK"
 													control={<Radio color="primary" />}
 													label="Work"
 													onChange={this.typeHandler}
 												/>
 												<FormControlLabel
-													value="other"
+													value="OTHER"
 													control={<Radio color="primary" />}
 													label="Other"
 													onChange={this.typeHandler}
@@ -577,72 +764,116 @@ export class Cart extends Component {
 									</div>
 
 									<div className="continue-cart-div">
-										
-
 										<Button
 											type="submit"
 											id="continue"
 											className="address-button"
 											style={{ backgroundColor: '#3371B5', color: 'white' }}
 											onClick={this.addCustomerDetailsHandler}
-											disabled={!enabled}>
+											// disabled={!this.state.enabled}
+											disabled={!enabled}
+											>
 											CONTINUE
 										</Button>
 									</div>
 								</form>
 							) : null}
-						</div>  
+						</div>
 						&nbsp;&nbsp;&nbsp;
 					</Grid>
+
 					<Grid item xs={10}>
 						<div className="order-sumary">
 							<div className="cart-title-div">
 								<h3 className="my-cart-h4">Order Summary</h3>
 							</div>
 
-							{this.state.showOrderSummery
-								? this.state.cart.map((ele) => {
+							{this.state.showOrderSummery ? (
+								<div>
+									{this.state.cart.map((ele) => {
 										return (
-											<div className="order-details-div">
-												<div className="img-book">
-													<img
-														src={ele.imgUrl}
-														className="order-logo"
-														style={{
-															borderRadius: 0,
-															width: '150px',
-															justifyContent: 'center',
-														}}
-													/>
-												</div>
-												<div className="aligncontentbesidepic">
-													<div className="book-title-div">
-														<h4>{ele.name}</h4>
-													</div>
-													<div className="author-name-div">
-														<p>{ele.author}</p>
-													</div>
-													<div className="book-price-div">
-														<p>Rs.{ele.totalPrice}</p>
+											<div>
+												<div>
+													<div>
+														<div>
+															<div className="book-details-divcart">
+																<div className="img-book">
+																	<img
+																		alt="name"
+																		id="img-book"
+																		src={ele.imgUrl}
+																		style={{
+																			borderRadius: 0,
+																			width: '130px',
+																			justifyContent: 'center',
+																		}}
+																	/>
+																</div>
+
+																<div className="aligncontentbesidepic">
+																	<div className="booknameorder">
+																		<Typography
+																			
+																			variant="body2"
+																			component="h4">
+																		<b>{ele.name} </b>	
+																		</Typography>
+																		<Typography
+																			id="note-content"
+																			variant="body2"
+																			color="textSecondary"
+																			component="p">
+																			by {ele.author}
+																		</Typography>
+																		<Typography
+																			id="note-content"
+																			variant="body2"
+																			color="black"
+																			component="h1">
+																			<b> Rs.{ele.totalPrice}</b>
+																		</Typography>
+																	</div>		
+																</div>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
 										);
-								  })
-								: null}
-							<div className="checkout-div">
-								<button
-									className="checkout-button"
-									onClick={this.orderPlacedPageHandler}
-									style={{ backgroundColor: '#3371B5', color: 'white' }}>
-									CHECKOUT
-								</button>
-							</div>
+									})}
+                                     	
+									<div className="cart-title-div">
+										<p
+											className="my-cart-h4 "
+											style={{ marginLeft: '4.5%', margintop: '400px', marginBottom: '8%' }}>
+											<b>Total Amount: </b>&nbsp;&nbsp; Rs.{this.state.OrderAmount}
+											<br/>
+											<b>Shipping Cost:</b> &nbsp;&nbsp; Rs.{this.state.shippingcharge}
+											<br/><br/>
+											<b>Total Payable:&nbsp;&nbsp; Rs.{this.state.totalPayable}</b>
+										</p>
+									
+										<div className="checkout-div">
+										<Button
+											className="checkout-button"
+											onClick={this.orderPlacedPageHandler}
+											style={{ backgroundColor: '#3371B5', color: 'white' }}>
+											CHECKOUT
+										</Button>
+									  </div>
+									  
+									 
+									</div>
+										
+								</div>
+							) : null}
 						</div>
 					</Grid>
+				
+				     &nbsp;&nbsp;&nbsp;
 					<div className={this.state.isActive ? [Styles.snackbar, Styles.show].join(' ') : Styles.snackbar}>
-						{this.state.status}  
-					</div>  
+						{this.state.status}
+					</div>
 				</div>
 			</Container>
 		);

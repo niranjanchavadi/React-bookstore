@@ -13,6 +13,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { withRouter } from 'react-router-dom';
 import { TextField, Dialog, DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
 import { uploadFile } from '../../Configuration/confiugration';
+import Login from '../UserRegistration/Login';
 
 const useStyles = makeStyles((theme) => ({
     typography: {
@@ -39,7 +40,9 @@ function SellerProfile(props) {
     };
 
     const HandleOpenFileChange = () => {
-        setOpenDialog(true);
+        if (isloggedin) {
+            setOpenDialog(true);
+        }
     };
 
     const handleCloseDialog = () => {
@@ -65,6 +68,30 @@ function SellerProfile(props) {
         props.history.push('/login');
     };
 
+    // const handleFileSubmitChange = () => {
+    // 	//let token = localStorage.getItem ('Token');
+    // 	const formData = new FormData();
+    // 	formData.append('file', file, file.name);
+    // 	//let Profile = localStorage.getItem ('file.name');
+
+    // 	uploadFile(formData)
+    // 		.then((response) => {
+    // 			console.log(response);
+    // 			console.log('data', response.data.data);
+
+    // 			if (this.isLogin == false) {
+    // 				this.snackbar.open('Please Login First', 'Ok', { duration: 2000 });
+    // 				return;
+    // 			}
+
+    // 			localStorage.setItem(localStorage.getItem('Email'), response.data.data);
+    // 			setOpenDialog(true);
+    // 		})
+    // 		.catch((err) => {
+    // 			console.log('profile not  update', err);
+    // 		});
+    // };
+
     const handleFileSubmitChange = () => {
         //let token = localStorage.getItem ('Token');
         const formData = new FormData();
@@ -75,9 +102,8 @@ function SellerProfile(props) {
             .then((response) => {
                 console.log(response);
                 console.log('data', response.data.data);
-                localStorage.setItem('SellerProfile', response.data.data);
+                localStorage.setItem(localStorage.getItem('Email'), response.data.data);
                 setOpenDialog(true);
-                alert('Seller Profile Change');
             })
             .catch((err) => {
                 console.log('profile not  update', err);
@@ -86,6 +112,7 @@ function SellerProfile(props) {
 
     const open = Boolean(anchor);
     const id = open ? 'simple-popover' : null;
+    let isloggedin = localStorage.getItem('Email') ? true : false;
 
     return ( <
         div >
@@ -94,15 +121,17 @@ function SellerProfile(props) {
             { display: 'flex', flexDirection: 'row' } } >
         <
         Avatar alt = { fullName }
-        src = { localStorage.getItem('SellerProfile') }
+        src = { localStorage.getItem(localStorage.getItem('Email')) }
         onClick = { handleClick }
-        /> <
-        /div> <
+        style = {
+            { width: '50px', height: '50px' } }
+        />{' '} <
+        /div>{' '} <
         Popover id = { id }
         open = { open }
         anchor = { anchor }
         style = {
-            { marginTop: '-7.5%', marginLeft: '10%' } }
+            { marginTop: '-21%', marginLeft: '-1%' } }
         onClose = { handleClose }
         anchorOrigin = {
             {
@@ -112,7 +141,7 @@ function SellerProfile(props) {
         }
         transformOrigin = {
             {
-                vertical: 'top',
+                vertical: 'bottom',
                 horizontal: 'right',
             }
         } >
@@ -140,12 +169,14 @@ function SellerProfile(props) {
         } >
         <
         Avatar alt = { localStorage.getItem('FullName') }
-        src = { localStorage.getItem('SellerProfile') }
+        src = { localStorage.getItem(localStorage.getItem('Email')) }
         style = {
-            { width: '77px', height: '77px' } }
-        /> <
-        /Badge> <
-        /div> <
+            { width: '100px', height: '100px' } }
+        />{' '} <
+        /Badge>{' '} <
+        /div>{' '} <
+        br / >
+        <
         div style = {
             {
                 justifyContent: 'center',
@@ -155,60 +186,74 @@ function SellerProfile(props) {
             }
         } >
         <
-        b > { fullName } < /b> <
-        /div> <
+        b > { fullName } < /b>{' '} <
+        /div>{' '} <
         div style = {
-            { justifyContent: 'center', display: 'flex', top: '5%', color: 'gray' } } >
+            {
+                justifyContent: 'center',
+                display: 'flex',
+                top: '5%',
+                color: 'gray',
+            }
+        } >
         <
-        b > { email } < /b> <
-        /div> <
-        Divider / >
-        <
+        b > { email } < /b>{' '} <
+        /div>{' '} { /* <Divider /> */ } { ' ' } <
         div style = {
             { marginTop: '5%' } } >
         <
         MenuItem title = "BookStore Account"
         onClick = { handleLoginChange }
         style = {
-            { justifyContent: 'center', display: 'flex' } } > < /MenuItem> <
-        /div> <
+            { justifyContent: 'center', display: 'flex' } } > { ' ' } <
+        /MenuItem>{' '} <
+        /div>{' '} <
         div style = {
             {
                 justifyContent: 'center',
                 display: 'flex',
                 padding: '9%',
             }
-        } >
-        <
-        Button variant = "contained"
-        color = "white"
-        style = {
-            { justifyContent: 'center', display: 'flex', marginLeft: '5%' } }
-        onClick = { handleLoginChange } >
-        Logout <
-        /Button> <
-        Button variant = "contained"
-        color = "white"
-        style = {
-            {
-                justifyContent: 'center',
-                display: 'flex',
-                backgroundColor: '#A03037',
-                marginLeft: '60%',
-            }
-        }
-        onClick = { handlerforLogin } >
-        Login <
-        /Button> <
-        /div> <
-        Divider / > {
+        } > { ' ' } {
+            isloggedin && ( <
+                Button variant = "contained"
+                style = {
+                    {
+                        justifyContent: 'center',
+                        display: 'flex',
+                        backgroundColor: '#A03037',
+                        color: 'white',
+                    }
+                }
+                onClick = { handleLoginChange } >
+                Logout { ' ' } <
+                /Button>
+            )
+        } { ' ' } {
+            !isloggedin && ( <
+                Button variant = "contained"
+                style = {
+                    {
+                        justifyContent: 'center',
+                        display: 'flex',
+                        backgroundColor: '#A03037',
+                        marginLeft: '6%',
+                        color: 'white',
+                    }
+                }
+                onClick = { handlerforLogin } >
+                Login { ' ' } <
+                /Button>
+            )
+        } { ' ' } <
+        /div>{' '} {
             /* <div className="profilefooter">
-                                                                                                                                                                                                                                                 <p>Privacy Policy .Terms of Service</p>  
-                                                                                                                                                                                                                                                </div> */
-        } <
-        /div> <
-        /Typography> <
-        /Popover> <
+                                                                                                                                                                                                                                                                                                                                                 <p>Privacy Policy .Terms of Service</p>  
+                                                                                                                                                                                                                                                                                                                                                </div> */
+        } { ' ' } <
+        /div>{' '} <
+        /Typography>{' '} <
+        /Popover>{' '} <
         Dialog open = { openDialog }
         onClose = { handleCloseDialog } >
         <
@@ -222,8 +267,8 @@ function SellerProfile(props) {
                 fontStyle: 'unset',
             }
         } >
-        Select Profile Photo <
-        /DialogTitle> <
+        Select Profile Photo { ' ' } <
+        /DialogTitle>{' '} <
         DialogContent >
         <
         DialogContentText >
@@ -233,7 +278,7 @@ function SellerProfile(props) {
                 display: 'flex',
                 justifyContent: 'space-around',
                 flexDirection: 'column',
-                width: '131%',
+                // width: '131%',
             }
         } >
         <
@@ -246,8 +291,8 @@ function SellerProfile(props) {
         <
         TextField type = "file"
         onChange = { handleFileChange }
-        /> <
-        /div> <
+        />{' '} <
+        /div>{' '} <
         div style = {
             {
                 display: 'flex',
@@ -261,18 +306,18 @@ function SellerProfile(props) {
         Button variant = "contained"
         color = "primary"
         onClick = { handleFileSubmitChange } >
-        Upload <
-        /Button> <
+        Upload { ' ' } <
+        /Button>{' '} <
         Button variant = "contained"
         color = "primary"
         onClick = { handleCloseDialog } >
-        Cancel <
-        /Button> <
-        /div> <
-        /div> <
-        /DialogContentText> <
-        /DialogContent> <
-        /Dialog> <
+        Cancel { ' ' } <
+        /Button>{' '} <
+        /div>{' '} <
+        /div>{' '} <
+        /DialogContentText>{' '} <
+        /DialogContent>{' '} <
+        /Dialog>{' '} <
         /div>
     );
 }

@@ -7,20 +7,12 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCartOutlined';
 import Badge from '@material-ui/core/Badge';
 import { withRouter } from 'react-router';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import UserProfile from '../Profile/UserProfile';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-
-// import Profile from './Profile/Profile';
-
-
+import SellerProfile from '../Profile/SellerProfile';
 
 
 
 
 const useStyles = (theme) => ({
-
-
-	
 	title: {
 		display: 'none',
 		paddingLeft: '0.5%',
@@ -71,7 +63,11 @@ const useStyles = (theme) => ({
 		opacity: 1,
 		backgroundColor: 'white',
 		borderRadius: '4px',
-	},
+    },
+    
+    searchbox:{
+       marginLeft:'-30%',
+    },
 
 	bookIcon: {
 		fontSize: '36px',
@@ -81,7 +77,7 @@ const useStyles = (theme) => ({
 	},
 	cartIcon: {
 		color: 'white',
-		marginLeft: '150%',
+		marginLeft: '0%',
 		[theme.breakpoints.up('sm')]: {
 			marginLeft: '10%',
 		},
@@ -101,38 +97,10 @@ const useStyles = (theme) => ({
 		flexWrap: 'noWrap',
 		alignItems: 'center',
 	},
-
-	wishlist: {
-		marginLeft: '-6%',
-	},
-
-	shoppingcart:{
-        marginLeft: '50%',
-	},
-
-
-	booktittle :{
-		cursor:'pointer',
-	 },
-
-	// wishlistbutton:{
-    //   marginLeft:'140%',
-	// },
 });
 
 
-
-
-
-const StyledBadge = withStyles((theme) => ({
-	badge: {
-		right: -10,
-		top: 5,
-		border: `2px solid ${theme.palette.background.paper}`,
-	},
-}))(Badge);
-
-class Wishlistboard extends Component {
+class SellerDashboard extends Component {
 	constructor(props) {
 		super(props);
 
@@ -144,6 +112,8 @@ class Wishlistboard extends Component {
 			menuAnchorEl: null,
 			visibilityOfDialogBox: false,
 			visibilityOfCloseIcon: 'hidden',
+			searchboolean:true,
+			
 			
 		
 		};
@@ -172,17 +142,7 @@ class Wishlistboard extends Component {
 
 	
 
-	goToCart = () => {
-		// let isloggedin = localStorage.getItem('Email') ? true : false;
-		// if(isloggedin){
-            
-		// }
-		// else{
-        //     this.props.history.push('/login');
-		// }
-		this.props.history.push('/cart');
-	};
-
+	
 	handleChange = () => {
 		this.props.history.push('/login');
 	};
@@ -192,53 +152,41 @@ class Wishlistboard extends Component {
 			menuOpen: false,
 		});
 	};
-	handleClickProfile = (event) => {
-		this.setState({
-			menuOpen: true,
-			menuAnchorEl: event.currentTarget,
-		});
-	};
+
 
 	render() {
-		console.log(this.props.cart)
 		const { classes } = this.props;
 		
 		return (
 			<div>
 				<AppBar position="fixed" className={classes.appBar}>
 					<Toolbar className={classes.toolbar}>
+						{/* <div>
+						<SimpleMenu/>
+						</div> */}
+					
 						<Grid container className={classes.gridDiv}>
 							<MenuBookIcon className={classes.bookIcon} />
 							<Typography className={classes.title} value="1" variant="h6" noWrap>
-							          <span    className={classes.booktittle} 
-											href="BookStore"
-											onClick={() => this.props.history.push('/')}
-											style={{ color: 'white' }}>
-											BookStore
-										</span>
+								BookStore
 							</Typography>
 						</Grid>
-                        
-                      <div  className={classes.shoppingcart}>
-                      
-					  <IconButton className={classes.cartIcon} onClick={this.goToCart}>
-							<StyledBadge badgeContent={this.props.cart} color="secondary">
-								<ShoppingCartIcon className={classes.cartIcon} fontSize='large' />
-							</StyledBadge>
-						</IconButton>
-					  </div>
-						
-					
-					
-						<div className={classes.wishlist}>
-						   <IconButton id='icon-btn' onClick={this.props.wishListIconClickedHandler}   >
-							<StyledBadge badgeContent={this.props.wishlist} color="secondary"
-							>
-							<FavoriteIcon fontSize='large' />
-							</StyledBadge>
-						</IconButton>
-                        </div>
-					    <UserProfile onChange={this.handleClickProfile}/>
+						<div className={classes.searchbox}>
+							<div className={classes.searchIcon}>
+								<SearchIcon />
+							</div>
+							<InputBase
+								placeholder="Search…"
+								classes={{
+									root: classes.inputRoot,
+									input: classes.inputInput,  
+								}}
+								
+								onChange= {!this.props.approvedbookssearch ? this.props.searchHandler :this.props.approvedsearchHandler }
+								inputProps={{ 'aria-label': 'search' }}
+							/>
+						</div>
+						<SellerProfile onChange={this.handleClickProfile} />    
 					</Toolbar>
 				</AppBar>
 			</div>
@@ -246,4 +194,4 @@ class Wishlistboard extends Component {
 	}
 }
 
-export default withRouter(withStyles(useStyles)(Wishlistboard));
+export default withRouter(withStyles(useStyles)(SellerDashboard));

@@ -39,7 +39,9 @@ function UserProfile(props) {
     };
 
     const HandleOpenFileChange = () => {
-        setOpenDialog(true);
+        if (isloggedin) {
+            setOpenDialog(true);
+        }
     };
 
     const handleCloseDialog = () => {
@@ -75,9 +77,10 @@ function UserProfile(props) {
             .then((response) => {
                 console.log(response);
                 console.log('data', response.data.data);
-                localStorage.setItem('UserProfile', response.data.data);
+                // localStorage.setItem('UserProfile', response.data.data);
+
+                localStorage.setItem(localStorage.getItem('Email'), response.data.data);
                 setOpenDialog(true);
-                alert('User Profile Change');
             })
             .catch((err) => {
                 console.log('profile not  update', err);
@@ -86,6 +89,7 @@ function UserProfile(props) {
 
     const open = Boolean(anchor);
     const id = open ? 'simple-popover' : null;
+    let isloggedin = localStorage.getItem('Email') ? true : false;
 
     return ( <
         div >
@@ -94,10 +98,12 @@ function UserProfile(props) {
             { display: 'flex', flexDirection: 'row' } } >
         <
         Avatar alt = { fullName }
-        src = { localStorage.getItem('UserProfile') }
+        src = { localStorage.getItem(localStorage.getItem('Email')) }
         onClick = { handleClick }
-        />  <
-        /div>  <
+        style = {
+            { width: '50px', height: '50px' } }
+        />{' '} <
+        /div>{' '} <
         Popover id = { id }
         open = { open }
         anchor = { anchor }
@@ -140,12 +146,14 @@ function UserProfile(props) {
         } >
         <
         Avatar alt = { localStorage.getItem('FullName') }
-        src = { localStorage.getItem('UserProfile') }
+        src = { localStorage.getItem(localStorage.getItem('Email')) }
         style = {
-            { width: '77px', height: '77px' } }
-        />  <
-        /Badge>  <
-        /div>  <
+            { width: '100px', height: '100px' } }
+        />{' '} <
+        /Badge>{' '} <
+        /div>{' '} <
+        br / >
+        <
         div style = {
             {
                 justifyContent: 'center',
@@ -155,60 +163,68 @@ function UserProfile(props) {
             }
         } >
         <
-        b > { fullName } < /b>  <
-        /div>  <
+        b > { fullName } < /b>{' '} <
+        /div>{' '} <
         div style = {
             { justifyContent: 'center', display: 'flex', top: '5%', color: 'gray' } } >
         <
-        b > { email } < /b>  <
-        /div>  <
-        Divider / >
-        <
+        b > { email } < /b>{' '} <
+        /div>{' '} { /* <Divider /> */ } { ' ' } <
         div style = {
             { marginTop: '5%' } } >
         <
         MenuItem title = "BookStore Account"
         onClick = { handleLoginChange }
         style = {
-            { justifyContent: 'center', display: 'flex' } } > < /MenuItem>  <
-        /div>  <
+            { justifyContent: 'center', display: 'flex' } } > { ' ' } <
+        /MenuItem>{' '} <
+        /div>{' '} <
         div style = {
             {
                 justifyContent: 'center',
                 display: 'flex',
                 padding: '9%',
             }
-        } >
-        <
-        Button variant = "contained"
-        color = "white"
-        style = {
-            { justifyContent: 'center', display: 'flex', marginLeft: '5%' } }
-        onClick = { handleLoginChange } >
-        Logout <
-        /Button>  <
-        Button variant = "contained"
-        color = "white"
-        style = {
-            {
-                justifyContent: 'center',
-                display: 'flex',
-                backgroundColor: '#A03037',
-                marginLeft: '60%',
-            }
-        }
-        onClick = { handlerforLogin } >
-        Login <
-        /Button>  <
-        /div>  <
-        Divider / > {
+        } > { ' ' } {
+            isloggedin && ( <
+                Button variant = "contained"
+                style = {
+                    {
+                        justifyContent: 'center',
+                        display: 'flex',
+                        backgroundColor: '#A03037',
+                        color: 'white',
+                    }
+                }
+                onClick = { handleLoginChange } >
+                Logout { ' ' } <
+                /Button>
+            )
+        } { ' ' } {
+            !isloggedin && ( <
+                Button variant = "contained"
+                style = {
+                    {
+                        justifyContent: 'center',
+                        display: 'flex',
+                        backgroundColor: '#A03037',
+                        marginLeft: '6%',
+                        color: 'white',
+                    }
+                }
+                onClick = { handlerforLogin } >
+                Login { ' ' } <
+                /Button>
+            )
+        } { ' ' } <
+        /div>{' '} {
             /* <div className="profilefooter">
-                                                                                                                                                                                                 <p>Privacy Policy .Terms of Service</p>  
-                                                                                                                                                                                                </div> */
-        } <
-        /div>  <
-        /Typography>  <
-        /Popover>  <
+                                                                                                                                                                                                                                                 <p>Privacy Policy .Terms of Service</p>  
+                                                                                                                                                                                                                                                </div> */
+        } { ' ' } <
+        /div>{' '} <
+        /Typography>{' '} <
+        /Popover>{' '} <
         Dialog open = { openDialog }
         onClose = { handleCloseDialog } >
         <
@@ -222,8 +238,8 @@ function UserProfile(props) {
                 fontStyle: 'unset',
             }
         } >
-        Select Profile Photo <
-        /DialogTitle>  <
+        Select Profile Photo { ' ' } <
+        /DialogTitle>{' '} <
         DialogContent >
         <
         DialogContentText >
@@ -233,7 +249,7 @@ function UserProfile(props) {
                 display: 'flex',
                 justifyContent: 'space-around',
                 flexDirection: 'column',
-                width: '131%',
+                // width: '131%',
             }
         } >
         <
@@ -246,8 +262,8 @@ function UserProfile(props) {
         <
         TextField type = "file"
         onChange = { handleFileChange }
-        />  <
-        /div>  <
+        />{' '} <
+        /div>{' '} <
         div style = {
             {
                 display: 'flex',
@@ -261,18 +277,18 @@ function UserProfile(props) {
         Button variant = "contained"
         color = "primary"
         onClick = { handleFileSubmitChange } >
-        Upload <
-        /Button>  <
+        Upload { ' ' } <
+        /Button>{' '} <
         Button variant = "contained"
         color = "primary"
         onClick = { handleCloseDialog } >
-        Cancel <
-        /Button>  <
-        /div>  <
-        /div>  <
-        /DialogContentText>  <
-        /DialogContent>  <
-        /Dialog>  <
+        Cancel { ' ' } <
+        /Button>{' '} <
+        /div>{' '} <
+        /div>{' '} <
+        /DialogContentText>{' '} <
+        /DialogContent>{' '} <
+        /Dialog>{' '} <
         /div>
     );
 }

@@ -87,11 +87,11 @@ export class OrderSuccessfull extends Component {
             variant = "contained"
             // className={classes.button}
             style = {
-                { width: '22%', backgroundColor: '#3371B5' } } >
+                { width: '22%', backgroundColor: '#3371B5', color: 'white' } } >
             Continue Shopping <
             /Button>  <
             /Grid>  <
-            /div>  { /* <Footer /> */ } <
+            /div>  <
             /Fragment>
         );
     }

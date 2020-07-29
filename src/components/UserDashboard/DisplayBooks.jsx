@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 // import Pagination from '@material-ui/lab/Pagination';
@@ -9,10 +10,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
+import { IconButton } from '@material-ui/core';
 // import bookImage from '../../assets/book.jpg';
-
-import { withStyles } from '@material-ui/core/styles';
-import Pagination from '../pagination/Pagination';
 
 
 
@@ -21,7 +20,7 @@ class DisplayBooks extends Component {
 		return (
 			<>
 				<div className="bookcount-sortby-div">
-					<Typography id="display-book-title" variant="h5" style={{ marginLeft: '-15%' }}>
+					<Typography id="display-book-title" variant="h5" style={{ marginLeft: '-20%' }}>
 						<b>Books</b>{' '}
 						<span id="bookcountfont">
 							(Found {this.props.bookCount} items,of {this.props.TotalCount})
@@ -32,6 +31,7 @@ class DisplayBooks extends Component {
 						<select
 							name="Sort By Relevance"
 							id="Sort_By_Relevance"
+							continue-shopping-cart-button
 							onChange={this.props.sortByRelevanceHandler}>
 							<option value="-1" selected>
 								Sort By Relevance
@@ -51,7 +51,7 @@ class DisplayBooks extends Component {
 											<img
 												id="img-book"
 												src={ele.bookImgUrl}
-												style={{ borderRadius: 0, width: '150px', justifyContent: 'center' }}
+												style={{ borderRadius: 0, width: '130px', marginLeft: '25%' }}
 											/>
 
 											{/* <img className='img' id='img-book' src={bookImage}/> */}
@@ -65,104 +65,111 @@ class DisplayBooks extends Component {
 													variant="body2"
 													color="textSecondary"
 													component="p">
-													{ele.authorName}
+													by {ele.authorName}
 												</Typography>
 												<Typography
 													id="note-content"
 													variant="body2"
-													color="textSecondary"
+													color="black"
 													component="h1">
-													<b> ₹ {ele.price}</b>
+													<b> Rs.{ele.price}</b>
 												</Typography>
-
-												{/* <Typography id='note-content' variant="body2" color="textSecondary" component="p">
-                                                     {ele.description}
-                                                </Typography> */}
 											</CardContent>
 										</CardActionArea>
 									</Tooltip>
 									<CardActions>
-                                        <div className="Addtocartbutton">
-                                        {this.props.clickedId.includes(ele.bookId) ? (
-											<Button
-												variant="outlined"
-												
-												style={{
-													background:  '#3371B5',
-													border: '1px solid black',
-                                                    color: 'white',
-													justifyContent:'center',
-													
-													// marginLeft:'50%'
-												}}
-												>
-												Addedtocart
-											</Button>
-										) : (
-											<>
-												<Button
+										<div className="Addtocartbutton" key={ele.bookId}>
+											{this.props.clickedId.includes(ele.bookId) ? (
+												<div className="Addtocartbutton2" key={ele.bookId}>
+												<IconButton
 													variant="outlined"
-                                                    color="white"
-                                                    size="small"
-													style={{ backgroundColor: '#A03037', color: 'white' }}
-													onClick={() => {
-														this.props.addToBagClickHandler(ele.bookId);
+													size="small"
+													type="submit"
+													style={{
+														background: '#3371B5',
+													    borderRadius:'3px',
+														color: 'white',
+														// justifyContent: 'center',
+														padding: '6px 32px',
+														paddingUp:'50px',
+													    marginLeft:'-15%',
+														fontSize:'0.9rem'
+														
 													}}>
-													ADD TO CART{' '}
-												</Button>
-                                                       
-											
-											</>
-										)}
+													ADDED TO BAG
+												</IconButton>
+												</div>
+											) : (
+												<>
+													{!this.props.clickedIdwishlist.includes(ele.bookId) && (
+														<Button
+															variant="outlined"
+															size="small"
+															style={{
+																backgroundColor: '#A03037',
+																color: 'white',
+																width: '70%',
+																marginLeft: '-5%',
+															}}
+															// disabled={!this.props.enabled}
+															onClick={() => {
+																this.props.addToBagClickHandler(ele.bookId,ele);
+															}}>
+															Add to bag
+														</Button>
+													)}
+													&nbsp;&nbsp;&nbsp;&nbsp;
+													{this.props.clickedIdwishlist.includes(ele.bookId) && (
+														<Button
+															variant="outlined"
+															style={{
+																background: '#3371B5',
+																// border: '1px solid black',
+																color: 'white',
+																justifyContent: 'center',
+																padding: '3px 36px',
+																marginRight: '-5%',
 
-                                       </div>
- 										
-                                        {this.props.clickedIdwishlist.includes(ele.bookId) ? (
-											<Button
-												variant="outlined"
-												
-												style={{
-													background:  '#3371B5',
-													border: '1px solid black',
-                                                    color: 'white',
-													justifyContent:'center',
-													
-													// marginLeft:'50%'
-												}}
-												>
-												Wishlisted
-											</Button>
-										) : (
-											<>
-												
-												<Button
-													variant="outlined"
-													color="black"
-
-													onClick = {()=>this.props.addToWishlistClickHandler(ele.bookId)}
-												>
-													{' '}
-													WishList
-												</Button>
-											</>
-										)}
-										 
-                                         
-										
+																// marginLeft:'50%'
+															}}>
+															Wishlisted
+														</Button>
+													)}
+													{!this.props.clickedIdwishlist.includes(ele.bookId) && (
+														<Button
+															variant="outlined"
+															color="black"
+															size="small"
+															type="submit"
+															style={{
+																width: '46.2%',
+																marginRight: '-5%',
+																borderRadius: '2px',
+															}}
+															onClick={() =>
+																this.props.addToWishlistClickHandler(ele.bookId)
+															}>
+															WishList
+														</Button>
+													)}
+												</>
+											)}
+											&nbsp;&nbsp;&nbsp;
+										</div>
 									</CardActions>
 								</Card>
 							</>
 						);
 					})}
 				</div>
-                <div className='pagination-div'>
-            <Pagination 
-            count={Math.floor(this.props.bookCount/12)} 
-            color="primary" 
-            onClick={this.props.onChangePaginationHandler} />
-        </div>
+				{/* <div className="pagination-div">
+<Pagination
+count={Math.floor(this.props.bookCount / 12)}
+color="primary"
+onClick={this.props.onChangePaginationHandler}
+/>
+</div> */}
 			</>
-            
 		);
 	}
 }

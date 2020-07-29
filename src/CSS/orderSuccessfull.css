@@ -101,3 +101,14 @@ td {
     align-content: center;
     align-self: flex-end;
 }
+
+.footercss {
+    margin-top: 3%;
+    width: 10%;
+    background-color: #2E1D1E;
+    color: white;
+    text-align: center;
+    font-size: 80%;
+    height: 30px;
+    padding-top: 10px;
+}
