@@ -16,7 +16,26 @@ import { IconButton } from '@material-ui/core';
 
 
 class DisplayBooks extends Component {
+
+
+	constructor(props) {
+		super(props);
+
+	}
+
+	handlewishlistlogin =()=>{
+		this.props.history.push("/admin");
+		
+	}
+
+
+
+
+
+
 	render() {
+
+		let isloggedin = localStorage.getItem('RoleType') === 'user' ? true : false;
 		return (
 			<>
 				<div className="bookcount-sortby-div">
@@ -102,21 +121,23 @@ class DisplayBooks extends Component {
 											) : (
 												<>
 													{!this.props.clickedIdwishlist.includes(ele.bookId) && (
-														<Button
+														<IconButton
 															variant="outlined"
 															size="small"
 															style={{
 																backgroundColor: '#A03037',
+																borderRadius:'3px',
 																color: 'white',
-																width: '70%',
+																width: '60%',
+																fontSize:'0.85rem',
 																marginLeft: '-5%',
 															}}
 															// disabled={!this.props.enabled}
 															onClick={() => {
 																this.props.addToBagClickHandler(ele.bookId,ele);
 															}}>
-															Add to bag
-														</Button>
+															ADD TO BAG
+														</IconButton>
 													)}
 													&nbsp;&nbsp;&nbsp;&nbsp;
 													{this.props.clickedIdwishlist.includes(ele.bookId) && (
@@ -136,22 +157,44 @@ class DisplayBooks extends Component {
 														</Button>
 													)}
 													{!this.props.clickedIdwishlist.includes(ele.bookId) && (
+											          <span>
+                                                             {isloggedin && (
 														<Button
 															variant="outlined"
 															color="black"
 															size="small"
 															type="submit"
 															style={{
-																width: '46.2%',
-																marginRight: '-5%',
+																width: '47.2%',
+																marginRight: '10%',
 																borderRadius: '2px',
+																fontSize:'0.75rem',
 															}}
 															onClick={() =>
 																this.props.addToWishlistClickHandler(ele.bookId)
 															}>
 															WishList
-														</Button>
-													)}
+														</Button>)}
+
+													{!isloggedin && (	
+														<Button
+														variant="outlined"
+														color="black"
+														size="small"
+														type="submit"
+														style={{
+															width: '46.2%',
+															marginRight: '10%',
+															fontSize:'0.75rem',
+															borderRadius: '2px',
+														}}
+														onClick={this.handlewishlistlogin}
+														>
+														WishList
+													  </Button>)}
+													  </span>
+													
+                                                    )}
 												</>
 											)}
 											&nbsp;&nbsp;&nbsp;

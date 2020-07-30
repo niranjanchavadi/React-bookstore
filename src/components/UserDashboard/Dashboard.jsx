@@ -40,6 +40,8 @@ class Dashboard extends Component {
 		wishlistbutton: true,
 
 		length: 0,
+		data:[],
+	
 
 		// ShowWishListComponent:false,
 	};
@@ -197,8 +199,8 @@ class Dashboard extends Component {
 				clickedId: [...clickedid],
 				addToBagBtnText: 'Added to bag',
 				wishlistbutton: false,
-			}
-			// () => this.bookslocalstore(book)
+			},
+			() => this.bookslocalstore(book)
 		);
 
 		var cart = {
@@ -214,60 +216,68 @@ class Dashboard extends Component {
 	
 		
 
-	// bookslocalstore = (book) => {
-	// 	console.log(book)
-	// 	if (!localStorage.getItem('Token')) {
-	// 		window.localStorage.setItem('items', JSON.stringify(this.state.clickedId));
-	// 		// window.localStorage.setItem("books",  JSON.stringify(book));
-	// 	}
+	bookslocalstore = (book) => {
 
-	// 	if (!window.localStorage.getItem('books')) {
-	// 		window.localStorage.setItem('books', JSON.stringify(book));
-	// 	} else {
+		
+	
+		if (!localStorage.getItem('Token')) {
+			window.localStorage.setItem('items', JSON.stringify(this.state.clickedId));
+			// window.localStorage.setItem("books",  JSON.stringify(book));
+		}
 
+		// if (!window.localStorage.getItem('books')) {
 
-	// 		var data = [localStorage.getItem('books')]
+		   this.state.data[this.state.data.length]=book 
+			
+			window.localStorage.setItem('books', JSON.stringify(this.state.data));
+           console.log(JSON.parse(localStorage.getItem('books')))
 
-    //         // data = data ? JSON.parse(data) : {};
+		// } else {
 
-	// 		// data[this.state.clickedId.length] = book;
-	// 		data.push(book)
+		
+			//  data = JSON.parse(localStorage.getItem('books'))
+			//  data[book.bookId] = book;
 
-    //         localStorage.setItem('books', JSON.stringify(data));
+            // data = data ? JSON.parse(data) : {};
+
+		
+			// data.push(book)
+
+            // localStorage.setItem('books', JSON.stringify(data));
 			
            
-	// 		// var data = localStorage.getItem('books');
+			// var data = localStorage.getItem('books');
 
-	// 		//   data = data ? JSON.parse(data) : [];
+			//   data = data ? JSON.parse(data) : [];
 			  
-	// 		//   let a=[book]
+			//   let a=[book]
 
-    //         //  data.push(a);
+            //  data.push(a);
 
-	// 		//   localStorage.setItem('books', JSON.stringify(data));
+			//   localStorage.setItem('books', JSON.stringify(data));
 			  
 
 
-	// 		//   JSONObject myjson = new JSONObject(book);
-    //         //   JSONArray the_json_array = myjson.getJSONArray("profiles");
+			//   JSONObject myjson = new JSONObject(book);
+            //   JSONArray the_json_array = myjson.getJSONArray("profiles");
             
-	// 		// var a = [];
-	// 		// a.push(JSON.parse(localStorage.getItem('session')));
-	// 		// localStorage.setItem('session', JSON.stringify(a));
+			// var a = [];
+			// a.push(JSON.parse(localStorage.getItem('session')));
+			// localStorage.setItem('session', JSON.stringify(a));
 
 
-	// 		// var temp=[];
-	// 		// temp.push(JSON.parse(window.localStorage.getItem('books')));
-	// 		// window.localStorage.setItem("books",  JSON.stringify(temp));
+			// var temp=[];
+			// temp.push(JSON.parse(window.localStorage.getItem('books')));
+			// window.localStorage.setItem("books",  JSON.stringify(temp));
 
-	// 		// var	temp= JSON.parse(window.localStorage.getItem("books"))
-	// 		// 	temp.push(book)
-	// 		//        console.log('temp',temp)
+			// var	temp= JSON.parse(window.localStorage.getItem("books"))
+			// 	temp.push(book)
+			//        console.log('temp',temp)
 
-	// 		// 	   window.localStorage.setItem("books",  JSON.stringify(temp));
-	// 		// 	   console.log(JSON.parse(window.localStorage.getItem("books")))
-	// 	}
-	// };
+			// 	   window.localStorage.setItem("books",  JSON.stringify(temp));
+			// 	   console.log(JSON.parse(window.localStorage.getItem("books")))
+		
+	};
 
 	addToWishlistClickHandler = (clickedIDWishlist) => {
 		let token = localStorage.getItem('Token');

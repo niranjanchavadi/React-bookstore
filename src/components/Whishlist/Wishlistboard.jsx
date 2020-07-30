@@ -181,6 +181,7 @@ class Wishlistboard extends Component {
         //     this.props.history.push('/login');
 		// }
 		this.props.history.push('/cart');
+		
 	};
 
 	handleChange = () => {

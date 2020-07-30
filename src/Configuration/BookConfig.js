@@ -291,3 +291,12 @@ export function orderPlaced(token) {
         },
     });
 }
+
+export function getUserDetails(userid) {
+    return axiosService.axiosGet('http://localhost:8080/user/getUserDetails?id=' + userid, {
+        headers: {
+            // token: token,
+            'Content-Type': 'application/json;charset=utf-8',
+        },
+    });
+}

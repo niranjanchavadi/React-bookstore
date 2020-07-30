@@ -63,6 +63,7 @@ class Wishlist extends Component {
         let token = localStorage.getItem('Token');
         const res= addFromWishlistToCart(data,token);
         this.getAllItemFromWishList();
+        this.getAllItemsFromCart();
     }
 
     deleteFromWishlist = (data) => {

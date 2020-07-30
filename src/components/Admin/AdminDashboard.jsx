@@ -182,8 +182,8 @@ class AdminDashboard extends Component {
 									root: classes.inputRoot,
 									input: classes.inputInput,
 								}}
-								onChange={this.props.searchHandler}   
-								// onChange= {!this.props.sellernamesearch ? this.props.searchHandler :this.props.sellersearchHandler }
+								// onChange={this.props.searchHandler}   
+								onChange= {!this.props.sellernamesearch || this.props.booknamesearch ? this.props.searchHandler :this.props.sellersearchHandler }
 
 								inputProps={{ 'aria-label': 'search' }}
 							/>

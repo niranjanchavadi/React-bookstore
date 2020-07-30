@@ -25,6 +25,7 @@ import {
 	getWishListBooks,
 	removeAll,
 	orderPlaced,
+	getUserDetails,
 } from '../../Configuration/BookConfig';
 import Dashboard from '../UserDashboard/Dashboard';
 import Dashboard1 from '../UserDashboard/Dashboard1';
@@ -47,8 +48,8 @@ export class Cart extends Component {
 			showOrderSuccessful: false,
 			sameBook: 1,
 			fullName: '',
-			phoneNumber: 0,
-			pinCode: 0,
+			phoneNumber: '',
+			pinCode: '',
 			city: '',
 			address: '',
 			landMark: '',
@@ -83,29 +84,27 @@ export class Cart extends Component {
 			// enabled: false,
 		
 			availablequantity:0,
+			// value:'HOME'
 		};
 	}
 
 	componentDidMount() {
-		
+	
+
 		if(localStorage.getItem("Token")){
 			this.getAllItemsFromCart();
 		}
 		else{
-			// res.data.forEach(element => {
-			// 	this.setState({
-			// 		clickedId:[...this.state.clickedId,element.bookId]
-			// 	},()=>console.log('reference',this.state.clickedId))
+            
+			let temp = JSON.parse(window.localStorage.getItem("books"))
+			console.log("abcd")
+				 console.log(temp)
+				// this.state.cart=temp
 
-				// this.addToBagClickHandler(element.bookId)
-				
-			// });
-			// window.localStorage.getItem("books").forEach(element => {
-			// 	this.setState({
-			// 		cart:[...this.state.cart,element.book]
-			// 	})
-			// })
-				this.state.cart= JSON.parse(window.localStorage.getItem("books"))
+
+				temp.forEach((element,index) => {
+					this.state.cart[index]=element
+				});
 				
 			
 		}
@@ -115,11 +114,39 @@ export class Cart extends Component {
 		this.getAllItemFromWishList();
 	}
 
+     getUserDetails = () =>{
+
+        
+		let userid=localStorage.getItem("UserId")
+		console.log('id',userid)
+		if(userid !== null){
+			getUserDetails(userid).then((res) => {
+				this.setState({ 
+					fullName:res.data.fullName,
+				phoneNumber:res.data.phoneNumber,
+				pinCode: res.data.pinCode,
+				city: res.data.city,
+				address: res.data.address,
+				landMark: res.data.landmark,
+				type: res.data.type,
+				state: res.data.state,
+				 })
+				
+	
+			})
+			
+		}
+	
+	 }
+
+
+
+
 	getAllItemsFromCart = () => {
 		let token = localStorage.getItem('Token');
 		getAllItemsFromCart(token)
 			.then((res) => {
-				this.setState({ cart: res.data });
+				this.setState({ cart: res.data },()=>console.log('ref', this.state.cart));
 				// localStorage.setItem('cartCount',res.data.data.totalBooksInCart)
 			})
 			.catch((err) => {
@@ -390,23 +417,23 @@ export class Cart extends Component {
 		});
 	};
 
-	addQuantity = (data) => {
+	addQuantity = (data,ele) => {
+		console.log(ele)
 		console.log('In addQuantityRequestMethod');
 		let token = localStorage.getItem('Token');
 	// 	let 
 	//   count=ele.quantity;
 	//   count=count-1;
-	// this.setState({
-	// 	availablequantity:ele.available,
-	// })
+	let count =ele.available;
+	  let quantity = ele.quantity;  
 	   
-		// if(this.state.availablequantity===0){
-		// 	alert(' available quantity is zero')
-		// }
-		// else{
+		if(count === quantity){
+			alert(' available quantity is zero')
+		}
+		else{
 			const res = addMoreItems(data, token);
 			this.getAllItemsFromCart();
-		// }
+		}
 			
 		
 	
@@ -454,6 +481,7 @@ export class Cart extends Component {
 	};
 
 	customerDetailsShowHandler = (event) => {
+		this.getUserDetails();
 		// let isloggedin = localStorage.getItem('Email') ? true : false;
 		if (localStorage.getItem('RoleType') === 'user') {
 			this.totalamount();
@@ -511,9 +539,9 @@ export class Cart extends Component {
 
 	render() {
 
-		const { fullName,phoneNumber,pinCode,city,address,landMark,state} = this.state;
-		const enabled =fullName.length > 0 && phoneNumber.length > 0 && pinCode.length > 0 && city.length > 0 &&
-		address.length > 0 &&landMark.length > 0 && state.length >0;
+		// const { fullName,phoneNumber,pinCode,city,address,landMark,state} = this.state;
+		// const enabled =fullName.length > 0 && phoneNumber.length > 0 && pinCode.length > 0 && city.length > 0 &&
+		// address.length > 0 &&landMark.length > 0 && state.length >0;
 
 
 		return (
@@ -525,6 +553,8 @@ export class Cart extends Component {
 							<Typography id="mycart-title" variant="h5" style={{ marginTop: '2%', marginLeft: '3.9%' }}>
 								My cart({this.state.cart.length})
 							</Typography>
+
+
 
 							{this.state.cart.map((ele, index) => {
 								return (
@@ -559,13 +589,13 @@ export class Cart extends Component {
 																	component="p">
 																	by {ele.author}
 																</Typography>
-																<Typography
+																{/* <Typography
 																	id="note-content"
 																	variant="body2"
 																	color="textSecondary"
 																	component="p">
 																	Available:{ele.available}
-																</Typography>
+																</Typography> */}
 																<Typography
 																	id="note-content"
 																	variant="body2"
@@ -597,7 +627,7 @@ export class Cart extends Component {
 																<div>
 																	<Button
 																		key={ele.id}
-																		onClick={() => this.addQuantity(ele.bookId)}>
+																		onClick={() => this.addQuantity(ele.bookId,ele)}>
 																		<AddCircleOutlineIcon />
 																	</Button>
 																</div>
@@ -644,6 +674,7 @@ export class Cart extends Component {
 										<TextField
 											type="text"
 											variant="outlined"
+											value={this.state.fullName}
 											required
 											placeholder="Name"
 											id="name"
@@ -656,6 +687,7 @@ export class Cart extends Component {
 										<TextField
 											type="text"
 											variant="outlined"
+											value={this.state.phoneNumber}
 											required
 											placeholder="Phone number"
 											id="phoneNumber"
@@ -674,6 +706,7 @@ export class Cart extends Component {
 											variant="outlined"
 											required
 											placeholder="pincode"
+											value={this.state.pincode}
 											id="pincode"
 											inputProps={{maxLength :6}}
 											className="form-control "
@@ -685,6 +718,7 @@ export class Cart extends Component {
 										<TextField
 											type="text"
 											variant="outlined"
+											value={this.state.state}
 											placeholder="State"
 											id="locality"
 											className="form-control "
@@ -701,6 +735,7 @@ export class Cart extends Component {
 											variant="outlined"
 											required
 											placeholder="city/town"
+											value={this.state.city}
 											id="city"
 											className="form-control "
 											onChange={this.cityHandler}
@@ -713,6 +748,7 @@ export class Cart extends Component {
 											variant="outlined"
 											required
 											placeholder="landmark"
+											value={this.state.landMark}
 											id="landmark"
 											className="form-control "
 											onChange={this.landmarkHandler}
@@ -728,6 +764,7 @@ export class Cart extends Component {
 											variant="outlined"
 											required
 											placeholder="address"
+											value={this.state.address}
 											id="address"
 											className="address-group "
 											onChange={this.addressHandler}
@@ -746,18 +783,21 @@ export class Cart extends Component {
 													control={<Radio color="primary" />}
 													label="Home"
 													onChange={this.typeHandler}
+													checked = {this.state.type === 'HOME'}
 												/>
 												<FormControlLabel
 													value="WORK"
 													control={<Radio color="primary" />}
 													label="Work"
 													onChange={this.typeHandler}
+													checked = {this.state.type === 'WORK'}
 												/>
 												<FormControlLabel
 													value="OTHER"
 													control={<Radio color="primary" />}
 													label="Other"
 													onChange={this.typeHandler}
+													checked = {this.state.type === 'OTHER'}
 												/>
 											</RadioGroup>
 										</div>
@@ -771,7 +811,7 @@ export class Cart extends Component {
 											style={{ backgroundColor: '#3371B5', color: 'white' }}
 											onClick={this.addCustomerDetailsHandler}
 											// disabled={!this.state.enabled}
-											disabled={!enabled}
+											// disabled={!enabled}
 											>
 											CONTINUE
 										</Button>
@@ -845,11 +885,11 @@ export class Cart extends Component {
 									<div className="cart-title-div">
 										<p
 											className="my-cart-h4 "
-											style={{ marginLeft: '4.5%', margintop: '400px', marginBottom: '8%' }}>
-											<b>Total Amount: </b>&nbsp;&nbsp; Rs.{this.state.OrderAmount}
+											style={{ marginLeft: '30.5%', margintop: '400px', marginBottom: '8%' }}>
+											<b>Total Amount: &nbsp;&nbsp; Rs.{this.state.OrderAmount}</b>
 											<br/>
-											<b>Shipping Cost:</b> &nbsp;&nbsp; Rs.{this.state.shippingcharge}
-											<br/><br/>
+											<b>Shipping Cost: &nbsp;&nbsp; Rs.{this.state.shippingcharge}</b>
+											<br/><b>----------------------------</b><br/>
 											<b>Total Payable:&nbsp;&nbsp; Rs.{this.state.totalPayable}</b>
 										</p>
 									

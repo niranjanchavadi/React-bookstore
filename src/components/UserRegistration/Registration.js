@@ -15,6 +15,61 @@ import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import Logo from '../../asserts/Logo.png';
 import { userRegistration } from '../../service/UserService/UserServices';
 import Styles from '../../css/snackbar.module.css';
+import { withStyles } from "@material-ui/core";
+
+import MenuBookIcon from "@material-ui/icons/MenuBookSharp";
+import { withRouter } from "react-router";
+import {
+    Container,
+    Typography,
+    AppBar,
+    Toolbar,
+    Grid,
+} from "@material-ui/core";
+
+const useStyles = (theme) => ({
+    title: {
+        display: "none",
+        paddingLeft: "0.5%",
+        fontSize: "140%",
+        overflow: "visible",
+        marginTop: "5px",
+        marginLeft: "15px",
+        [theme.breakpoints.up("sm")]: {
+            display: "block",
+        },
+    },
+    bookIcon: {
+        fontSize: "36px",
+        [theme.breakpoints.up("sm")]: {
+            fontSize: "36px",
+        },
+    },
+    cartIcon: {
+        color: "white",
+        marginLeft: "0%",
+        [theme.breakpoints.up("sm")]: {
+            marginLeft: "10%",
+        },
+    },
+    searchbox: {
+        marginLeft: "-30%",
+    },
+    appBar: {
+        padding: "0 10%",
+        backgroundColor: "#A03037",
+        position: "fixed",
+    },
+    toolbar: {
+        display: "flex",
+        justifyContent: "space-between",
+    },
+    gridDiv: {
+        width: "auto",
+        flexWrap: "noWrap",
+        alignItems: "center",
+    },
+});
 
 class Registration extends Component {
     constructor(props) {
@@ -131,10 +186,35 @@ class Registration extends Component {
         }
     };
 
+    // render() {
+    // 	const { emailId, password, fullName, mobileNumber } = this.state;
+    // 	const enabled = fullName.length > 0 && emailId.length > 0 && mobileNumber.length > 0 && password.length > 0;
+    // 	return (
     render() {
+        const { classes } = this.props;
         const { emailId, password, fullName, mobileNumber } = this.state;
         const enabled = fullName.length > 0 && emailId.length > 0 && mobileNumber.length > 0 && password.length > 0;
         return ( <
+            div >
+            <
+            AppBar position = "fixed"
+            className = { classes.appBar } >
+            <
+            Toolbar className = { classes.toolbar } >
+            <
+            Grid container className = { classes.gridDiv } >
+            <
+            MenuBookIcon className = { classes.bookIcon }
+            /> <
+            Typography className = { classes.title }
+            value = "1"
+            variant = "h6"
+            noWrap >
+            BookStore <
+            /Typography> <
+            /Grid> <
+            /Toolbar> <
+            /AppBar> <
             form onSubmit = { this.handleSubmit } >
             <
             Card className = "registercard" >
@@ -344,9 +424,16 @@ class Registration extends Component {
             /Card>{' '} <
             div className = { this.state.isActive ? [Styles.snackbar, Styles.show].join(' ') : Styles.snackbar } > { ' ' } { this.state.status } { ' ' } <
             /div>{' '} <
-            /form>
+            /form> <
+            /div>
         );
     }
 }
 
-export default Registration;
+export default withRouter(withStyles(useStyles)(Registration)); {
+    /* );
+    	}
+    }
+
+    export default Registration; */
+}

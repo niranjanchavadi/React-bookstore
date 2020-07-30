@@ -14,7 +14,55 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Logo from '../../asserts/Logo.png';
 import { DialogContent, Dialog } from '@material-ui/core';
 import { withStyles } from '@material-ui/core';
+
 import Styles from '../../css/snackbar.module.css';
+import MenuBookIcon from '@material-ui/icons/MenuBookSharp';
+import { withRouter } from 'react-router';
+import { Container, Typography, AppBar, Toolbar, Grid } from '@material-ui/core';
+
+const useStyles = (theme) => ({
+    title: {
+        display: 'none',
+        paddingLeft: '0.5%',
+        fontSize: '140%',
+        overflow: 'visible',
+        marginTop: '5px',
+        marginLeft: '15px',
+        [theme.breakpoints.up('sm')]: {
+            display: 'block',
+        },
+    },
+    bookIcon: {
+        fontSize: '36px',
+        [theme.breakpoints.up('sm')]: {
+            fontSize: '36px',
+        },
+    },
+    cartIcon: {
+        color: 'white',
+        marginLeft: '0%',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: '10%',
+        },
+    },
+    searchbox: {
+        marginLeft: '-30%',
+    },
+    appBar: {
+        padding: '0 10%',
+        backgroundColor: '#A03037',
+        position: 'fixed',
+    },
+    toolbar: {
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    gridDiv: {
+        width: 'auto',
+        flexWrap: 'noWrap',
+        alignItems: 'center',
+    },
+});
 
 export class Login extends Component {
     constructor(props) {
@@ -110,6 +158,7 @@ export class Login extends Component {
                     localStorage.setItem('FullName', response.data.message);
                     localStorage.setItem('Email', user.emailId);
                     localStorage.setItem('RoleType', response.data.roleType);
+                    localStorage.setItem('UserId', response.data.userId);
                     this.openSnackBar('Login Successfull');
 
                     setTimeout(() => {
@@ -140,10 +189,36 @@ export class Login extends Component {
         });
     };
 
+    // render() {
+    // 	const { emailId, password } = this.state;
+    // 	const enabled = emailId.length > 0 && password.length > 0;
+    // 	return (
+
     render() {
+        const { classes } = this.props;
         const { emailId, password } = this.state;
         const enabled = emailId.length > 0 && password.length > 0;
         return ( <
+            div >
+            <
+            AppBar position = "fixed"
+            className = { classes.appBar } >
+            <
+            Toolbar className = { classes.toolbar } >
+            <
+            Grid container className = { classes.gridDiv } >
+            <
+            MenuBookIcon className = { classes.bookIcon }
+            />{' '} <
+            Typography className = { classes.title }
+            value = "1"
+            variant = "h6"
+            noWrap >
+            BookStore { ' ' } <
+            /Typography>{' '} <
+            /Grid>{' '} <
+            /Toolbar>{' '} <
+            /AppBar>{' '} <
             form onSubmit = { this.handleSubmit } >
             <
             Card className = "login" >
@@ -187,7 +262,8 @@ export class Login extends Component {
             autoHideDuration = { 3000 }
             onClose = {
                 () => this.setState({ snackbarOpen: false }) }
-            message = { this.state.snackbarMessage } > < /Snackbar>{' '} <
+            message = { this.state.snackbarMessage } > { ' ' } <
+            /Snackbar>{' '} <
             div >
             <
             div className = "usernameLogin" >
@@ -246,7 +322,13 @@ export class Login extends Component {
                                 showPassword: !this.state.showPassword,
                             })
                         }
-                        edge = "end" > { this.state.showPassword ? < Visibility / > : < VisibilityOff / > } { ' ' } <
+                        edge = "end" > { ' ' } {
+                            this.state.showPassword ? ( <
+                                Visibility / >
+                            ) : ( <
+                                VisibilityOff / >
+                            )
+                        } { ' ' } <
                         /IconButton>{' '} <
                         /InputAdornment>
                     ),
@@ -278,11 +360,12 @@ export class Login extends Component {
             /div>{' '} <
             /CardContent>{' '} <
             /Card>{' '} <
-            div className = { this.state.isActive ? [Styles.snackbar, Styles.show].join(' ') : Styles.snackbar } > { this.state.status } { ' ' } <
+            div className = { this.state.isActive ? [Styles.snackbar, Styles.show].join(' ') : Styles.snackbar } > { ' ' } { this.state.status } { ' ' } <
             /div>{' '} <
-            /form>
+            /form>{' '} <
+            /div>
         );
     }
 }
 
-export default Login;
+export default withRouter(withStyles(useStyles)(Login));

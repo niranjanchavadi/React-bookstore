@@ -23,6 +23,7 @@ class Logout extends Component {
         console.log('log out component');
         localStorage.removeItem('Token');
         localStorage.removeItem('Email');
+
         this.props.history.push('/login');
     };
 

@@ -7,6 +7,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCartOutlined';
 import Badge from '@material-ui/core/Badge';
 import { withRouter } from 'react-router';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import UserProfile from '../Profile/UserProfile';
 
 
 
@@ -212,6 +213,7 @@ class Dashboardorder extends Component {
 								<ShoppingCartIcon className={classes.cartIcon} />
 							</StyledBadge>
 						</IconButton>
+						<UserProfile onChange={this.handleClickProfile}/>
 					</Toolbar>
 				</AppBar>
 			</div>

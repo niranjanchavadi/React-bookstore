@@ -11,6 +11,55 @@ import Card from '@material-ui/core/Card';
 import '../../css/ResetPassword.css';
 import { resetPassword } from '../../service/UserService/UserServices';
 import Logo from '../../asserts/Logo.png';
+import { withStyles } from '@material-ui/core';
+import Styles from '../../css/snackbar.module.css';
+import MenuBookIcon from '@material-ui/icons/MenuBookSharp';
+import { withRouter } from 'react-router';
+import { Container, Typography, AppBar, Toolbar, Grid } from '@material-ui/core';
+
+const useStyles = (theme) => ({
+    title: {
+        display: 'none',
+        paddingLeft: '0.5%',
+        fontSize: '140%',
+        overflow: 'visible',
+        marginTop: '5px',
+        marginLeft: '15px',
+        [theme.breakpoints.up('sm')]: {
+            display: 'block',
+        },
+    },
+    bookIcon: {
+        fontSize: '36px',
+        [theme.breakpoints.up('sm')]: {
+            fontSize: '36px',
+        },
+    },
+    cartIcon: {
+        color: 'white',
+        marginLeft: '0%',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: '10%',
+        },
+    },
+    searchbox: {
+        marginLeft: '-30%',
+    },
+    appBar: {
+        padding: '0 10%',
+        backgroundColor: '#A03037',
+        position: 'fixed',
+    },
+    toolbar: {
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    gridDiv: {
+        width: 'auto',
+        flexWrap: 'noWrap',
+        alignItems: 'center',
+    },
+});
 
 export class ResetPassword extends Component {
     constructor(props) {
@@ -113,25 +162,52 @@ export class ResetPassword extends Component {
         }
     };
 
+    // render() {
+    // 	return (
     render() {
+        const { classes } = this.props;
         return ( <
+            div >
+            <
+            AppBar position = "fixed"
+            className = { classes.appBar } >
+            <
+            Toolbar className = { classes.toolbar } >
+            <
+            Grid container className = { classes.gridDiv } >
+            <
+            MenuBookIcon className = { classes.bookIcon }
+            />{' '} <
+            Typography className = { classes.title }
+            value = "1"
+            variant = "h6"
+            noWrap >
+            BookStore { ' ' } <
+            /Typography>{' '} <
+            /Grid>{' '} <
+            /Toolbar>{' '} <
+            /AppBar>{' '} <
             Card className = "reset" >
             <
             CardContent >
             <
             div className = "resetpasswordpage" >
             <
-            div className = "middle" >
+            div className = "middlereset" >
             <
             img src = { Logo }
-            width = "25%"
-            height = "25%"
+            width = "30%"
+            height = "30%"
             alt = "hello" / >
             <
             /div>{' '} <
-            div className = "resetpassword" >
+            div className = "resetpassword"
+            style = {
+                { color: '#A03037' } } >
             <
-            span > Reset Password < /span>{' '} <
+            span > { ' ' } <
+            b > Reset Password < /b>{' '} <
+            /span>{' '} <
             /div>{' '} <
             Snackbar anchorOrigin = {
                 {
@@ -224,8 +300,10 @@ export class ResetPassword extends Component {
             /div>{' '} <
             /div>{' '} <
             /CardContent>{' '} <
-            /Card>
+            /Card>{' '} <
+            /div>
         );
     }
 }
-export default ResetPassword;
+
+export default withRouter(withStyles(useStyles)(ResetPassword));
