@@ -9,19 +9,40 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
 import Pagination from '../pagination/Pagination';
 import '../../css/Admin.css';
-import DisapproveDialog from './DisapproveDialog';
+import { AnimateOnChange, HideUntilLoaded } from "react-animation";
 
-class Adminbooks extends Component {	
+import DisapproveDialog from './DisapproveDialog';
+const { useState, useEffect } = React;
+class Adminbooks extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			sellerName: '',
+		};
+	}
+
 	render() {
+		
 		let isloggedin = localStorage.getItem('RoleType') === 'ADMIN' ? true : false;
 
 		return (
 			<>
-				<div className="bookcount-sortby-div">
+				{/* <div className="bookcount-sortby-div">
 					<Typography id="display-book-title" variant="h4" style={{ marginLeft: '25%', color: '#A03037' }}>
 						<b>Manage Your Books Here</b>{' '}
 					</Typography>
-				</div>
+				</div> */}
+				<Card className="bookcount-sortby-div1">
+					<h1>
+						{' '}
+						<AnimateOnChange
+							animationOut="custom-animation-out 500ms ease-out forwards"
+							animationIn="custom-animation-in 500ms ease-out forwards"
+							durationOut="500">
+							<b style={{ color: '#A03037' }}>Manage Your Books Here</b>{' '}
+						</AnimateOnChange>
+					</h1>
+				</Card>
 				{isloggedin && (
 					<div className="bookcount-sortby-div">
 						<Typography
@@ -35,28 +56,38 @@ class Adminbooks extends Component {
 
 				{isloggedin && (
 					<div className="display-sellers-div">
+						{/* <div className="bookcount-sortby-div">
+						<Typography
+							id="display-book-title"
+							variant="h5"
+							style={{ marginLeft: '-17%', color: '#A03037' }}>
+							<b>SellerName</b> <span id="sellercountfont">({this.props.sellerCount})</span>
+						</Typography>
+					</div> */}
 						{this.props.sellers.map((ele) => {
+							
 							return (
 								<>
+								
 									<Card className="sellernote-card" key={ele.sellerId}>
 										<CardActionArea>
 											<CardContent id="card-content">
 												<Typography gutterBottom variant="h11" component="h3">
-													Name:{ele.sellerName}
+													Name : {ele.sellerName}
 												</Typography>
 												<Typography
 													id="note-content"
 													variant="body2"
 													color="textSecondary"
 													component="p">
-													sellerId:{ele.sellerId}
+													seller Id: {ele.sellerId}
 												</Typography>
 												<Typography
 													id="note-content"
 													variant="body2"
 													color="textSecondary"
 													component="p">
-													Requests:{ele.quantity}
+													Requests: {ele.quantity}
 												</Typography>
 											</CardContent>
 										</CardActionArea>
@@ -83,10 +114,7 @@ class Adminbooks extends Component {
 					</div>
 				)}
 
-
-
-
-{/* {isloggedin && (
+				{/* {isloggedin && (
 					<div className="bookcount-sortby-div">
 						<Typography
 							id="display-book-title"
@@ -97,8 +125,26 @@ class Adminbooks extends Component {
 			     	</div>
 				  )} */}
 				<div className="display-sellerbooks-div">
-			    	
+					{/* <div className="bookcount-sortby-div">
+						<Typography
+							id="display-book-title"
+							variant="h5"
+							style={{ marginLeft: '-17%', color: '#A03037' }}>
+							<b>SellerList</b> <span id="sellercountfont">({this.props.sellerCount})</span>
+						</Typography>
+					</div> */}
+
 					{this.props.books.map((ele) => {
+						// 	<div className="display-sellers-div">
+						// 		<div className="bookcount-sortby-div">
+						// 	<Typography
+						// 		id="display-book-title"
+						// 		variant="h5"
+						// 		style={{ marginLeft: '-17%', color: '#A03037' }}>
+						// 		<b>SellerList</b> <span id="sellercountfont">({this.props.sellerCount})</span>
+						// 	</Typography>
+						// </div>
+
 						return (
 							<>
 								<Card className="verificationnote-card" key={ele.id}>
@@ -141,8 +187,7 @@ class Adminbooks extends Component {
 														color: 'white',
 														justifyContent: 'center',
 														padding: '3px 44px',
-														marginLeft:'30%'
-													
+														marginLeft: '30%',
 													}}>
 													Approved
 												</Button>
@@ -153,7 +198,11 @@ class Adminbooks extends Component {
 															variant="outlined"
 															color="white"
 															size="small"
-															style={{ backgroundColor: '#A03037', color: 'white',marginLeft:'7%'}}
+															style={{
+																backgroundColor: '#A03037',
+																color: 'white',
+																marginLeft: '7%',
+															}}
 															onClick={() => {
 																this.props.handleApproved(ele.bookId);
 															}}>
@@ -169,7 +218,7 @@ class Adminbooks extends Component {
 																padding: '3px 40px',
 																color: 'white',
 																justifyContent: 'center',
-																marginLeft:'8%'
+																marginLeft: '8%',
 																// marginLeft:'50%'
 															}}>
 															DisApproved
@@ -181,10 +230,12 @@ class Adminbooks extends Component {
 															color="white"
 															size="small"
 															style={{ backgroundColor: '#A03037', color: 'white' }}
-															onClick={() => this.props.handledisApprove(ele.bookId)}>
+															onClick={() =>
+																this.props.handleDisapprovedialog(ele.bookId)
+															}>
 															DisApprove
-														</Button>)}
-	
+														</Button>
+													)}
 												</>
 											)}
 										</div>

@@ -101,7 +101,7 @@ class Wishlist extends Component {
                                                             <div className="img-book">
                                                                 <img
                                                                     id="img-book"
-                                                                    src={ele.imgUrl}
+                                                                    src={ele.bookImgUrl}
                                                                     style={{ borderRadius: 0, justifyContent: 'center' }}
                                                                 />
                                                             </div>
@@ -119,21 +119,21 @@ class Wishlist extends Component {
 																			
 																			variant="body2"
 																			component="h4">
-																		<b>{ele.name} </b>	
+																		<b>{ele.bookName} </b>	
 																		</Typography>
 																		<Typography
 																			id="note-content"
 																			variant="body2"
 																			color="textSecondary"
 																			component="p">
-																			by {ele.author}
+																			by {ele.authorName}
 																		</Typography>
 																		<Typography
 																			id="note-content"
 																			variant="body2"
 																			color="black"
 																			component="h1">
-																			<b> Rs.{ele.totalPrice}</b>
+																			<b> Rs.{ele.price}</b>
 																		</Typography>
 															</div>
                                                             &nbsp;&nbsp;

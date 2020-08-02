@@ -363,4 +363,32 @@
                 height: 42px;
                 margin-top: -80px;
             }
+            .example-appear {
+                opacity: 0.04;
+            }
+            .example-appear.example-appear-active {
+                opacity: 1;
+                transition: opacity 50s ease-in;
+            }
+            @keyframes custom-animation-in {
+                from {
+                    transform: rotateX(140deg) scale(32);
+                }
+                to {
+                    transform: none;
+                }
+            }
+            @keyframes custom-animation-out {
+                from {
+                    transform: none;
+                }
+                to {
+                    transform: rotateX(-270deg) scale(0);
+                }
+            }
+            .bookcount-sortby-div1 {
+                width: 26.1%;
+                margin-top: 5%;
+                margin-left: 38%;
+            }
         }

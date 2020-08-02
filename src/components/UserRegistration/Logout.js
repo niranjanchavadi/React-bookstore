@@ -48,9 +48,9 @@ class Logout extends Component {
                     marginLeft: '8%',
                 }
             } >
-            BookStore Login { ' ' } <
-            /h2>{' '} <
-            /div>{' '} <
+            BookStore Login <
+            /h2> <
+            /div> <
             Snackbar anchorOrigin = {
                 {
                     vertical: 'bottom',
@@ -61,7 +61,10 @@ class Logout extends Component {
             autoHideDuration = { 3000 }
             onClose = {
                 () => this.setState({ snackbarOpen: false }) }
-            message = { this.state.snackbarMessage } > < /Snackbar>{' '} <
+            message = { this.state.snackbarMessage } >
+
+            <
+            /Snackbar> <
             div className = "logout" >
             <
             div className = "logoutButton" >
@@ -71,13 +74,13 @@ class Logout extends Component {
             onClick = { this.logout }
             style = {
                 { backgroundColor: '#A03037' } } >
-            Logout { ' ' } <
-            /Button>{' '} <
-            /div>{' '} <
-            /div>{' '} <
+            Logout <
+            /Button> <
+            /div> <
+            /div> <
             br / >
             <
-            /div>{' '} <
+            /div> <
             /div>
         );
     }

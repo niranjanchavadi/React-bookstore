@@ -3,7 +3,7 @@ import Popover from '@material-ui/core/Popover';
 import Badge from '@material-ui/core/Badge';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import Tooltip from '@material-ui/core/Tooltip';
-import MenuItem from '@material-ui/core/MenuItem';
+
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -13,6 +13,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { withRouter } from 'react-router-dom';
 import { TextField, Dialog, DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
 import { uploadFile } from '../../Configuration/confiugration';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Login from '../UserRegistration/Login';
 
 const useStyles = makeStyles((theme) => ({
@@ -50,6 +51,11 @@ function SellerProfile(props) {
     };
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
+    };
+
+    const handlerRemoveProfile = () => {
+        console.log(props);
+        localStorage.removeItem(localStorage.getItem('Email'));
     };
 
     const handleLoginChange = () => {
@@ -121,17 +127,17 @@ function SellerProfile(props) {
             { display: 'flex', flexDirection: 'row' } } >
         <
         Avatar alt = { fullName }
-        src = { localStorage.getItem(localStorage.getItem('Email')) }
+        src = { localStorage.getItem(localStorage.getItem('Email')) || localStorage.getItem('FullName') }
         onClick = { handleClick }
         style = {
-            { width: '50px', height: '50px' } }
-        />{' '} <
-        /div>{' '} <
+            { width: '58px', height: '58px', color: "#A03037", fontSize: '1.6rem' } }
+        />  <
+        /div>  <
         Popover id = { id }
         open = { open }
         anchor = { anchor }
         style = {
-            { marginTop: '-21%', marginLeft: '-1%' } }
+            { marginTop: '-17.5%', marginLeft: '-1%' } }
         onClose = { handleClose }
         anchorOrigin = {
             {
@@ -169,12 +175,12 @@ function SellerProfile(props) {
         } >
         <
         Avatar alt = { localStorage.getItem('FullName') }
-        src = { localStorage.getItem(localStorage.getItem('Email')) }
+        src = { localStorage.getItem(localStorage.getItem('Email')) || localStorage.getItem('FullName') }
         style = {
-            { width: '100px', height: '100px' } }
-        />{' '} <
-        /Badge>{' '} <
-        /div>{' '} <
+            { width: '130px', height: '130px', color: "#A03037", fontSize: '2.6rem' } }
+        />  <
+        /Badge>  <
+        /div>  <
         br / >
         <
         div style = {
@@ -186,8 +192,8 @@ function SellerProfile(props) {
             }
         } >
         <
-        b > { fullName } < /b>{' '} <
-        /div>{' '} <
+        b > { fullName } < /b>  <
+        /div>  <
         div style = {
             {
                 justifyContent: 'center',
@@ -197,24 +203,20 @@ function SellerProfile(props) {
             }
         } >
         <
-        b > { email } < /b>{' '} <
-        /div>{' '} { /* <Divider /> */ } { ' ' } <
-        div style = {
-            { marginTop: '5%' } } >
+        b > { email } < /b>  <
+        /div> 
+
+
         <
-        MenuItem title = "BookStore Account"
-        onClick = { handleLoginChange }
-        style = {
-            { justifyContent: 'center', display: 'flex' } } > { ' ' } <
-        /MenuItem>{' '} <
-        /div>{' '} <
         div style = {
             {
-                justifyContent: 'center',
+                justifyContent: 'space-between',
                 display: 'flex',
                 padding: '9%',
             }
-        } > { ' ' } {
+        } >
+
+        {
             isloggedin && ( <
                 Button variant = "contained"
                 style = {
@@ -226,10 +228,31 @@ function SellerProfile(props) {
                     }
                 }
                 onClick = { handleLoginChange } >
-                Logout { ' ' } <
+                Logout <
                 /Button>
             )
-        } { ' ' } {
+        }
+
+
+        {
+            isloggedin && ( <
+                Button variant = "contained"
+                color = "primary"
+                style = {
+                    {
+                        justifyContent: 'center',
+                        display: 'flex',
+                        backgroundColor: '#A03037',
+                        color: 'white',
+                    }
+                }
+                onClick = { handlerRemoveProfile } >
+                Delete <
+                / Button>
+            )
+        }
+
+        {
             !isloggedin && ( <
                 Button variant = "contained"
                 style = {
@@ -242,18 +265,18 @@ function SellerProfile(props) {
                     }
                 }
                 onClick = { handlerforLogin } >
-                Login { ' ' } <
+                Login <
                 /Button>
             )
-        } { ' ' } <
-        /div>{' '} {
+        } <
+        /div>  {
             /* <div className="profilefooter">
-                                                                                                                                                                                                                                                                                                                                                 <p>Privacy Policy .Terms of Service</p>  
-                                                                                                                                                                                                                                                                                                                                                </div> */
-        } { ' ' } <
-        /div>{' '} <
-        /Typography>{' '} <
-        /Popover>{' '} <
+                                                                                                                                                                                                                                                                                                                                                             <p>Privacy Policy .Terms of Service</p>  
+                                                                                                                                                                                                                                                                                                                                                            </div> */
+        } <
+        /div>  <
+        /Typography>  <
+        /Popover>  <
         Dialog open = { openDialog }
         onClose = { handleCloseDialog } >
         <
@@ -267,8 +290,8 @@ function SellerProfile(props) {
                 fontStyle: 'unset',
             }
         } >
-        Select Profile Photo { ' ' } <
-        /DialogTitle>{' '} <
+        Select Profile Photo <
+        /DialogTitle>  <
         DialogContent >
         <
         DialogContentText >
@@ -291,8 +314,8 @@ function SellerProfile(props) {
         <
         TextField type = "file"
         onChange = { handleFileChange }
-        />{' '} <
-        /div>{' '} <
+        />  <
+        /div>  <
         div style = {
             {
                 display: 'flex',
@@ -306,18 +329,18 @@ function SellerProfile(props) {
         Button variant = "contained"
         color = "primary"
         onClick = { handleFileSubmitChange } >
-        Upload { ' ' } <
-        /Button>{' '} <
+        Upload <
+        /Button>  <
         Button variant = "contained"
         color = "primary"
         onClick = { handleCloseDialog } >
-        Cancel { ' ' } <
-        /Button>{' '} <
-        /div>{' '} <
-        /div>{' '} <
-        /DialogContentText>{' '} <
-        /DialogContent>{' '} <
-        /Dialog>{' '} <
+        Cancel <
+        /Button>  <
+        /div>  <
+        /div>  <
+        /DialogContentText>  <
+        /DialogContent>  <
+        /Dialog>  <
         /div>
     );
 }

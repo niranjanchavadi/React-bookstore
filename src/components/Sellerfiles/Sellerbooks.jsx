@@ -38,7 +38,16 @@ class Sellerbooks extends Component {
 				   </div> */}
          {this.props.updatenewbooksstate &&(
 				   
-				<div className="display-books-div">
+				
+					<div className="approvedbookcount-sortby-divnew">
+						<Typography
+							// id="display-book-titlenew"
+							variant="h5"
+							style={{ marginLeft: '-4%', color: '#A03037' ,fontSize:'25px'}}>
+							<b>NewlyAddedBooks</b> <span id="sellercountfont">({this.props.newbookCount})</span>
+						</Typography>
+				
+					<div className="display-newbooks-div">
 					{this.props.books.map((ele) => {
 						return (
 							<>
@@ -125,13 +134,33 @@ class Sellerbooks extends Component {
 							</>
 						);
 					})}
+						</div>
 				</div>)}
 			
 
 
 
 				{!this.props.updatenewbooksstate &&(
-                <div className="display-books-div">
+                  <div>
+					{this.props.heading  ? 
+					(<div className="approvedbookcount-sortby-divnew">
+						<Typography
+							id="display-book-titlenew"
+							variant="h5"
+							style={{ marginLeft: '-14%', color: '#A03037' ,fontSize:'25px'}}>
+							<b>ApprovedBooks</b> <span id="sellercountfont">({this.props.approvedbookcount})</span>
+						</Typography>
+					</div>)
+					:
+					(<div className="approvedbookcount-sortby-divnew">
+						<Typography
+							id="display-book-titlenew"
+							variant="h5"
+							style={{ marginLeft: '-14%', color: '#A03037',fontSize:'25px' }}>
+							<b>DisapprovedBooks</b> <span id="sellercountfont">({this.props.approvedbookcount})</span>
+						</Typography>
+					</div>)}
+					<div className="display-approvedbooks-div">
 					{this.props.approvedBooks.map((ele) => {
 						return (
 							<>
@@ -194,6 +223,7 @@ class Sellerbooks extends Component {
 							</>
 						);
 					})}
+				</div>
 				</div>)}
 			</>
 		);

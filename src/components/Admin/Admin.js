@@ -120,6 +120,26 @@ const useStyles = (theme) => ({
         flexWrap: 'noWrap',
         alignItems: 'center',
     },
+
+    yes: {
+        marginLeft: '1%',
+        marginTop: '-10%',
+        backgroundColor: 'rgb(145,10,10)',
+        width: '50%',
+        color: 'white',
+    },
+    disapproveheading: {
+        color: 'rgb(145,10,10)',
+        width: '100%',
+        marginTop: '1%',
+    },
+
+    cancel: {
+        marginLeft: '1%',
+        backgroundColor: 'rgb(145,10,10)',
+        width: '50%',
+        color: 'white',
+    },
 });
 
 class Admin extends Component {
@@ -129,6 +149,7 @@ class Admin extends Component {
             // bookList: [],
             displayType: 'allBooks',
             filterArray: [],
+            filterArray1: [],
             isSearching: false,
             filterArrayCount: 0,
             clickedId: [],
@@ -147,13 +168,14 @@ class Admin extends Component {
             booknamesearch: false,
             openDisapproveDialog: false,
             bookId: '',
+            adminheading: false,
         };
     }
 
-    handleDisapprovedialog = (book) => {
+    handleDisapprovedialog = (Id) => {
         this.setState({
             openDisapproveDialog: !this.state.openDisapproveDialog,
-            bookId: book.bookId,
+            bookId: Id,
         });
     };
 
@@ -208,6 +230,7 @@ class Admin extends Component {
         this.setState({
             sellernamesearch: true,
             booknamesearch: false,
+            adminheading: false,
         });
     };
 
@@ -219,11 +242,9 @@ class Admin extends Component {
     };
 
     handleApproved = (clickedID) => {
-        // let cartCount = this.state.cartCount;
         let clickedid = this.state.clickedId;
         clickedid.push(clickedID);
         this.setState({
-            // cartCount: this.state.cartCount,
             clickedId: [...clickedid],
             addToBagBtnText: 'Approved',
         });
@@ -232,11 +253,14 @@ class Admin extends Component {
         };
 
         let token = localStorage.getItem('Token');
-        // 	console.log(token, 'token');
+
         const response = bookVerification(cart, token);
         response.then((res) => {
             console.log('Approved Response ', res.data);
         });
+
+        this.getBookLists();
+        this.getAllSellers();
     };
 
     handledisApprove = (clickedID2) => {
@@ -246,6 +270,7 @@ class Admin extends Component {
             // cartCount: this.state.cartCount,
             clickedIddisapprove: [...clickediddisapprove],
             disapprovedtext: 'disApproved',
+            openDisapproveDialog: !this.state.openDisapproveDialog,
         });
         var cart = {
             bookId: clickedID2,
@@ -257,6 +282,9 @@ class Admin extends Component {
         response.then((res) => {
             console.log('disApproved Response ', res.data);
         });
+
+        this.getBookLists();
+        this.getAllSellers();
     };
 
     componentDidMount() {
@@ -285,6 +313,7 @@ class Admin extends Component {
                 sellerId: sellerId,
                 sellernamesearch: false,
                 booknamesearch: true,
+                adminheading: true,
             },
             () => this.getBookLists()
         );
@@ -323,7 +352,7 @@ class Admin extends Component {
             });
             this.setState({
                 isSearching: true,
-                filterArray: newData,
+                filterArray1: newData,
                 filterArrayCount: newData.length,
             });
         } else {
@@ -338,6 +367,18 @@ class Admin extends Component {
     };
 
     render() {
+
+
+
+        let user = localStorage.getItem('RoleType');
+        if (user === "SELLER" || user === "user") {
+            localStorage.removeItem('Token');
+            localStorage.removeItem('FullName');
+            localStorage.removeItem('Email');
+        }
+
+        const { classes } = this.props;
+
         const indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
         const indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
         const currentPosts = this.state.books.slice(indexOfFirstPost, indexOfLastPost);
@@ -350,7 +391,7 @@ class Admin extends Component {
             sellersearchHandler = { this.sellersearchHandler }
             sellernamesearch = { this.state.sellernamesearch }
             booknamesearch = { this.state.booknamesearch }
-            />{' '} <
+            /> <
             >
             <
             Adminbooks
@@ -358,7 +399,7 @@ class Admin extends Component {
             books = { this.state.isSearching ? this.state.filterArray : currentPosts }
             bookCount = { this.state.isSearching ? this.state.filterArrayCount : this.state.bookCount }
             TotalCount = { this.state.books.length }
-            sellers = { this.state.isSearching ? this.state.filterArray : currentPosts2 }
+            sellers = { this.state.isSearching ? this.state.filterArray1 : currentPosts2 }
             sellerCount = { this.state.isSearching ? this.state.filterArrayCount : this.state.sellerCount }
             TotalsellerCount = { this.state.sellers.length }
             sellerCount = { this.state.sellers.length }
@@ -371,46 +412,54 @@ class Admin extends Component {
             clickedIddisapprove = { this.state.clickedIddisapprove }
             addToBagBtnText = { this.state.addToBagBtnText }
             handleDisapprovedialog = { this.handleDisapprovedialog }
-            />{' '} <
+            adminheading = { this.state.adminheading }
+            /> <
             Grid container className = "page" >
             <
             Pagination onChange = { this.alerts }
             showFirstButton showLastButton count = { Math.ceil(this.state.books.length / 8) }
-            />{' '} <
-            /Grid>{' '} {
-                /* <div>
-                                						{' '}
-                                						{this.state.openDisapproveDialog ? (
-                                							<div>
-                                								<Dialog className="updateDialog" open={true}>
-                                									<DialogContent className="updateDialogContent">
-                                										
+            /> <
+            /Grid> <
+            div >
 
-                                                                         <Typography
-                                												// className={classes.heading}
-                                												variant="h4"
-                                												component="h5"
-                                												gutterBottom>
-                                												Do you want to disapprove?
-                                											</Typography>{' '}
-                                											<div>
-                                												<Button
-                                													type="submit"
-                                													// className={classes.addBook}
-                                													variant="contained"
-                                													onClick={this.handledisApprove(this.state.bookId)}>
-                                													Yes{' '}
-                                												</Button>{' '}
-                                												<Button onClick={this.handleDisapprovedialog}> Cancel </Button>{' '}
-                                											</div>{' '}
-                                									
-                                									</DialogContent>{' '}
-                                								</Dialog>{' '}
-                                							</div>
-                                						) : null}{' '}
-                                					</div>{' '} */
-            } { ' ' } <
-            />{' '} <
+            {
+                this.state.openDisapproveDialog ? ( <
+                    div >
+                    <
+                    Dialog className = "updateDialog"
+                    open = { true } >
+                    <
+                    DialogContent className = "updateDialogContent" >
+                    <
+                    div >
+                    <
+                    Typography className = { classes.disapproveheading }
+                    variant = "h6"
+                    component = "h6"
+                    gutterBottom >
+                    Do you really want to disapprove ?
+                    <
+                    /Typography> <
+                    /div> <
+                    div >
+                    <
+                    Button type = "submit"
+                    variant = "contained"
+                    style = {
+                        { backgroundColor: '#A03037', color: 'white' } }
+                    onClick = {
+                        () => this.handledisApprove(this.state.bookId) } >
+                    Yes <
+                    /Button> <
+                    Button onClick = { this.handleDisapprovedialog } > Cancel < /Button> <
+                    /div> <
+                    /DialogContent> <
+                    /Dialog> <
+                    /div>
+                ) : null
+            } <
+            /div> <
+            /> <
             />
         );
     }

@@ -302,6 +302,15 @@ class Dashboard extends Component {
 	};
 
 	render() {
+
+
+		let user = localStorage.getItem('RoleType');
+		if (user === "ADMIN"|| user === "SELLER") {
+			localStorage.removeItem('Token');
+			localStorage.removeItem('FullName');
+			localStorage.removeItem('Email');
+		}
+
 		const indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
 		const indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
 		const currentPosts = this.state.books.slice(indexOfFirstPost, indexOfLastPost);

@@ -31,20 +31,20 @@ export class OrderSuccessfull extends Component {
             pathname: '/',
         });
     };
-    getOrderId = () => {
-        getOrderId()
-            .then((res) => {
-                this.setState({ orderId: res.data });
-                console.log(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
+    // getOrderId = () => {
+    // 	getOrderId()
+    // 		.then((res) => {
+    // 			this.setState({ orderId: res.data });
+    // 			console.log(res.data);
+    // 		})
+    // 		.catch((err) => {
+    // 			console.log(err);
+    // 		});
+    // };
 
-    componentDidMount() {
-        this.getOrderId();
-    }
+    // componentDidMount() {
+    // 	this.getOrderId();
+    // }
 
     render() {
         const { classes } = this.props;
@@ -61,23 +61,23 @@ export class OrderSuccessfull extends Component {
             <
             p className = "paragraph" >
             hurray!!!your order is confirmed < br / >
-            the order Id is < b > #{ this.state.orderId } < /b>
+            the order Id is < b > #{ this.props.match.params.orderId } < /b>
             save the order id
             for < br / > further communication.. <
-            /p>  <
+            /p> <
             table >
             <
             tr >
             <
-            th > Email Us < /th> <th> Contact Us </th > < th > Address < /th>  <
-            /tr>  <
+            th > Email Us < /th> <th> Contact Us </th > < th > Address < /th> <
+            /tr> <
             tr >
             <
             td > admin @ bookstore.com < /td> <td> +91 9777037773 </td >
             <
-            td > Mohan 's Enclave, Ground Floor, BTM Stage 2, Bangalore, Karnataka 560068 </td>  <
-            /tr>  <
-            /table>  <
+            td > Mohan 's Enclave, Ground Floor, BTM Stage 2, Bangalore, Karnataka 560068 </td> <
+            /tr> <
+            /table> <
             Grid container direction = "row"
             justify = "center"
             alignItems = "center" >
@@ -89,9 +89,9 @@ export class OrderSuccessfull extends Component {
             style = {
                 { width: '22%', backgroundColor: '#3371B5', color: 'white' } } >
             Continue Shopping <
-            /Button>  <
-            /Grid>  <
-            /div>  <
+            /Button> <
+            /Grid> <
+            /div> <
             /Fragment>
         );
     }

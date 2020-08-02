@@ -62,6 +62,10 @@ const useStyles = (theme) => ({
         flexWrap: 'noWrap',
         alignItems: 'center',
     },
+
+    booktittle: {
+        cursor: 'pointer',
+    },
 });
 
 export class Login extends Component {
@@ -209,16 +213,24 @@ export class Login extends Component {
             Grid container className = { classes.gridDiv } >
             <
             MenuBookIcon className = { classes.bookIcon }
-            />{' '} <
+            /> <
             Typography className = { classes.title }
             value = "1"
             variant = "h6"
             noWrap >
-            BookStore { ' ' } <
-            /Typography>{' '} <
-            /Grid>{' '} <
-            /Toolbar>{' '} <
-            /AppBar>{' '} <
+            <
+            span className = { classes.booktittle }
+            href = "BookStore"
+            onClick = {
+                () => this.props.history.push('/') }
+            style = {
+                { color: 'white' } } >
+            BookStore <
+            /span> <
+            /Typography> <
+            /Grid> <
+            /Toolbar> <
+            /AppBar> <
             form onSubmit = { this.handleSubmit } >
             <
             Card className = "login" >
@@ -236,22 +248,23 @@ export class Login extends Component {
             height = "35%"
             alt = "hello" / >
             <
-            /div>{' '} <
+            /div> <
             div className = "signInLogin" >
             <
             h3 style = {
                 { color: '#A03037', textAlign: 'center', marginLeft: '-70%' } } >
-            Login { ' ' } <
-            span href = "Register"
+            Login <
+            span className = { classes.booktittle }
+            href = "Register"
             onClick = {
                 () => this.props.history.push('/register') }
             style = {
                 { color: '#A03037', marginLeft: '10%' } } >
-            Register { ' ' } <
-            /span>{' '} <
-            /h3>{' '} <
-            /div>{' '} <
-            /div>{' '} <
+            Register <
+            /span> <
+            /h3> <
+            /div> <
+            /div> <
             Snackbar anchorOrigin = {
                 {
                     vertical: 'bottom',
@@ -262,8 +275,7 @@ export class Login extends Component {
             autoHideDuration = { 3000 }
             onClose = {
                 () => this.setState({ snackbarOpen: false }) }
-            message = { this.state.snackbarMessage } > { ' ' } <
-            /Snackbar>{' '} <
+            message = { this.state.snackbarMessage } > < /Snackbar> <
             div >
             <
             div className = "usernameLogin" >
@@ -292,8 +304,8 @@ export class Login extends Component {
                 }
             }
             onChange = { this.axios }
-            />{' '} <
-            /div>{' '} <
+            /> <
+            /div> <
             div className = "password" >
             <
             TextField required size = "small"
@@ -322,28 +334,28 @@ export class Login extends Component {
                                 showPassword: !this.state.showPassword,
                             })
                         }
-                        edge = "end" > { ' ' } {
+                        edge = "end" > {
                             this.state.showPassword ? ( <
                                 Visibility / >
                             ) : ( <
                                 VisibilityOff / >
                             )
-                        } { ' ' } <
-                        /IconButton>{' '} <
+                        } <
+                        /IconButton> <
                         /InputAdornment>
                     ),
                 }
             }
-            />{' '} <
-            /div>{' '} <
-            /div>{' '} <
+            /> <
+            /div> <
+            /div> <
             div className = "Forget"
             onClick = {
                 () => this.props.history.push('/forgotpassword') }
             marginRight = "100%" >
             <
-            span href = "ForgotPassword" > Forgot Password ? < /span>{' '} <
-            /div>{' '} <
+            span href = "ForgotPassword" > Forgot Password ? < /span> <
+            /div> <
             div className = "flex-container" >
             <
             div >
@@ -353,16 +365,16 @@ export class Login extends Component {
             style = {
                 { width: '350%', backgroundColor: '#A03037', color: 'white' } }
             disabled = {!enabled } >
-            Login { ' ' } <
-            /Button>{' '} <
-            /div>{' '} <
-            /div>{' '} <
-            /div>{' '} <
-            /CardContent>{' '} <
-            /Card>{' '} <
-            div className = { this.state.isActive ? [Styles.snackbar, Styles.show].join(' ') : Styles.snackbar } > { ' ' } { this.state.status } { ' ' } <
-            /div>{' '} <
-            /form>{' '} <
+            Login <
+            /Button> <
+            /div> <
+            /div> <
+            /div> <
+            /CardContent> <
+            /Card> <
+            div className = { this.state.isActive ? [Styles.snackbar, Styles.show].join(' ') : Styles.snackbar } > { this.state.status } <
+            /div> <
+            /form> <
             /div>
         );
     }

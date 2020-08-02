@@ -3,7 +3,7 @@ import Popover from '@material-ui/core/Popover';
 import Badge from '@material-ui/core/Badge';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import Tooltip from '@material-ui/core/Tooltip';
-import MenuItem from '@material-ui/core/MenuItem';
+
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -17,6 +17,14 @@ import { uploadFile } from '../../Configuration/confiugration';
 const useStyles = makeStyles((theme) => ({
     typography: {
         padding: theme.spacing(5),
+    },
+
+    logout: {
+        justifyContent: 'space-evenly',
+    },
+
+    deletespacing: {
+        marginLeft: '10%',
     },
 }));
 
@@ -42,6 +50,11 @@ function UserProfile(props) {
         if (isloggedin) {
             setOpenDialog(true);
         }
+    };
+
+    const handlerRemoveProfile = () => {
+        console.log(props);
+        localStorage.removeItem(localStorage.getItem('Email'));
     };
 
     const handleCloseDialog = () => {
@@ -98,17 +111,17 @@ function UserProfile(props) {
             { display: 'flex', flexDirection: 'row' } } >
         <
         Avatar alt = { fullName }
-        src = { localStorage.getItem(localStorage.getItem('Email')) }
+        src = { localStorage.getItem(localStorage.getItem('Email')) || localStorage.getItem('FullName') }
         onClick = { handleClick }
         style = {
-            { width: '50px', height: '50px' } }
+            { width: '58px', height: '58px', color: '#A03037', fontSize: '1.6rem' } }
         />{' '} <
         /div>{' '} <
         Popover id = { id }
         open = { open }
         anchor = { anchor }
         style = {
-            { marginTop: '-23.5%' } }
+            { marginTop: '-19.5%' } }
         onClose = { handleClose }
         anchorOrigin = {
             {
@@ -146,9 +159,12 @@ function UserProfile(props) {
         } >
         <
         Avatar alt = { localStorage.getItem('FullName') }
-        src = { localStorage.getItem(localStorage.getItem('Email')) }
+        src = {
+            localStorage.getItem(localStorage.getItem('Email')) ||
+            localStorage.getItem('FullName')
+        }
         style = {
-            { width: '100px', height: '100px' } }
+            { width: '130px', height: '130px', color: "#A03037", fontSize: '2.6rem' } }
         />{' '} <
         /Badge>{' '} <
         /div>{' '} <
@@ -169,19 +185,11 @@ function UserProfile(props) {
             { justifyContent: 'center', display: 'flex', top: '5%', color: 'gray' } } >
         <
         b > { email } < /b>{' '} <
-        /div>{' '} { /* <Divider /> */ } { ' ' } <
-        div style = {
-            { marginTop: '5%' } } >
-        <
-        MenuItem title = "BookStore Account"
-        onClick = { handleLoginChange }
-        style = {
-            { justifyContent: 'center', display: 'flex' } } > { ' ' } <
-        /MenuItem>{' '} <
         /div>{' '} <
-        div style = {
+        div className = { classes.logout }
+        style = {
             {
-                justifyContent: 'center',
+                justifyContent: 'space-between',
                 display: 'flex',
                 padding: '9%',
             }
@@ -198,6 +206,23 @@ function UserProfile(props) {
                 }
                 onClick = { handleLoginChange } >
                 Logout { ' ' } <
+                /Button>
+            )
+        } <
+        span className = { classes.deletespacing } > < /span> {
+            isloggedin && ( <
+                Button variant = "contained"
+                color = "primary"
+                style = {
+                    {
+                        justifyContent: 'center',
+                        display: 'flex',
+                        backgroundColor: '#A03037',
+                        color: 'white',
+                    }
+                }
+                onClick = { handlerRemoveProfile } >
+                Delete { ' ' } <
                 /Button>
             )
         } { ' ' } {
@@ -219,8 +244,8 @@ function UserProfile(props) {
         } { ' ' } <
         /div>{' '} {
             /* <div className="profilefooter">
-                                                                                                                                                                                                                                                 <p>Privacy Policy .Terms of Service</p>  
-                                                                                                                                                                                                                                                </div> */
+                                                                                                                                                                                                                                                                                     <p>Privacy Policy .Terms of Service</p>  
+                                                                                                                                                                                                                                                                                    </div> */
         } { ' ' } <
         /div>{' '} <
         /Typography>{' '} <

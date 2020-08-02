@@ -24,7 +24,8 @@ class DisplayBooks extends Component {
 	}
 
 	handlewishlistlogin =()=>{
-		this.props.history.push("/admin");
+		// this.props.history.push("/login");
+		window.location.assign('/login');
 		
 	}
 
@@ -39,7 +40,7 @@ class DisplayBooks extends Component {
 		return (
 			<>
 				<div className="bookcount-sortby-div">
-					<Typography id="display-book-title" variant="h5" style={{ marginLeft: '-20%' }}>
+					<Typography id="display-book-title" variant="h5" style={{ marginLeft: '-17%' }}>
 						<b>Books</b>{' '}
 						<span id="bookcountfont">
 							(Found {this.props.bookCount} items,of {this.props.TotalCount})

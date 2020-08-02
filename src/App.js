@@ -20,6 +20,8 @@ import SellerPage from './components/Sellerfiles/SellerPage';
 import VerificationSuccessful from './components/UserRegistration/Verification';
 
 function App() {
+    let token = localStorage.getItem('Token') ? true : false;
+    let roletype = localStorage.getItem('RoleType');
     return ( <
         div className = "appDiv" >
         <
@@ -28,12 +30,12 @@ function App() {
         Route path = { '/' }
         exact component = { Dashboard }
         />{' '} <
-        Route path = { '/ordersuccessfull' }
+        Route path = { '/ordersuccessfull/:orderId' }
         exact component = { OrderSuccessfull }
         />{' '} <
         Route path = { '/register' }
         component = { Registration }
-        />  <
+        /> <
         Route path = { '/login' }
         exact component = { Login }
         />{' '} <
@@ -42,19 +44,19 @@ function App() {
         />{' '} <
         Route path = { '/resetpassword' }
         component = { ResetPassword }
-        />{' '} <
+        />{' '} { /* {token && roletype === 'SELLER' &&  */ } <
         Route path = { '/seller' }
         component = { SellerPage }
-        /> <
+        /> { /* {token && roletype === 'ADMIN' &&  */ } <
         Route path = { '/admin' }
         exact component = { Admin }
-        />{' '} <
+        /> <
         Route path = { '/cart' }
         exact component = { Cart }
-        />  <
+        /> <
         Route path = "/logout"
         component = { Logout }
-        />{' '} <
+        /> <
         Route path = "/wishlist"
         component = { Wishlist }
         />{' '} <

@@ -192,10 +192,10 @@ class BasicTextFields extends Component {
 			filterArray: [],
 			isSearching: false,
 			filterArrayCount: 0,
-			
-			
-			updatenewbooksstate: false,
+
+			updatenewbooksstate: '',
 			approvedbookssearch: true,
+			heading: '',
 		};
 	}
 
@@ -218,6 +218,12 @@ class BasicTextFields extends Component {
 		isActive: false,
 	};
 
+
+
+	componentDidMount(){
+		this.getBookLists(); 
+	}
+	
 	getUpdateBooks = () => {
 		let bookId = this.state.bookId;
 
@@ -294,6 +300,7 @@ class BasicTextFields extends Component {
 
 		this.setState({
 			updatenewbooksstate: false,
+			heading: true,
 		});
 
 		getApprovedBooks(token)
@@ -314,6 +321,7 @@ class BasicTextFields extends Component {
 
 		this.setState({
 			updatenewbooksstate: false,
+			heading: false,
 		});
 
 		getDisapprovedBooks(token)
@@ -476,6 +484,8 @@ class BasicTextFields extends Component {
 			.catch((err) => {
 				this.openSnackBar(err.response.data.message, 'Approval request failed ');
 			});
+
+		this.getBookLists();
 	};
 
 	handleApprovalRequest = (clickedID2) => {
@@ -544,7 +554,7 @@ class BasicTextFields extends Component {
 
 			this.setState({
 				isSearching: true,
-				filterArray: newData,
+				filterArray1: newData,
 				filterArrayCount: newData.length,
 			});
 		} else {
@@ -568,6 +578,12 @@ class BasicTextFields extends Component {
 	};
 
 	render() {
+		let user = localStorage.getItem('RoleType');
+		if (user === 'ADMIN' || user === 'user') {
+			localStorage.removeItem('Token');
+			localStorage.removeItem('FullName');
+			localStorage.removeItem('Email');
+		}
 		// const { bookName,authorName, price,quantity, bookDetails} = this.state;
 
 		// const enabled = bookName.length > 0 && authorName.length > 0 && price.length > 0 && quantity.length > 0 && bookDetails.length > 0;
@@ -587,45 +603,44 @@ class BasicTextFields extends Component {
 						searchHandler={this.searchHandler}
 						approvedsearchHandler={this.approvedsearchHandler}
 						approvedbookssearch={this.state.approvedbookssearch}
-					/>{' '}
-				</div>{' '}
+					/>
+				</div>
 				<div className="bookcount-sortby-div">
 					<Typography id="display-book-title" variant="h4" style={{ marginLeft: '30%', color: '#A03037' }}>
-						<b> Sell Your Books Here </b>{' '}
-					</Typography>{' '}
-				</div>{' '}
+						<b> Sell Your Books Here </b>
+					</Typography>
+				</div>
 				<div className="addBookButton">
 					<SimpleMenu
 						getBookLists={this.getBookLists}
 						getApprovedbooks={this.getApprovedbooks}
 						getDisapprovedBooks={this.getDisapprovedBooks}
-					/>{' '}
+					/>
 					<Button
 						onClick={this.openAddBook}
 						variant="contained"
 						disabled={!isloggedin}
 						style={{ backgroundColor: '#A03037', color: 'white' }}>
-						ADD BOOK{' '}
-					</Button>{' '}
-				</div>{' '}
-			
+						ADD BOOK
+					</Button>
+				</div>
 				{!isloggedin && (
 					<div className="bookcount-sortby-div">
 						<Typography
 							id="display-book-title"
 							variant="h5"
 							style={{ marginLeft: '35%', color: '#A03037' }}>
-							<b> Please Login to Add Books </b>{' '}
-						</Typography>{' '}
+							<b> Please Login to Add Books </b>
+						</Typography>
 					</div>
-				)}{' '}
+				)}
 				{this.state.openAdd ? (
 					<Dialog className="addDialog" open={true}>
 						<DialogContent className="addDialogContent">
 							<form className="addDialogContentForm" autoComplete="off">
 								<Typography className={classes.heading} variant="h4" component="h2" gutterBottom>
-									Add Books{' '}
-								</Typography>{' '}
+									Add Books
+								</Typography>
 								<TextField
 									type="text"
 									label="Book Name"
@@ -682,7 +697,7 @@ class BasicTextFields extends Component {
 								/>
 								<br />
 								<Button variant="contained" component="label">
-									Upload Image{' '}
+									Upload Image
 									<input
 										type="file"
 										style={{ display: 'none' }}
@@ -691,7 +706,7 @@ class BasicTextFields extends Component {
 										accept="Image/*"
 										required
 									/>
-								</Button>{' '}
+								</Button>
 								<p className={classes.url}> {this.state.imgName} </p> <br />
 								<div className="save button">
 									<Button
@@ -700,29 +715,31 @@ class BasicTextFields extends Component {
 										variant="contained"
 										// disabled={!enabled}
 										onClick={this.addBook}>
-										Save{' '}
-									</Button>{' '}
+										Save
+									</Button>
 									<Button onClick={this.openAddBook} varia3nt="outlined">
-										Cancel{' '}
-									</Button>{' '}
-								</div>{' '}
-							</form>{' '}
-						</DialogContent>{' '}
+										Cancel
+									</Button>
+								</div>
+							</form>
+						</DialogContent>
 						<div
 							className={
 								this.state.isActive ? [Styles.snackbar, Styles.show].join(' ') : Styles.snackbar
 							}>
-							{' '}
-							{this.state.status}{' '}
-						</div>{' '}
+							
+							{this.state.status}
+						</div>
 					</Dialog>
-				) : null}{' '}
+				) : null}
 				<div className="bookDisplay">
 					<Sellerbooks
 						books={this.state.isSearching ? this.state.filterArray : currentPosts}
 						bookCount={this.state.isSearching ? this.state.filterArrayCount : this.state.bookCount}
 						TotalCount={this.state.books.length}
-						approvedBooks={this.state.isSearching ? this.state.filterArray : currentPosts2}
+						newbookCount={this.state.books.length}
+						approvedbookcount={this.state.approvedBooks.length}
+						approvedBooks={this.state.isSearching ? this.state.filterArray1 : currentPosts2}
 						approvedBooksCount={
 							this.state.isSearching ? this.state.filterArrayCount : this.state.approvedBooksCount
 						}
@@ -734,7 +751,8 @@ class BasicTextFields extends Component {
 						clickedId={this.state.clickedId}
 						approvalclickedId={this.state.approvalclickedId}
 						updatenewbooksstate={this.state.updatenewbooksstate}
-					/>{' '}
+						heading={this.state.heading}
+					/>
 					<Grid container className="page">
 						<Pagination
 							onChange={this.alerts}
@@ -746,10 +764,10 @@ class BasicTextFields extends Component {
 									? Math.ceil(this.state.books.length / 8)
 									: Math.ceil(this.state.approvedBooks.length / 8)
 							}
-						/>{' '}
-					</Grid>{' '}
+						/>
+					</Grid>
 					<div>
-						{' '}
+						
 						{this.state.openUpdateDialog ? (
 							<div>
 								<Dialog className="updateDialog" open={true}>
@@ -760,8 +778,8 @@ class BasicTextFields extends Component {
 												variant="h4"
 												component="h2"
 												gutterBottom>
-												Update Books{' '}
-											</Typography>{' '}
+												Update Books
+											</Typography>
 											<TextField
 												type="text"
 												label="Book Name"
@@ -770,7 +788,7 @@ class BasicTextFields extends Component {
 												name="bookName"
 												onBlur={this.validatebookName}
 												onChange={this.updateState}
-											/>{' '}
+											/>
 											<br />
 											<TextField
 												type="text"
@@ -780,7 +798,7 @@ class BasicTextFields extends Component {
 												value={this.state.authorName}
 												onBlur={this.validateauthorName}
 												onChange={this.updateState}
-											/>{' '}
+											/>
 											<br />
 											<TextField
 												type="number"
@@ -790,7 +808,7 @@ class BasicTextFields extends Component {
 												variant="outlined"
 												name="price"
 												onChange={this.updateState}
-											/>{' '}
+											/>
 											<br />
 											<TextField
 												type="number"
@@ -802,7 +820,7 @@ class BasicTextFields extends Component {
 												onBlur={this.validateQuantity}
 												value={this.state.quantity}
 												onChange={this.updateState}
-											/>{' '}
+											/>
 											<br />
 											<TextareaAutosize
 												className={classes.textArea1}
@@ -812,7 +830,7 @@ class BasicTextFields extends Component {
 												placeholder="Book Detail"
 												name="bookDetails"
 												onChange={this.updateState}
-											/>{' '}
+											/>
 											<br />
 											<div>
 												<Button
@@ -820,32 +838,27 @@ class BasicTextFields extends Component {
 													className={classes.addBook}
 													variant="contained"
 													onClick={this.getUpdateBooks}>
-													Submit{' '}
+													Submit
 												</Button>
-												&nbsp;&nbsp;&nbsp;
-												<Button onClick={this.handleUpdate}> Cancel </Button>{' '}
-											</div>{' '}
-										</form>{' '}
-									</DialogContent>{' '}
-
-							
-									
+												&nbsp; &nbsp; &nbsp;
+												<Button onClick={this.handleUpdate}> Cancel </Button>
+											</div>
+										</form>
+									</DialogContent>
 									<div
 										className={
 											this.state.isActive
 												? [Styles.snackbar, Styles.show].join(' ')
 												: Styles.snackbar
 										}>
-										{' '}
-										{this.state.status}{' '}
-									</div>{' '}
-								</Dialog>{' '}
+										
+										{this.state.status}
+									</div>
+								</Dialog>
 							</div>
-						) : null}{' '}
-					</div>{' '}
-
-					
-				</div>{' '}
+						) : null}
+					</div>
+				</div>
 			</Fragment>
 		);
 	}

@@ -4,9 +4,19 @@
     /* box-shadow: 14px 10px 11px 0px rgba(0, 0, 0, 0.2); */
 }
 
-.bookname {
+.name {
     margin-left: -30%;
     margin-top: -3%;
+}
+
+.author {
+    margin-left: -36%;
+    margin-top: -1%;
+}
+
+.price {
+    margin-left: -42%;
+    margin-top: 1%;
 }
 
 .booknameorder {
